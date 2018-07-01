@@ -22,7 +22,6 @@
 
         <div class="col-lg-4 offset-lg-2">
           <div class="home-wrapper">
-            <form role="form" id="register_form" class="intro-form">
               <h3 class="text-center"> Register for free </h3>
               <div class="form-group">
                 <input type="text" class="form-control" placeholder="Full name" required="required">
@@ -37,9 +36,8 @@
                 <input type="text" class="form-control" placeholder="Password" required="required">
               </div>
               <div class="form-group text-center">
-                <button type="submit" class="btn btn-primary btn-shadow btn-rounded w-lg">Start Now</button>
+                <button v-on:click="login()" class="btn btn-primary btn-shadow btn-rounded w-lg">Start Now</button>
               </div>
-            </form>
           </div>
         </div>
 
@@ -55,6 +53,7 @@
 
 <script>
 import FeaturesList from '@/components/FeaturesList';
+import auth from '@/services/auth';
 
 export default {
   name: 'HelloWorld',
@@ -63,6 +62,11 @@ export default {
     return {
       msg: 'Welcome to Your Vue.js App'
     };
+  },
+  methods: {
+    login () {
+      auth.login('adrian9', 'adrian1');
+    }
   }
 };
 </script>
