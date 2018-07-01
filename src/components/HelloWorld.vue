@@ -1,97 +1,70 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-    <h2>Essential Links</h2>
-    <ul>
-      <li>
-        <a
-          href="https://vuejs.org"
-          target="_blank"
-        >
-          Core Docs
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://forum.vuejs.org"
-          target="_blank"
-        >
-          Forum
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://chat.vuejs.org"
-          target="_blank"
-        >
-          Community Chat
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://twitter.com/vuejs"
-          target="_blank"
-        >
-          Twitter
-        </a>
-      </li>
-      <br>
-      <li>
-        <a
-          href="http://vuejs-templates.github.io/webpack/"
-          target="_blank"
-        >
-          Docs for This Template
-        </a>
-      </li>
-    </ul>
-    <h2>Ecosystem</h2>
-    <ul>
-      <li>
-        <a
-          href="http://router.vuejs.org/"
-          target="_blank"
-        >
-          vue-router
-        </a>
-      </li>
-      <li>
-        <a
-          href="http://vuex.vuejs.org/"
-          target="_blank"
-        >
-          vuex
-        </a>
-      </li>
-      <li>
-        <a
-          href="http://vue-loader.vuejs.org/"
-          target="_blank"
-        >
-          vue-loader
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://github.com/vuejs/awesome-vue"
-          target="_blank"
-        >
-          awesome-vue
-        </a>
-      </li>
-    </ul>
-  </div>
+<section>
+  <!-- HOME -->
+  <section class="home home-form-left" id="home">
+    <!-- <div class="bg-overlay"></div> -->
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6">
+
+          <div class="home-wrapper">
+            <h2 class="animated fadeInDown wow" data-wow-delay=".1s">
+              <span class="text-colored">Starto</span> is a fully responsive landing page Template.
+            </h2>
+            <p class="animated fadeInDown wow text-muted" data-wow-delay=".2s">
+              Starto is a fully responsive landing page built using the latest Bootstrap framework. It's designed for describing your app, agency or business. The clean and well commented...
+            </p>
+            <a href="" class="btn btn-primary btn-shadow btn-rounded w-lg animated fadeInDown wow" data-wow-delay=".4s">Get Started</a>
+            <div class="clearfix"></div>
+          </div><!-- home wrapper -->
+
+        </div> <!-- end col -->
+
+        <div class="col-lg-4 offset-lg-2">
+          <div class="home-wrapper">
+            <form role="form" id="register_form" class="intro-form">
+              <h3 class="text-center"> Register for free </h3>
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="Full name" required="required">
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="Email Address" required="required">
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="User name" required="required">
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="Password" required="required">
+              </div>
+              <div class="form-group text-center">
+                <button type="submit" class="btn btn-primary btn-shadow btn-rounded w-lg">Start Now</button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+      </div> <!-- end row -->
+    </div> <!-- end container -->
+  </section>
+
+  <FeaturesList/>
+  <!-- END HOME -->
+</section>
+
 </template>
 
 <script>
+import FeaturesList from '@/components/FeaturesList';
+
 export default {
   name: 'HelloWorld',
+  components: {FeaturesList},
   data () {
     return {
       msg: 'Welcome to Your Vue.js App'
-    }
+    };
   }
-}
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
