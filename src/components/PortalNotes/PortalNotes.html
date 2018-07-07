@@ -1,5 +1,17 @@
 
 <section class="portal-notes">
   <h1>portal-notes Component</h1>
+
+  <div class="card-deck" v-for="note in notesResult.content">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">{{ note.noteTitle }}</h5>
+        <p class="card-text">{{ note.noteBody.substring(0, 350).concat('...') | striphtml }}</p>
+        <p class="card-text"><small class="text-muted">{{note.noteCreatedTime | moment("dddd, MMMM Do YYYY, h:mm:ss a") }}</small></p>
+        <router-link :to="{ name: 'PortalNoteDetail', params: { id: note.id }}" class="btn btn-primary">Edit</router-link>
+      </div>
+    </div>
+  </div>
+
 </section>
 

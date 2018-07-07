@@ -1,6 +1,18 @@
 <section class="portal-note-detail">
-  <Vueditor ref="noteEditor"></Vueditor>
-  <button v-on:click="logNote()"
-          class="btn btn-primary btn-shadow btn-rounded w-lg">Log Note</button>
+
+  <vue-editor useCustomImageHandler @imageAdded="insertImage" v-model="currentNote.noteBody" class="editor-body"></vue-editor>
+
+  <div class="row">
+    <div class="col-md-7 offset-md-1">
+      <input type="text" class="form-control" v-model="currentNote.noteTitle" placeholder="Note Title">
+    </div>
+    <div class="col-md-4">
+      <button v-on:click="cancelEdit()"
+              class="btn btn-primary btn-shadow btn-rounded w-lg">Cancel</button>
+      <button v-on:click="saveNote()"
+              class="btn btn-primary btn-shadow btn-rounded w-lg">Save Note</button>
+    </div>
+  </div>
+
 </section>
 

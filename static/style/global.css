@@ -4,3 +4,9 @@ html, body {
 .section-pad {
   padding: 40px 0 40px 0;
 }
+.sticky-wrapper {
+  top: 0;
+}
+.footer {
+  padding-bottom: 0;
+}
