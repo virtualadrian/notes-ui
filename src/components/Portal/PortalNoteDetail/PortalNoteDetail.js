@@ -5,6 +5,10 @@ import router from '@/router';
 
 import environment from '@/services/environment';
 
+const getEmptyNote = function () {
+  return {id: -1, noteBody: '', noteTitle: ''};
+};
+
 const api = {
   getNote: (id) => environment.getEndpoint(`note/${id}`),
   saveEditorImage: () => environment.getEndpoint(`note/image`),
@@ -15,7 +19,7 @@ const api = {
   components: {VueEditor}
 })
 export default class PortalNoteDetail extends Vue {
-  currentNote = {id: -1, noteBody: '', noteTitle: ''};
+  currentNote = getEmptyNote();
 
   mounted () {
     this.currentNote.id = this.$route.params.id;

@@ -7,6 +7,9 @@ export default class PortalNavigation extends Vue {
   logout () {
     auth.logout();
     router.push('/');
-    router.go();
+    // force refresh if logging out from homepage
+    if (router.currentRoute.name === 'Home') {
+      router.go();
+    }
   }
 }

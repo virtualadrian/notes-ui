@@ -31,6 +31,10 @@ class Authentication {
       });
   }
 
+  getCurrentUserFirstName () {
+    return Authentication.getAuth().firstName;
+  }
+
   logout () {
     localStorage.removeItem('notes::auth');
   }
@@ -64,8 +68,12 @@ class Authentication {
     return expirationDate < new Date();
   }
 
+  static getAuth () {
+    return JSON.parse(localStorage.getItem('notes::auth'));
+  }
+
   static getIdToken () {
-    const authData = JSON.parse(localStorage.getItem('notes::auth'));
+    const authData = Authentication.getAuth();
     return authData ? authData.access_token : undefined;
   }
 

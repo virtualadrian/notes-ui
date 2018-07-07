@@ -1,5 +1,6 @@
 import { Component, Vue } from 'vue-property-decorator';
 import http from '@/services/http';
+import auth from '@/services/authentication';
 import environment from '@/services/environment';
 import striphtml from '@/shared/filter/striphtml';
 
@@ -12,9 +13,15 @@ const api = {
 })
 export default class PortalNotes extends Vue {
   notesResult = {};
+  currentUserFirstName = 'Your';
 
   mounted () {
     this.getNotes();
+    this.getUserName();
+  }
+
+  getUserName () {
+    this.currentUserFirstName = auth.getCurrentUserFirstName();
   }
 
   getNotes () {
