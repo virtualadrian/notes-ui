@@ -25,9 +25,12 @@ export default {
     loginData.set('username', username);
     loginData.set('password', password);
 
-    http.post('oauth/token', loginData, {headers: { 'Content-Type': 'application/x-www-form-urlencoded' }})
+    return http.post('oauth/token', loginData, {headers: { 'Content-Type': 'application/x-www-form-urlencoded' }})
       .then((response) => {
-        console.dir(response);
+        localStorage.setItem('notes::auth', JSON.stringify(response.data));
       });
+  },
+  logout: function () {
+    localStorage.removeItem('notes::auth');
   }
 };

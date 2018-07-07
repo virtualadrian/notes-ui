@@ -1,11 +1,13 @@
+import PortalNavigation from '@/components/PortalNavigation/PortalNavigation.vue';
+
 export default {
   name: 'portal-layout',
-  components: {},
+  components: {PortalNavigation},
   props: [],
   data () {
     return {
 
-    }
+    };
   },
   computed: {
 
@@ -16,4 +18,4 @@ export default {
   methods: {
 
   }
-}
+};
