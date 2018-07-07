@@ -1,50 +1,5 @@
 <template>
 <section>
-  <!-- HOME -->
-  <section class="home home-form-left" id="home">
-    <!-- <div class="bg-overlay"></div> -->
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-6">
-
-          <div class="home-wrapper">
-            <h2 class="animated fadeInDown wow" data-wow-delay=".1s">
-              <span class="text-colored">Starto</span> is a fully responsive landing page Template.
-            </h2>
-            <p class="animated fadeInDown wow text-muted" data-wow-delay=".2s">
-              Starto is a fully responsive landing page built using the latest Bootstrap framework. It's designed for describing your app, agency or business. The clean and well commented...
-            </p>
-            <a href="" class="btn btn-primary btn-shadow btn-rounded w-lg animated fadeInDown wow" data-wow-delay=".4s">Get Started</a>
-            <div class="clearfix"></div>
-          </div><!-- home wrapper -->
-
-        </div> <!-- end col -->
-
-        <div class="col-lg-4 offset-lg-2">
-          <div class="home-wrapper">
-              <h3 class="text-center"> Register for free </h3>
-              <div class="form-group">
-                <input type="text" class="form-control" placeholder="Full name" required="required">
-              </div>
-              <div class="form-group">
-                <input type="text" class="form-control" placeholder="Email Address" required="required">
-              </div>
-              <div class="form-group">
-                <input type="text" class="form-control" placeholder="User name" required="required">
-              </div>
-              <div class="form-group">
-                <input type="text" class="form-control" placeholder="Password" required="required">
-              </div>
-              <div class="form-group text-center">
-                <button v-on:click="login()" class="btn btn-primary btn-shadow btn-rounded w-lg">Start Now</button>
-              </div>
-          </div>
-        </div>
-
-      </div> <!-- end row -->
-    </div> <!-- end container -->
-  </section>
-
   <FeaturesList/>
   <!-- END HOME -->
 </section>

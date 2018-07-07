@@ -27,4 +27,78 @@ npm run e2e
 npm test
 ```
 
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+
+## Component/Tool Information
+
+Vue CLI
+``` bash
+npm install -g @vue/cli
+```
+
+Vue INIT
+``` bash
+npm install -g @vue/init
+```
+
+## Component Generation
+
+From the root of the project run
+
+``` bash
+npm run gc {Component Name}
+
+```
+
+Example:
+
+``` bash
+npm run gc ForgotPassword
+
+```
+
+## Quick Start
+
+``` bash
+
+git clone git@github.com:virtualadrian/notes-ui.git && \
+cd notes-ui && \
+npm install && \
+npm run dev
+
+```
+
+## Styling
+
+Styles: SCSS
+
+
+## Additional tools
+
+*Global*
+``` bash
+
+sudo npm install -g @vue/init
+sudo npm install -g @vue/cli
+sudo npm install -g vue-generate-component
+ 
+```
+
+*Project Dependencies*
+``` bash
+
+npm install --save axios 
+ 
+```
+
+
+*Project Dev Dependencies*
+
+``` bash
+
+npm install --save-dev vue-class-component vue-property-decorator 
+npm install --save-dev vue-style-loader css-loader
+npm install --save-dev node-sass sass-loader
+
+```
+
+WIP: More to come...
