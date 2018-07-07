@@ -50,7 +50,7 @@ export default new Router({
           component: PortalDashboard
         },
         {
-          path: 'notes/',
+          path: 'notes',
           name: 'PortalNotes',
           component: PortalNotes
         },
