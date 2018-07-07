@@ -1,19 +1,22 @@
-export default {
-  name: 'login',
-  components: {},
-  props: [],
-  data () {
-    return {
+import Vue from 'vue';
+import Component from 'vue-class-component';
 
-    }
-  },
-  computed: {
+@Component({
+  props: {
+    propMessage: String
+  }
+})
+export default class Login extends Vue {
 
-  },
+  // Data property
+  loginModel = {};
+
+  // Lifecycle hook
   mounted () {
+  }
 
-  },
-  methods: {
-
+  // Component method
+  login () {
+    console.log(this.loginModel);
   }
 }

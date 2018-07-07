@@ -96,9 +96,22 @@ npm install --save axios
 ``` bash
 
 npm install --save-dev vue-class-component vue-property-decorator 
+npm install --save-dev babel-plugin-transform-decorators-legacy
 npm install --save-dev vue-style-loader css-loader
 npm install --save-dev node-sass sass-loader
 
 ```
+
+*Babel Plugin For ES6*
+
+
+Add "transform-decorators-legacy" to the .babelrc file so we can use @Component annotations.
+
+``` json
+{
+  "plugins": ["transform-vue-jsx", "transform-runtime", "transform-decorators-legacy"]
+}  
+```
+
 
 WIP: More to come...

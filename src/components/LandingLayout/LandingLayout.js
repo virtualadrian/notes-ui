@@ -1,6 +1,8 @@
+import Navigation from '@/components/Navigation/Navigation.vue';
+
 export default {
   name: 'landing-layout',
-  components: {},
+  components: {Navigation},
   props: [],
   data () {
     return {

@@ -1,11 +1,11 @@
 export default {
-  name: 'features-list',
+  name: 'feature-list',
   components: {},
   props: [],
   data () {
     return {
 
-    };
+    }
   },
   computed: {
 
@@ -16,4 +16,4 @@ export default {
   methods: {
 
   }
-};
+}
