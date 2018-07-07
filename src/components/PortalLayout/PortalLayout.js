@@ -1,6 +1,8 @@
+import PortalDashboard from '@/components/PortalDashboard/PortalDashboard.vue';
+
 export default {
   name: 'portal-layout',
-  components: {},
+  components: {PortalDashboard},
   props: [],
   data () {
     return {

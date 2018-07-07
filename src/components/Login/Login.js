@@ -1,15 +1,12 @@
 import Vue from 'vue';
 import Component from 'vue-class-component';
+import auth from '@/services/auth';
+import router from '@/router';
 
-@Component({
-  props: {
-    propMessage: String
-  }
-})
+@Component
 export default class Login extends Vue {
-
   // Data property
-  loginModel = {};
+  loginModel = {username: '', password: ''};
 
   // Lifecycle hook
   mounted () {
@@ -17,6 +14,9 @@ export default class Login extends Vue {
 
   // Component method
   login () {
-    console.log(this.loginModel);
+    auth.login(this.loginModel.username, this.loginModel.password)
+      .then(() => {
+        router.push({ name: 'PortalDashboard' });
+      });
   }
 }

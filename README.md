@@ -87,7 +87,8 @@ sudo npm install -g vue-generate-component
 ``` bash
 
 npm install --save axios 
- 
+npm install --save jwt-decode 
+
 ```
 
 

@@ -1,4 +1,6 @@
 import Vue from 'vue';
+import decode from 'jwt-decode';
+
 import Router from 'vue-router';
 import LandingLayout from '@/components/LandingLayout/LandingLayout.vue';
 
@@ -10,6 +12,41 @@ import PortalLayout from '@/components/PortalLayout/PortalLayout.vue';
 import PortalDashboard from '@/components/PortalDashboard/PortalDashboard.vue';
 
 Vue.use(Router);
+
+function getTokenExpirationDate (encodedToken) {
+  const token = decode(encodedToken);
+  if (!token.exp) { return null; }
+
+  const date = new Date(0);
+  date.setUTCSeconds(token.exp);
+
+  return date;
+}
+
+function isTokenExpired (token) {
+  const expirationDate = getTokenExpirationDate(token);
+  return expirationDate < new Date();
+}
+
+function getIdToken () {
+  const authData = JSON.parse(localStorage.getItem('notes::auth'));
+  return authData ? authData.access_token : undefined;
+}
+
+function isLoggedIn () {
+  const idToken = getIdToken();
+  return !!idToken && !isTokenExpired(idToken);
+}
+
+function guardRoute (to, from, next) {
+  if (!isLoggedIn()) {
+    next({
+      path: '/account/login'
+    });
+  } else {
+    next();
+  }
+}
 
 export default new Router({
   routes: [
@@ -37,6 +74,7 @@ export default new Router({
     {
       path: '/portal',
       component: PortalLayout,
+      beforeEnter: guardRoute,
       children: [
         {
           path: '',
