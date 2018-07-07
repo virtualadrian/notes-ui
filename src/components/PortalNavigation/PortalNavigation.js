@@ -1,5 +1,5 @@
 import { Component, Vue } from 'vue-property-decorator';
-import auth from '@/services/auth';
+import auth from '@/services/authentication';
 import router from '@/router';
 
 @Component
