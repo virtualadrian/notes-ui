@@ -29,5 +29,8 @@ export default {
       .then((response) => {
         localStorage.setItem('notes::auth', JSON.stringify(response.data));
       });
+  },
+  logout: function () {
+    localStorage.removeItem('notes::auth');
   }
 };

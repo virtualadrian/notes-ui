@@ -1,13 +1,13 @@
-import PortalDashboard from '@/components/PortalDashboard/PortalDashboard.vue';
+import PortalNavigation from '@/components/PortalNavigation/PortalNavigation.vue';
 
 export default {
   name: 'portal-layout',
-  components: {PortalDashboard},
+  components: {PortalNavigation},
   props: [],
   data () {
     return {
 
-    }
+    };
   },
   computed: {
 
@@ -18,4 +18,4 @@ export default {
   methods: {
 
   }
-}
+};
