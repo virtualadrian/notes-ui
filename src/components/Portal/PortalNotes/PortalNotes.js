@@ -30,4 +30,11 @@ export default class PortalNotes extends Vue {
         this.notesResult = result.data;
       });
   }
+
+  deleteNote (note) {
+    http.delete(api.getAllNotes())
+      .then((result) => {
+        this.notesResult = result.data;
+      });
+  }
 }

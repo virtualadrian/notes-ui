@@ -1,6 +1,6 @@
 
 <section class="portal-notes section-pad">
-  
+
   <div class="container">
     <div class="row">
       <div class="col-sm-8">
@@ -8,7 +8,7 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-sm-3" v-for="note in notesResult.content">
+      <div class="col-sm-4" v-for="note in notesResult.content">
         <div class="card" >
           <div class="card-body">
             <h5 class="card-title"><strong>{{ note.noteTitle }}</strong></h5>
@@ -16,11 +16,12 @@
             <p class="card-text"><small class="text-muted">{{note.noteCreatedTime | moment("MMMM Do YYYY, h:mm:ss a") }}</small></p>
           </div>
           <div class="card-footer">
-            <router-link :to="{ name: 'PortalNoteDetail', params: { id: note.id }}" class="btn btn-primary">
-              <i class="zmdi zmdi-edit"></i>
-            </router-link>
-            <router-link :to="{ name: 'PortalNoteDetail', params: { id: note.id }}" class="btn btn-primary">
+            <button class="btn btn-danger float-sm-left" v-on:click="deleteNote(note)">
               <i class="zmdi zmdi-delete"></i>
+            </button>
+
+            <router-link :to="{ name: 'PortalNoteDetail', params: { id: note.id }}" class="btn btn-primary float-sm-right">
+              <i class="zmdi zmdi-edit"></i>
             </router-link>
           </div>
         </div>
