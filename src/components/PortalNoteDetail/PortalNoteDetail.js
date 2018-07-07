@@ -30,4 +30,9 @@ export default class PortalNoteDetail extends Vue {
         this.currentNote = response.data;
       });
   }
+
+  logNote () {
+    const content = this.$refs.noteEditor.getContent();
+    console.log(content);
+  }
 }
