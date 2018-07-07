@@ -1,19 +1,5 @@
-export default {
-  name: 'footer',
-  components: {},
-  props: [],
-  data () {
-    return {
+import { Component, Vue } from 'vue-property-decorator';
 
-    }
-  },
-  computed: {
-
-  },
-  mounted () {
-
-  },
-  methods: {
-
-  }
+@Component
+export default class Footer extends Vue {
 }

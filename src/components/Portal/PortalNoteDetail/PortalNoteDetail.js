@@ -1,5 +1,5 @@
 import { Component, Vue } from 'vue-property-decorator';
-import { http } from '@/services/http';
+import http from '@/services/http';
 import { VueEditor } from 'vue2-editor';
 import router from '@/router';
 

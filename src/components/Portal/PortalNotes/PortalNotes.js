@@ -1,5 +1,5 @@
 import { Component, Vue } from 'vue-property-decorator';
-import { http } from '@/services/http';
+import http from '@/services/http';
 import environment from '@/services/environment';
 import striphtml from '@/shared/filter/striphtml';
 

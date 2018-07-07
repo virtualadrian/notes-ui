@@ -6,6 +6,10 @@ const AUTH_CLIENT_ID = environment.getValue('clientId');
 const AUTH_CLIENT_KEY = environment.getValue('clientKey');
 const AUTH_GRANT_TYPE = environment.getValue('grantType');
 
+const api = {
+  getToken: () => environment.getEndpoint(`oauth/token`)
+};
+
 const http = axios.create({
   headers: {
     Authorization: `Basic ` + btoa(`${AUTH_CLIENT_ID}:${AUTH_CLIENT_KEY}`)
@@ -21,7 +25,7 @@ class Authentication {
     loginData.set('username', username);
     loginData.set('password', password);
 
-    return http.post('oauth/token', loginData, {headers: { 'Content-Type': 'application/x-www-form-urlencoded' }})
+    return http.post(api.getToken(), loginData, {headers: { 'Content-Type': 'application/x-www-form-urlencoded' }})
       .then((response) => {
         localStorage.setItem('notes::auth', JSON.stringify(response.data));
       });
@@ -29,6 +33,10 @@ class Authentication {
 
   logout () {
     localStorage.removeItem('notes::auth');
+  }
+
+  isLoggedIn () {
+    return Authentication.checkLoggedIn();
   }
 
   static guardRoute (to, from, next) {

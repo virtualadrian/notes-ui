@@ -1,14 +1,25 @@
 import axios from 'axios';
 
-const SCHEME = window['notes']['HTTP_SCHEME'] || 'http';
-const HOST = window['notes']['HTTP_HOST'] || 'localhost';
-const PORT = window['notes']['HTTP_PORT'] || '9999';
+function getAccessToken () {
+  let apiAuth = localStorage.getItem('notes::auth') ? JSON.parse(localStorage.getItem('notes::auth')) : {};
+  return apiAuth.access_token;
+}
 
-const auth = localStorage.getItem('notes::auth') ? JSON.parse(localStorage.getItem('notes::auth')) : {};
+const http = axios.create();
 
-export const http = axios.create({
-  baseURL: `${SCHEME}://${HOST}:${PORT}/api/v1/`,
-  headers: {
-    Authorization: `Bearer ${auth.access_token}`
-  }
-});
+http.interceptors.request.use(
+  config => {
+    if (!config.headers.Authorization) {
+      const token = getAccessToken();
+
+      if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+      }
+    }
+
+    return config;
+  },
+  error => Promise.reject(error)
+);
+
+export default http;
