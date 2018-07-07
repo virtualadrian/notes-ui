@@ -3,16 +3,16 @@ import Router from 'vue-router';
 
 import auth from '@/services/authentication';
 
-import LandingLayout from '@/components/LandingLayout/LandingLayout.vue';
+import LandingLayout from '@/components/Landing/LandingLayout/LandingLayout.vue';
 
-import Login from '@/components/Login/Login.vue';
-import Home from '@/components/Home/Home.vue';
-import RegistrationFull from '@/components/RegistrationFull/RegistrationFull.vue';
+import Login from '@/components/Landing/Login/Login.vue';
+import Home from '@/components/Landing/Home/Home.vue';
+import RegistrationFull from '@/components/Landing/RegistrationFull/RegistrationFull.vue';
 
-import PortalLayout from '@/components/PortalLayout/PortalLayout.vue';
-import PortalDashboard from '@/components/PortalDashboard/PortalDashboard.vue';
-import PortalNotes from '@/components/PortalNotes/PortalNotes.vue';
-import PortalNoteDetail from '@/components/PortalNoteDetail/PortalNoteDetail.vue';
+import PortalLayout from '@/components/Portal/PortalLayout/PortalLayout.vue';
+import PortalDashboard from '@/components/Portal/PortalDashboard/PortalDashboard.vue';
+import PortalNotes from '@/components/Portal/PortalNotes/PortalNotes.vue';
+import PortalNoteDetail from '@/components/Portal/PortalNoteDetail/PortalNoteDetail.vue';
 
 Vue.use(Router);
 
