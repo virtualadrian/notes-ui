@@ -1,5 +1,5 @@
-import RegistrationSimple from '@/components/RegistrationSimple/RegistrationSimple.vue';
-import FeatureList from '@/components/FeatureList/FeatureList.vue';
+import RegistrationSimple from '@/components/Landing/RegistrationSimple/RegistrationSimple.vue';
+import FeatureList from '@/components/Landing/FeatureList/FeatureList.vue';
 
 export default {
   name: 'home',

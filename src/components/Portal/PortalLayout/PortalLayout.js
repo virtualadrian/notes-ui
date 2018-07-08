@@ -1,6 +1,6 @@
 import { Component, Vue } from 'vue-property-decorator';
-import PortalNavigation from '@/components/PortalNavigation/PortalNavigation.vue';
-import PortalFooter from '@/components/PortalFooter/PortalFooter.vue';
+import PortalNavigation from '@/components/Portal/PortalNavigation/PortalNavigation.vue';
+import PortalFooter from '@/components/Portal/PortalFooter/PortalFooter.vue';
 
 @Component({
   components: {PortalNavigation, PortalFooter}

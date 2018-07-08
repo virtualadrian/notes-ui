@@ -1,13 +1,18 @@
 import { Component, Vue } from 'vue-property-decorator';
-import { http } from '@/services/http';
+import http from '@/services/http';
 import { VueEditor } from 'vue2-editor';
 import router from '@/router';
 
 import environment from '@/services/environment';
 
+const getEmptyNote = function () {
+  return {id: -1, noteBody: '', noteTitle: ''};
+};
+
 const api = {
   getNote: (id) => environment.getEndpoint(`note/${id}`),
-  saveEditorImage: () => environment.getEndpoint(`note/image`),
+  saveEditorImage: () => environment.getEndpoint(`note/upload/file`),
+  getEditorImage: (name) => environment.getEndpoint(`assets/note/images/${name}`),
   saveNote: () => environment.getEndpoint(`note`)
 };
 
@@ -15,7 +20,7 @@ const api = {
   components: {VueEditor}
 })
 export default class PortalNoteDetail extends Vue {
-  currentNote = {id: -1, noteBody: '', noteTitle: ''};
+  currentNote = getEmptyNote();
 
   mounted () {
     this.currentNote.id = this.$route.params.id;
@@ -37,6 +42,8 @@ export default class PortalNoteDetail extends Vue {
 
     save.then((response) => {
       this.showNote(response);
+      this.$toastr.defaultTimeout = 1000;
+      this.$toastr.s('Note has been saved.');
     });
   }
 
@@ -46,11 +53,11 @@ export default class PortalNoteDetail extends Vue {
 
   insertImage (file, Editor, cursorLocation) {
     const formData = new FormData();
-    formData.append('image', file);
+    formData.append('file', file);
 
     http.post(api.saveEditorImage(), formData)
       .then((result) => {
-        Editor.insertEmbed(cursorLocation, 'image', result.data.image.url);
+        Editor.insertEmbed(cursorLocation, 'image', api.getEditorImage(file.name));
       })
       .catch((err) => {
         console.log(err);
