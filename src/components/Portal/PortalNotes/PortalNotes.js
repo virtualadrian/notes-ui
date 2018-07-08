@@ -5,7 +5,8 @@ import environment from '@/services/environment';
 import striphtml from '@/shared/filter/striphtml';
 
 const api = {
-  getAllNotes: (id) => environment.getEndpoint(`note`)
+  getNotes: () => environment.getEndpoint(`note`),
+  deleteNote: (id) => environment.getEndpoint(`note/${id}`)
 };
 
 @Component({
@@ -13,7 +14,7 @@ const api = {
 })
 export default class PortalNotes extends Vue {
   notesResult = {};
-  currentUserFirstName = 'Your';
+  currentUserFirstName = 'Awesomeness';
 
   mounted () {
     this.getNotes();
@@ -25,16 +26,17 @@ export default class PortalNotes extends Vue {
   }
 
   getNotes () {
-    http.get(api.getAllNotes())
+    http.get(api.getNotes())
       .then((result) => {
         this.notesResult = result.data;
       });
   }
 
   deleteNote (note) {
-    http.delete(api.getAllNotes())
-      .then((result) => {
-        this.notesResult = result.data;
+    http.delete(api.deleteNote(note.id))
+      .then(() => {
+        this.$toastr.s('Note has been removed.');
+        this.getNotes();
       });
   }
 }
