@@ -18,7 +18,8 @@ class Environment {
     if (endpoint && endpoint.substring(0, 1) !== '/') {
       endpoint = `/${endpoint}`;
     }
-    return 'https://s3.amazonaws.com/userasset.dev.noteler.com' + endpoint;
+    const bucketName = this.getValue('AWSS3Bucket');
+    return `https://s3.amazonaws.com/${bucketName}/${endpoint}`;
   }
 }
 

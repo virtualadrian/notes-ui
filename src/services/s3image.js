@@ -10,7 +10,7 @@ const api = {
 };
 
 const s3api = {
-  upload: () => 'https://s3.amazonaws.com/userasset.dev.noteler.com/' // environment.getS3Endpoint('http://sigv4examplebucket.s3.amazonaws.com/')
+  upload: () => environment.getS3Endpoint('')
 };
 
 class S3ImageUpload {
@@ -23,20 +23,16 @@ class S3ImageUpload {
   }
   uploadImage(file) {
     const formData = new FormData();
+    const fileKey = `images/${auth.getCurrentUserAccountId()}/${file.name}`;
 
-    formData.append('key', `images/${auth.getCurrentUserAccountId()}/${file.name}`);
-    formData.append('AWSAccessKeyId', 'AKIAIK2BQXMNK2YZHHZA');
-    formData.append('acl', 'ec2-bundle-read');
+    formData.append('key', fileKey);
+    formData.append('AWSAccessKeyId', environment.getValue('AWSAccessKeyId'));
+    formData.append('acl', environment.getValue('AWSS3Acl'));
     formData.append('policy', this.policy.postPolicy);
     formData.append('signature', this.policy.policySignature);
     formData.append('file', file);
 
     return s3http.post(s3api.upload(), formData);
-
-    //
-    // .then(result => {
-    //   console.dir(result);
-    // });
   }
 }
 

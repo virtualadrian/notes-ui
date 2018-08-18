@@ -13,7 +13,6 @@ const getEmptyNote = function() {
 
 const api = {
   getNote: (id) => environment.getEndpoint(`note/${id}`),
-  saveEditorImage: () => environment.getEndpoint(`note/upload/file`),
   getEditorImage: (userId, name) => environment.getS3Endpoint(`/images/${userId}/${name}`),
   saveNote: () => environment.getEndpoint(`note`)
 };
