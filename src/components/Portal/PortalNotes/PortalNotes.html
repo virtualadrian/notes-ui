@@ -46,22 +46,5 @@
            centered title="Confirm Note Delete?">
     <p class="my-4">Are you sure you want to delete this note?</p>
   </b-modal>
-  <b-modal id="modal-center" ref="noteSearch" centered @shown="$refs.noteSearchTerm.focus()">
-    <input type="text"
-           v-on:keyup.enter="searchNotes"
-           v-model="noteSearch.term"
-           class="form-control form-control-lg note-title-input"
-           ref="noteSearchTerm"
-           placeholder="Search Notes For ...">
-    <div slot="modal-footer" class="text-center w-100">
-      <b-btn @click="searchNotes" class="btn btn-primary btn-shadow btn-rounded">Search</b-btn>
-    </div>
-
-  </b-modal>
-  <div class="invisible" id="shortcuts">
-    <b-btn @click="showSearch"
-           v-shortkey="['shift', 'space']" @shortkey="showSearch()"
-           class="btn btn-primary btn-shadow btn-rounded">Search</b-btn>
-  </div>
 </section>
 

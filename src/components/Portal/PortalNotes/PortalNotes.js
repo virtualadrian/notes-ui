@@ -16,23 +16,7 @@ const api = {
 export default class PortalNotes extends Vue {
   notesResult = {};
   currentUserFirstName = 'Awesomeness';
-  noteSearch = {
-    term: ''
-  };
   currentNote = {};
-
-  showSearch() {
-    this.$refs.noteSearch.show();
-  }
-
-  searchNotes() {
-    router.push({name: 'PortalSearchNote',
-      params: {
-        term: this.noteSearch.term,
-        page: 1,
-        size: 10
-      }});
-  }
 
   mounted() {
     this.getNotes();

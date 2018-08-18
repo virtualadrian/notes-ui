@@ -7,6 +7,9 @@ import fab from 'vue-fab';
   components: {fab}
 })
 export default class PortalNavigation extends Vue {
+  noteSearch = {
+    term: ''
+  };
   fabActions = [
     {
       name: 'studySession',
@@ -27,6 +30,19 @@ export default class PortalNavigation extends Vue {
       color: '#007bff'
     }
   ];
+
+  showSearch() {
+    this.$refs.noteSearch.show();
+  }
+
+  searchNotes() {
+    router.push({name: 'PortalSearchNote',
+      params: {
+        term: this.noteSearch.term,
+        page: 1,
+        size: 10
+      }});
+  }
 
   addNewNote() {
     router.push({name: 'PortalNoteDetail'});
