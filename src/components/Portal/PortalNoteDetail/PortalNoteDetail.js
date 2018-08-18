@@ -22,19 +22,26 @@ const api = {
 })
 export default class PortalNoteDetail extends Vue {
   currentNote = getEmptyNote();
-  editorSettings = {
-    bounds: '#scrolling-container',
-    placeholder: 'Compose an epic...',
-    theme: 'snow'
+  editor = {
+    options: {
+
+    },
+    dirty: false
   };
 
-  vueEditorTextChanged() {
-
+  onTextChanged(delta, oldDelta, source) {
+    this.editor.dirty = true;
   }
 
   mounted() {
     this.currentNote.id = this.$route.params.id;
-    this.getNoteDetail();
+    this.getNoteDetail()
+      .then(() => {
+        this.$refs.noteEditor.quill.on('editor-change', this.onTextChanged);
+      })
+      .then(() => {
+        this.editor.dirty = false;
+      });
     this.resizeEditor();
     window.addEventListener('resize', this.resizeEditor);
   }
@@ -53,7 +60,7 @@ export default class PortalNoteDetail extends Vue {
 
   getNoteDetail() {
     if (!this.currentNote.id) { return; }
-    http.get(api.getNote(this.currentNote.id))
+    return http.get(api.getNote(this.currentNote.id))
       .then((response) => {
         this.showNote(response);
       });
@@ -64,15 +71,36 @@ export default class PortalNoteDetail extends Vue {
       ? http.put(api.saveNote(), this.currentNote)
       : http.post(api.saveNote(), this.currentNote);
 
-    save.then((response) => {
+    return save.then((response) => {
       this.showNote(response);
       this.$toastr.defaultTimeout = 1000;
       this.$toastr.s('Note has been saved.');
+      this.editor.dirty = false;
     });
   }
 
-  cancel() {
+  backWithSave() {
+    this.saveNote()
+      .then(() => {
+        router.push({name: 'PortalNotes'});
+      });
+  }
+
+  backNoSave() {
     router.push({name: 'PortalNotes'});
+  }
+
+  backCancel() {
+    this.$refs.unsavedChanges.hide();
+  }
+
+  cancel() {
+    // editor-change
+    if (!this.editor.dirty) {
+      router.push({name: 'PortalNotes'});
+    } else {
+      this.$refs.unsavedChanges.show();
+    }
   }
 
   insertS3Image(file, Editor, cursorLocation) {

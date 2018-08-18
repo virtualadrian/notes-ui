@@ -1,4 +1,4 @@
-<section class="footer portal-footer" v-bind:class="{ hiding: hiding }">
+<section class="footer portal-footer" v-if="$route.path.indexOf('/portal/note/edit') < 0">
   <!-- FOOTER -->
   <footer class="section bg-gray footer footer-sm">
     <div class="container">

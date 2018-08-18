@@ -23,6 +23,10 @@ export default class PortalNoteDetail extends Vue {
     router.push({name: 'PortalNotes'});
   }
 
+  edit() {
+    router.push({name: 'PortalNoteDetail', params: { id: this.$route.params.id }});
+  }
+
   getNoteDetail() {
     if (!this.currentNote.id) { return; }
     http.get(api.getNote(this.currentNote.id))
