@@ -18,6 +18,9 @@ const api = {
 export default class PortalNotes extends Vue {
   notesResult = {};
   currentUserFirstName = 'Awesomeness';
+  notesSearch = {
+    term: ''
+  };
   fabActions = [
     {
       name: 'addNewNote',
@@ -44,7 +47,16 @@ export default class PortalNotes extends Vue {
   }
 
   searchNotes() {
-    window.location.reload();
+    router.push({name: 'PortalSearchNote',
+      params: {
+        term: this.notesSearch.term,
+        page: 1,
+        size: 25
+      }});
+  }
+
+  showSearch() {
+    this.$refs.noteSearch.show();
   }
 
   shareNotes() {

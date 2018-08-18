@@ -14,6 +14,7 @@ import PortalDashboard from '@/components/Portal/PortalDashboard/PortalDashboard
 import PortalNotes from '@/components/Portal/PortalNotes/PortalNotes.vue';
 import PortalNoteDetail from '@/components/Portal/PortalNoteDetail/PortalNoteDetail.vue';
 import PortalNoteView from '@/components/Portal/PortalNoteView/PortalNoteView.vue';
+import PortalSearchNote from '@/components/Portal/PortalSearchNote/PortalSearchNote.vue';
 
 Vue.use(Router);
 
@@ -64,6 +65,16 @@ export default new Router({
           path: 'note/view/:id?',
           name: 'PortalNoteView',
           component: PortalNoteView
+        },
+        {
+          path: 'note/share/:id?',
+          name: 'PortalShareNote',
+          component: PortalNoteView
+        },
+        {
+          path: 'note/search/:term/:page/:size',
+          name: 'PortalSearchNote',
+          component: PortalSearchNote
         }
       ]
     }
