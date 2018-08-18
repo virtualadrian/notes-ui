@@ -19,7 +19,7 @@ class Environment {
       endpoint = `/${endpoint}`;
     }
     const bucketName = this.getValue('AWSS3Bucket');
-    return `https://s3.amazonaws.com/${bucketName}/${endpoint}`;
+    return `https://s3.amazonaws.com/${bucketName}${endpoint}`;
   }
 }
 

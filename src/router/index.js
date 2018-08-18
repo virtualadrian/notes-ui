@@ -13,6 +13,7 @@ import PortalLayout from '@/components/Portal/PortalLayout/PortalLayout.vue';
 import PortalDashboard from '@/components/Portal/PortalDashboard/PortalDashboard.vue';
 import PortalNotes from '@/components/Portal/PortalNotes/PortalNotes.vue';
 import PortalNoteDetail from '@/components/Portal/PortalNoteDetail/PortalNoteDetail.vue';
+import PortalNoteView from '@/components/Portal/PortalNoteView/PortalNoteView.vue';
 
 Vue.use(Router);
 
@@ -55,9 +56,14 @@ export default new Router({
           component: PortalNotes
         },
         {
-          path: 'note/:id?',
+          path: 'note/edit/:id?',
           name: 'PortalNoteDetail',
           component: PortalNoteDetail
+        },
+        {
+          path: 'note/view/:id?',
+          name: 'PortalNoteView',
+          component: PortalNoteView
         }
       ]
     }

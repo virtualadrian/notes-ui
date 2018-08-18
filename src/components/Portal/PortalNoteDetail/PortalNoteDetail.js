@@ -22,10 +22,33 @@ const api = {
 })
 export default class PortalNoteDetail extends Vue {
   currentNote = getEmptyNote();
+  editorSettings = {
+    bounds: '#scrolling-container',
+    placeholder: 'Compose an epic...',
+    theme: 'snow'
+  };
+
+  vueEditorTextChanged() {
+
+  }
 
   mounted() {
     this.currentNote.id = this.$route.params.id;
     this.getNoteDetail();
+    this.resizeEditor();
+    window.addEventListener('resize', this.resizeEditor);
+  }
+
+  beforeDestroy() {
+    window.removeEventListener('resize', this.resizeEditor);
+  }
+
+  resizeEditor() {
+    const quillWrapper = document.querySelectorAll('.quillWrapper')[0];
+    if (quillWrapper) {
+      const height = document.body.clientHeight - 217;
+      quillWrapper.style.height = `${height}px`;
+    }
   }
 
   getNoteDetail() {
@@ -48,7 +71,7 @@ export default class PortalNoteDetail extends Vue {
     });
   }
 
-  cancelEdit() {
+  cancel() {
     router.push({name: 'PortalNotes'});
   }
 

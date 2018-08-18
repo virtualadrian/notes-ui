@@ -1,4 +1,8 @@
-html, body {
+html {
+  height: 100%;
+}
+body {
+  margin: 0;
   height: 100%;
 }
 .section-pad {
@@ -6,7 +10,15 @@ html, body {
 }
 .sticky-wrapper {
   top: 0;
+  height: 92px;
 }
 .footer {
   padding-bottom: 0;
+}
+.padding-0 {
+  padding: 0;
+}
+
+.card-shadow {
+  box-shadow: 1px 5px 9px rgba(158, 159, 159, 0.32);
 }
