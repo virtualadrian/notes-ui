@@ -16,23 +16,23 @@ export default class PortalNotes extends Vue {
   notesResult = {};
   currentUserFirstName = 'Awesomeness';
 
-  mounted () {
+  mounted() {
     this.getNotes();
     this.getUserName();
   }
 
-  getUserName () {
+  getUserName() {
     this.currentUserFirstName = auth.getCurrentUserFirstName();
   }
 
-  getNotes () {
+  getNotes() {
     http.get(api.getNotes())
       .then((result) => {
         this.notesResult = result.data;
       });
   }
 
-  deleteNote (note) {
+  deleteNote(note) {
     http.delete(api.deleteNote(note.id))
       .then(() => {
         this.$toastr.s('Note has been removed.');

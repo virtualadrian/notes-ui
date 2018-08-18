@@ -17,7 +17,7 @@ new Vue({
   el: '#app',
   router,
   components: {App},
-  mounted: function () {
+  mounted: function() {
     this.$toastr.defaultTimeout = 1000;
   },
   template: '<App/>'

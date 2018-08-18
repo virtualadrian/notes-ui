@@ -17,7 +17,7 @@ const http = axios.create({
 });
 
 class Authentication {
-  login (username, password) {
+  login(username, password) {
     const loginData = new FormData();
 
     loginData.set('grant_type', AUTH_GRANT_TYPE);
@@ -31,19 +31,23 @@ class Authentication {
       });
   }
 
-  getCurrentUserFirstName () {
-    return Authentication.getAuth().firstName;
-  }
-
-  logout () {
+  logout() {
     localStorage.removeItem('notes::auth');
   }
 
-  isLoggedIn () {
+  isLoggedIn() {
     return Authentication.checkLoggedIn();
   }
 
-  static guardRoute (to, from, next) {
+  getCurrentUserFirstName() {
+    return Authentication.getAuth().firstName;
+  }
+
+  getCurrentUserAccountId() {
+    return Authentication.getAuth().accountId;
+  }
+
+  static guardRoute(to, from, next) {
     if (!Authentication.checkLoggedIn()) {
       next({
         path: '/account/login'
@@ -53,7 +57,7 @@ class Authentication {
     }
   }
 
-  static getTokenExpirationDate (encodedToken) {
+  static getTokenExpirationDate(encodedToken) {
     const token = decode(encodedToken);
     if (!token.exp) { return null; }
 
@@ -63,21 +67,21 @@ class Authentication {
     return date;
   }
 
-  static isTokenExpired (token) {
+  static isTokenExpired(token) {
     const expirationDate = Authentication.getTokenExpirationDate(token);
     return expirationDate < new Date();
   }
 
-  static getAuth () {
+  static getAuth() {
     return JSON.parse(localStorage.getItem('notes::auth'));
   }
 
-  static getIdToken () {
+  static getIdToken() {
     const authData = Authentication.getAuth();
     return authData ? authData.access_token : undefined;
   }
 
-  static checkLoggedIn () {
+  static checkLoggedIn() {
     const idToken = Authentication.getIdToken();
     return !!idToken && !Authentication.isTokenExpired(idToken);
   }

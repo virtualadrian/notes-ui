@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-function getAccessToken () {
+function getAccessToken() {
   let apiAuth = localStorage.getItem('notes::auth') ? JSON.parse(localStorage.getItem('notes::auth')) : {};
   return apiAuth.access_token;
 }
