@@ -1,5 +1,5 @@
 
-<section class="portal-notes section-pad">
+<section class="portal-notes section-pad h-100">
 
   <div class="container">
     <div class="row">
@@ -33,7 +33,10 @@
       </div>
     </div>
   </div>
-
-
+  <fab :actions="fabActions"
+       @addNewNote="addNewNote"
+       @searchNotes="searchNotes"
+       @shareNotes="shareNotes"
+       :ripple-color="'light'" :z-index="'99999'" :position="'top-left'"></fab>
 </section>
 

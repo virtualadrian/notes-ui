@@ -5,7 +5,7 @@
     <div class="container">
       <!-- LOGO -->
       <router-link class="navbar-brand logo" :to="{name: 'PortalDashboard'}">
-        <i class="zmdi zmdi-dialpad"></i> <span> noteler</span>
+        <i class="zmdi zmdi-book"></i> <span>noteler</span>
       </router-link>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
         <i class="zmdi zmdi-menu"></i>
@@ -15,15 +15,7 @@
 
           <!-- notes -->
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Notes
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <router-link class="nav-link" to="/portal/notes">View All</router-link>
-              <a class="dropdown-item" href="#">Search</a>
-              <div class="dropdown-divider"></div>
-              <router-link class="dropdown-item" to="/portal/note">Add New Note</router-link>
-            </div>
+            <router-link class="nav-link" to="/portal/notes" role="button">Notes</router-link>
           </li>
 
           <!-- study -->

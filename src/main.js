@@ -9,9 +9,12 @@ import 'vue-toastr/src/vue-toastr.scss';
 import BootstrapVue from 'bootstrap-vue';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
+import 'animate.css/animate.min.css';
+import VueShortkey from 'vue-shortkey';
 
 Vue.config.productionTip = false;
 
+Vue.use(VueShortkey);
 Vue.use(BootstrapVue);
 Vue.use(VueMoment);
 Vue.use(Toastr);

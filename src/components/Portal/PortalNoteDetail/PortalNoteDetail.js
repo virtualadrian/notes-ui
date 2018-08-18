@@ -4,11 +4,10 @@ import router from '@/router';
 import http from '@/services/http';
 import auth from '@/services/authentication';
 import s3image from '@/services/s3image';
-
 import environment from '@/services/environment';
 
 const getEmptyNote = function() {
-  return {id: -1, noteBody: '', noteTitle: ''};
+  return {id: -1, noteBody: '', noteTitle: '', noteTags: ''};
 };
 
 const api = {
@@ -23,25 +22,16 @@ const api = {
 export default class PortalNoteDetail extends Vue {
   currentNote = getEmptyNote();
   editor = {
-    options: {
-
-    },
     dirty: false
   };
 
-  onTextChanged(delta, oldDelta, source) {
+  onTextChanged() {
     this.editor.dirty = true;
   }
 
   mounted() {
     this.currentNote.id = this.$route.params.id;
-    this.getNoteDetail()
-      .then(() => {
-        this.$refs.noteEditor.quill.on('editor-change', this.onTextChanged);
-      })
-      .then(() => {
-        this.editor.dirty = false;
-      });
+    this.loadNoteDetail();
     this.resizeEditor();
     window.addEventListener('resize', this.resizeEditor);
   }
@@ -60,9 +50,20 @@ export default class PortalNoteDetail extends Vue {
 
   getNoteDetail() {
     if (!this.currentNote.id) { return; }
-    return http.get(api.getNote(this.currentNote.id))
+    return http.get(api.getNote(this.currentNote.id));
+  }
+
+  loadNoteDetail() {
+    if (!this.currentNote.id) { return; }
+    return this.getNoteDetail()
       .then((response) => {
         this.showNote(response);
+      })
+      .then(() => {
+        this.$refs.noteEditor.quill.on('editor-change', this.onTextChanged);
+      })
+      .then(() => {
+        this.editor.dirty = false;
       });
   }
 

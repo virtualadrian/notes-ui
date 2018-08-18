@@ -22,3 +22,7 @@ body {
 .card-shadow {
   box-shadow: 1px 5px 9px rgba(158, 159, 159, 0.32);
 }
+
+.fab-main.pointer i {
+  color: #fff !important;
+}
