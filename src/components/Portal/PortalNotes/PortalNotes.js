@@ -4,7 +4,6 @@ import http from '@/services/http';
 import auth from '@/services/authentication';
 import environment from '@/services/environment';
 import striphtml from '@/shared/filter/striphtml';
-import fab from 'vue-fab';
 
 const api = {
   getNotes: () => environment.getEndpoint(`note`),
@@ -12,55 +11,27 @@ const api = {
 };
 
 @Component({
-  filters: {striphtml},
-  components: {fab}
+  filters: {striphtml}
 })
 export default class PortalNotes extends Vue {
   notesResult = {};
   currentUserFirstName = 'Awesomeness';
-  notesSearch = {
+  noteSearch = {
     term: ''
   };
-  fabActions = [
-    {
-      name: 'addNewNote',
-      icon: 'add',
-      tooltip: 'Add New Note',
-      color: '#007bff'
-    },
-    {
-      name: 'searchNotes',
-      icon: 'search',
-      tooltip: 'Search Notes',
-      color: '#007bff'
-    },
-    {
-      name: 'shareNotes',
-      icon: 'share',
-      tooltip: 'Share  Notes',
-      color: '#007bff'
-    }
-  ];
-
-  addNewNote() {
-    router.push({name: 'PortalNoteDetail'});
-  }
-
-  searchNotes() {
-    router.push({name: 'PortalSearchNote',
-      params: {
-        term: this.notesSearch.term,
-        page: 1,
-        size: 25
-      }});
-  }
+  currentNote = {};
 
   showSearch() {
     this.$refs.noteSearch.show();
   }
 
-  shareNotes() {
-    router.push({name: 'PortalShareNote'});
+  searchNotes() {
+    router.push({name: 'PortalSearchNote',
+      params: {
+        term: this.noteSearch.term,
+        page: 1,
+        size: 10
+      }});
   }
 
   mounted() {
@@ -79,9 +50,20 @@ export default class PortalNotes extends Vue {
       });
   }
 
-  deleteNote(note) {
-    http.delete(api.deleteNote(note.id))
+  toggleDeleteConfirm(note) {
+    this.currentNote = note;
+    if (note) {
+      this.$refs.deleteNote.show();
+    } else {
+      this.$refs.deleteNote.hide();
+    }
+  }
+
+  deleteNote() {
+    if (!this.currentNote) { return; }
+    http.delete(api.deleteNote(this.currentNote.id))
       .then(() => {
+        this.$refs.deleteNote.hide();
         this.$toastr.s('Note has been removed.');
         this.getNotes();
       });

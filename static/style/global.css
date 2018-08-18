@@ -26,3 +26,8 @@ body {
 .fab-main.pointer i {
   color: #fff !important;
 }
+
+.back-to-top {
+  right: initial;
+  left: 20px;
+}

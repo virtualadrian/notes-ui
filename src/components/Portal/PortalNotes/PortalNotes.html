@@ -1,5 +1,5 @@
 
-<section class="portal-notes section-pad h-100">
+<section class="portal-notes section-pad h-auto">
 
   <div class="container">
     <div class="row">
@@ -11,12 +11,16 @@
       <div class="col-sm-4" v-for="note in notesResult.content">
         <div class="card card-shadow" >
           <div class="card-body">
-            <h5 class="card-title"><strong>{{ note.noteTitle }}</strong></h5>
+            <h5 class="card-title">
+              <router-link :to="{ name: 'PortalNoteView', params: { id: note.id }}">
+                <strong>{{ note.noteTitle }}</strong>
+              </router-link>
+            </h5>
             <p class="card-text">{{ note.noteBody.substring(0, 350).concat('...') | striphtml }}</p>
             <p class="card-text"><small class="text-muted">{{note.noteCreatedTime | moment("MMMM Do YYYY, h:mm:ss a") }}</small></p>
           </div>
           <div class="card-footer">
-            <button class="btn btn-danger btn-shadow btn-rounded float-sm-left" v-on:click="deleteNote(note)">
+            <button class="btn btn-danger btn-shadow btn-rounded float-sm-left" v-on:click="toggleDeleteConfirm(note)">
               <i class="zmdi zmdi-delete"></i>
             </button>
 
@@ -33,16 +37,19 @@
       </div>
     </div>
   </div>
-  <fab :actions="fabActions"
-       @addNewNote="addNewNote"
-       @searchNotes="showSearch"
-       @shareNotes="shareNotes"
-       :ripple-color="'light'" :z-index="'99999'" :position="'top-left'"></fab>
-
+  <b-modal id="modal-center" ref="deleteNote"
+           @ok="deleteNote"
+           :ok-title="'Delete'"
+           :ok-variant="'danger'"
+           @cancel="toggleDeleteConfirm()"
+           :cancel-title="'Cancel'"
+           centered title="Confirm Note Delete?">
+    <p class="my-4">Are you sure you want to delete this note?</p>
+  </b-modal>
   <b-modal id="modal-center" ref="noteSearch" centered @shown="$refs.noteSearchTerm.focus()">
     <input type="text"
            v-on:keyup.enter="searchNotes"
-           v-model="notesSearch.term"
+           v-model="noteSearch.term"
            class="form-control form-control-lg note-title-input"
            ref="noteSearchTerm"
            placeholder="Search Notes For ...">
@@ -55,9 +62,6 @@
     <b-btn @click="showSearch"
            v-shortkey="['shift', 'space']" @shortkey="showSearch()"
            class="btn btn-primary btn-shadow btn-rounded">Search</b-btn>
-    <b-btn @click="addNewNote"
-           v-shortkey="['ctrl', 'n']" @shortkey="addNewNote()"
-           class="btn btn-primary btn-shadow btn-rounded">New Note</b-btn>
   </div>
 </section>
 

@@ -1,5 +1,5 @@
 
-<section class="portal-search-notes">
+<section class="portal-search-notes h-auto">
 
   <div class="container-fluid">
     <div class="row note-action">
@@ -14,18 +14,24 @@
                  placeholder="Search Term" aria-label="Term" aria-describedby="search-term">
         </div>
       </div>
-      <div class="col-sm-2">
-        <button v-on:click="refreshSearch()"
-                class="btn btn-success btn-shadow btn-rounded" title="Search">
-          Search &nbsp; <i class="zmdi zmdi-search"></i>
-        </button>
-      </div>
-      <div class="col-sm-2 offset-sm-1">
+      <div class="col-sm-3 ">
         <b-pagination size="md"
-                      v-on:change="refreshSearch"
+                      v-on:change="goToPage"
                       v-model="search.page"
                       :total-rows="result.totalElements"
                       :per-page="search.size"></b-pagination>
+      </div>
+      <div class="col-sm-3">
+        <button v-on:click="refreshSearch"
+                class="btn btn-success btn-shadow btn-rounded" title="Search">
+          Search &nbsp; <i class="zmdi zmdi-search"></i>
+        </button>
+        <b-dropdown text="Page Size">
+          <b-dropdown-item v-on:click="page(10)">10</b-dropdown-item>
+          <b-dropdown-item v-on:click="page(25)">25</b-dropdown-item>
+          <b-dropdown-item v-on:click="page(50)">50</b-dropdown-item>
+          <b-dropdown-item v-on:click="page(100)">100</b-dropdown-item>
+        </b-dropdown>
       </div>
     </div>
     <div class="row result">

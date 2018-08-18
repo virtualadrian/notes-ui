@@ -72,7 +72,7 @@ export default new Router({
           component: PortalNoteView
         },
         {
-          path: 'note/search/:term/:page/:size',
+          path: 'note/search/:term?/:page?/:size?',
           name: 'PortalSearchNote',
           component: PortalSearchNote
         }

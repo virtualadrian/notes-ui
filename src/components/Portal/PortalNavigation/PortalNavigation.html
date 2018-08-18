@@ -54,6 +54,16 @@
     </div>
   </nav>
   <!-- END NAVBAR -->
-
+  <fab :actions="fabActions"
+       @addNewNote="addNewNote"
+       @addNewCardDeck="addNewCardDeck"
+       @studySession="studySession"
+       v-if="$route.path.indexOf('/portal/note/edit') < 0"
+       :bg-color="'#9c27b0'" :ripple-color="'light'" :z-index="'99999'" :position="'bottom-right'"></fab>
+  <div class="invisible" id="shortcuts">
+    <b-btn @click="addNewNote"
+           v-shortkey="['ctrl', 'n']" @shortkey="addNewNote()"
+           class="btn btn-primary btn-shadow btn-rounded">New Note</b-btn>
+  </div>
 </section>
 

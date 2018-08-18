@@ -20,13 +20,10 @@ export default class PortalSearchNote extends Vue {
   search = {
     term: '',
     page: 1,
-    size: 25
+    size: 10
   };
 
-  refreshSearch(page) {
-    const next = this.search.page + 1;
-    const nextPage = (next > this.result.totalPages ? this.result.totalPages : next);
-    this.search.page = page || nextPage;
+  refreshSearch() {
     router.push({name: 'PortalSearchNote',
       params: {
         term: this.search.term,
@@ -35,10 +32,21 @@ export default class PortalSearchNote extends Vue {
       }});
   }
 
+  page(size) {
+    this.search.size = size;
+    this.search.page = 1;
+    this.refreshSearch();
+  }
+
+  goToPage(page) {
+    const next = this.search.page + 1;
+    const nextPage = (next > this.result.totalPages ? this.result.totalPages : next);
+    this.search.page = page || nextPage;
+    this.refreshSearch();
+  }
+
   searchNotes() {
-    http.get(api.searchNotes(this.search.term,
-      this.search.page - 1,
-      this.search.size))
+    http.get(api.searchNotes(this.search.term, this.search.page - 1, this.search.size))
       .then((response) => {
         this.result.content = response.data.content;
         this.result.totalPages = response.data.totalPages;
@@ -50,7 +58,7 @@ export default class PortalSearchNote extends Vue {
   mounted() {
     this.search.term = this.$route.params.term || '';
     this.search.page = parseInt(this.$route.params.page) || 1;
-    this.search.size = parseInt(this.$route.params.size) || 25;
+    this.search.size = parseInt(this.$route.params.size) || 10;
 
     this.searchNotes();
   }
