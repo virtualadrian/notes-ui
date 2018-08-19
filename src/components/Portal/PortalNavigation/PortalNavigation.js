@@ -36,6 +36,7 @@ export default class PortalNavigation extends Vue {
   }
 
   searchNotes() {
+    this.$refs.noteSearch.hide();
     router.push({name: 'PortalSearchNote',
       params: {
         term: this.noteSearch.term,

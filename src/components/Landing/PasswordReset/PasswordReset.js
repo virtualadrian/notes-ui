@@ -24,7 +24,6 @@ export default class PasswordReset extends Vue {
   sendReset() {
     http.post(api.sendPasswordReset(), this.reset)
       .then(() => {
-        router.push({name: 'Login'});
         this.$refs.resetSent.show();
       })
       .catch(() => {
