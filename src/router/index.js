@@ -8,6 +8,7 @@ import LandingLayout from '@/components/Landing/LandingLayout/LandingLayout.vue'
 import Login from '@/components/Landing/Login/Login.vue';
 import Home from '@/components/Landing/Home/Home.vue';
 import RegistrationFull from '@/components/Landing/RegistrationFull/RegistrationFull.vue';
+import RegistrationConfirm from '@/components/Landing/RegistrationConfirm/RegistrationConfirm.vue';
 
 import PortalLayout from '@/components/Portal/PortalLayout/PortalLayout.vue';
 import PortalDashboard from '@/components/Portal/PortalDashboard/PortalDashboard.vue';
@@ -38,6 +39,11 @@ export default new Router({
           path: 'account/register',
           name: 'RegistrationFull',
           component: RegistrationFull
+        },
+        {
+          path: 'account/register/confirm/:token',
+          name: 'RegistrationConfirm',
+          component: RegistrationConfirm
         }
       ]
     },
