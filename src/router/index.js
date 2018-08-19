@@ -9,6 +9,9 @@ import Login from '@/components/Landing/Login/Login.vue';
 import Home from '@/components/Landing/Home/Home.vue';
 import RegistrationFull from '@/components/Landing/RegistrationFull/RegistrationFull.vue';
 import RegistrationConfirm from '@/components/Landing/RegistrationConfirm/RegistrationConfirm.vue';
+import PasswordReset from '@/components/Landing/PasswordReset/PasswordReset.vue';
+import PasswordResetComplete from '@/components/Landing/PasswordResetComplete/PasswordResetComplete.vue';
+import SupportHome from '@/components/Landing/SupportHome/SupportHome.vue';
 
 import PortalLayout from '@/components/Portal/PortalLayout/PortalLayout.vue';
 import PortalDashboard from '@/components/Portal/PortalDashboard/PortalDashboard.vue';
@@ -44,6 +47,21 @@ export default new Router({
           path: 'account/register/confirm/:token',
           name: 'RegistrationConfirm',
           component: RegistrationConfirm
+        },
+        {
+          path: 'account/password/reset',
+          name: 'PasswordReset',
+          component: PasswordReset
+        },
+        {
+          path: 'account/password/reset/:token',
+          name: 'PasswordResetComplete',
+          component: PasswordResetComplete
+        },
+        {
+          path: 'support/help',
+          name: 'SupportHome',
+          component: SupportHome
         }
       ]
     },

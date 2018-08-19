@@ -2,8 +2,13 @@ import Vue from 'vue';
 import Component from 'vue-class-component';
 import auth from '@/services/authentication';
 import router from '@/router';
+import AccountInstructions from '@/components/Landing/AccountInstructions/AccountInstructions.vue';
 
-@Component
+@Component({
+  components: {
+    AccountInstructions
+  }
+})
 export default class Login extends Vue {
   loginModel = {username: '', password: ''};
 

@@ -3,17 +3,21 @@ import Vue from 'vue';
 import http from '@/services/http';
 import environment from '@/services/environment';
 import router from '@/router';
+import AccountInstructions from '@/components/Landing/AccountInstructions/AccountInstructions.vue';
 
 const api = {
   register: () => environment.getEndpoint(`account/register`)
 };
 
-@Component
+@Component({
+  components: {
+    AccountInstructions
+  }
+})
 export default class RegistrationFull extends Vue {
   registration ={
     username: '',
     email: '',
-    password: '',
     firstName: '',
     lastName: ''
   };
@@ -28,10 +32,15 @@ export default class RegistrationFull extends Vue {
           this.$refs.checkInbox.show();
         })
         .catch(() => {
-          this.$refs.problemActivating.show();
+          this.$refs.problemRegistering.show();
         })
       ;
     }
+  }
+
+  registrationSentOk() {
+    this.$refs.checkInbox.hide();
+    router.push({name: 'Login'});
   }
 
   get registrationValid() {
@@ -42,6 +51,7 @@ export default class RegistrationFull extends Vue {
   }
 
   get isEmailValid() {
-    return /[A-Z]/.test(this.registration.email);
+    const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return regex.test(this.registration.email);
   }
 }

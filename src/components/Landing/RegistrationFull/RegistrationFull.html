@@ -10,13 +10,16 @@
           <div class="home-wrapper">
             <h3 class="text-center"> New Noteler Account</h3>
             <div class="form-group">
-              <input type="text" class="form-control" placeholder="Full name" required="required">
+              <input type="text" v-model="registration.firstName" class="form-control" placeholder="First name">
             </div>
             <div class="form-group">
-              <input type="text" class="form-control" placeholder="Email Address" required="required">
+              <input type="text" v-model="registration.lastName" class="form-control" placeholder="Last name">
             </div>
             <div class="form-group">
-              <input type="text" class="form-control" placeholder="User name" required="required">
+              <input type="text" v-model="registration.email" class="form-control" placeholder="Email Address" required="required">
+            </div>
+            <div class="form-group">
+              <input type="text" v-model="registration.username" class="form-control" placeholder="User name" required="required">
             </div>
             <div class="form-group text-center">
               <button type="submit"
@@ -30,69 +33,22 @@
     </div> <!-- end container -->
   </section>
 
-
-  <section class="section" id="features">
-    <div class="container">
-
-      <div class="row">
-        <div class="col-lg-12 text-center">
-          <div class="title-box">
-            <h3 class="fadeIn animated wow" data-wow-delay=".1s">Account Login Help</h3>
-            <div class="border"></div>
-          </div>
-        </div>
-      </div> <!-- end row -->
-
-      <div class="row text-center">
-        <div class="col-lg-4">
-          <div class="service-item animated fadeInLeft wow" data-wow-delay=".1s">
-            <h2><i class="zmdi zmdi-collection-item-1 text-colored"></i></h2>
-            <div class="service-detail">
-              <h4>Lost Password?</h4>
-              <p>
-                <a class="btn btn-primary btn-shadow btn-rounded w-lg" routerLink="/account/password/reset">Reset Password</a>
-              </p>
-            </div> <!-- /service-detail -->
-          </div> <!-- /service-item -->
-        </div> <!-- /col -->
-
-        <div class="col-lg-4">
-          <div class="service-item animated fadeInDown wow" data-wow-delay=".3s">
-            <h2><i class="zmdi zmdi-collection-item-2 text-colored"></i></h2>
-            <div class="service-detail">
-              <h4>Not Registered?</h4>
-              <p>
-                <a class="btn btn-primary btn-shadow btn-rounded w-lg" routerLink="/account/password/reset">Register Now</a>
-              </p>
-            </div> <!-- /service-detail -->
-          </div> <!-- /service-item -->
-        </div> <!-- /col -->
-
-        <div class="col-lg-4">
-          <div class="service-item animated fadeInRight wow" data-wow-delay=".5s">
-            <h2><i class="zmdi zmdi-collection-item-3 text-colored"></i></h2>
-            <div class="service-detail">
-              <h4>Need Help?</h4>
-              <p>
-                <a class="btn btn-primary btn-shadow btn-rounded w-lg" routerLink="/account/password/reset">Contact Us</a>
-              </p>
-            </div> <!-- /service-detail -->
-          </div> <!-- /service-item -->
-        </div> <!-- /col -->
-      </div> <!--end row -->
-
-
-    </div> <!-- end container -->
-  </section>
-
-  <!-- END LOGIN COMPONENT -->
+  <AccountInstructions/>
   <b-modal id="modal-center" ref="checkInbox"
-           @ok="show=false"
+           @ok="registrationSentOk"
            :ok-only="true"
            :ok-title="'Ok'"
            :ok-variant="'primary'"
            centered title="Registration E-Mail Sent">
     <p class="my-4">Welcome aboard! Please check your Inbox, we've sent you an E-Mail.</p>
+  </b-modal>
+  <b-modal id="modal-center" ref="problemRegistering"
+           @ok="show=false"
+           :ok-only="true"
+           :ok-title="'Ok'"
+           :ok-variant="'primary'"
+           centered title="Registration Failed">
+    <p class="my-4">Oops! There was a problem registering your account. Please try again.</p>
   </b-modal>
 </section>
 

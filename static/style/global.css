@@ -31,3 +31,9 @@ body {
   right: initial;
   left: 20px;
 }
+.navbar-custom {
+  background-color: #dbdbdb;
+}
+.navbar-custom .navbar-nav li a {
+  color: #333;
+}

@@ -2,12 +2,17 @@ import {Component, Vue} from 'vue-property-decorator';
 import http from '@/services/http';
 import environment from '@/services/environment';
 import router from '@/router';
+import AccountInstructions from '@/components/Landing/AccountInstructions/AccountInstructions.vue';
 
 const api = {
   setNewPassword: () => environment.getEndpoint(`account/register/confirm`)
 };
 
-@Component
+@Component({
+  components: {
+    AccountInstructions
+  }
+})
 export default class RegistrationConfirm extends Vue {
   registration = {
     token: '',
