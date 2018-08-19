@@ -4,17 +4,19 @@ import environment from '@/services/environment';
 import router from '@/router';
 
 const api = {
-  setNewPassword: () => environment.getEndpoint(`account/password/set`)
+  setNewPassword: () => environment.getEndpoint(`account/password/reset`)
 };
 
 @Component
 export default class PasswordResetComplete extends Vue {
   passwordReset = {
+    token: '',
     password: '',
     confirmPassword: ''
   };
 
   mounted() {
+    this.passwordReset.token = this.$route.params.token;
   }
 
   setPassword() {
