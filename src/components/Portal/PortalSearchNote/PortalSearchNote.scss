@@ -1,0 +1,24 @@
+.portal-search-notes {
+  height: auto;
+  min-height: 100%;
+
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+
+    &.result > div[class*='col-'] {
+      display: flex;
+    }
+  }
+
+  .card {
+    width: 100%;
+    margin-top: 20px;
+  }
+}
+
+.note-action {
+  padding: 25px 0 10px 0px;
+  margin-top: 0;
+  background-color: #f7f7f7;
+}

@@ -37,7 +37,7 @@ npm install -g @vue/cli
 
 Vue INIT
 ``` bash
-npm install -g @vue/init
+npm install -g @vue/cli-init
 ```
 
 ## Component Generation
