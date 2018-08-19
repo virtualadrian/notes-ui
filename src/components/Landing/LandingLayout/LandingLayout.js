@@ -8,7 +8,6 @@ import auth from '@/services/authentication';
   components: {Navigation, PortalNavigation, Footer}
 })
 export default class LandingLayout extends Vue {
-
   get headerNavigationComponent() {
     return auth.isLoggedIn() ? 'PortalNavigation' : 'Navigation';
   }
