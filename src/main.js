@@ -16,6 +16,9 @@ import 'highlight.js/styles/arta.css';
 
 import VueShortkey from 'vue-shortkey';
 
+import 'highlight.js/styles/default.css';
+import 'highlight.js/styles/arta.css';
+
 Vue.config.productionTip = false;
 
 Vue.use(VueShortkey);
