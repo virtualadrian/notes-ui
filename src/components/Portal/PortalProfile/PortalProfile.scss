@@ -1,0 +1,37 @@
+.portal-note-detail {
+  height: auto;
+}
+.note-title-row {
+  padding-top: 3px;
+}
+.note-action {
+  padding: 25px 0 10px 0px;
+  margin-top: 0;
+  background-color: #f7f7f7;
+}
+
+.note-title-input {
+  font-size: 18px;
+}
+
+.note-action-back {
+  padding: 0;
+  text-align: center;
+}
+
+.note-action-save {
+  padding: 0;
+  text-align: center;
+}
+
+.quillWrapper {
+  height: 95%;
+}
+
+.ql-container {
+  height: calc(100% - 47px);
+}
+
+.ql-editor {
+  height: calc(100% - 42px);
+}
