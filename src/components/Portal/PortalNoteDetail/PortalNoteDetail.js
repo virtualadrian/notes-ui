@@ -1,13 +1,18 @@
 import { Component, Vue } from 'vue-property-decorator';
-import { VueEditor } from 'vue2-editor';
+import { VueEditor, Quill } from 'vue2-editor';
 import router from '@/router';
 import http from '@/services/http';
 import auth from '@/services/authentication';
 import s3image from '@/services/s3image';
 import environment from '@/services/environment';
+import {ImageDrop} from 'quill-image-drop-module';
+import ImageResize from 'quill-image-resize-module';
+
+Quill.register('modules/imageResize', ImageResize);
+Quill.register('modules/imageDrop', ImageDrop);
 
 const getEmptyNote = function() {
-  return {id: -1, noteBody: '', noteTitle: '', noteTags: ''};
+  return {id: -1, noteBody: '', noteTitle: '', noteTags: '', isPrivate: true};
 };
 
 const api = {
@@ -23,6 +28,16 @@ export default class PortalNoteDetail extends Vue {
   currentNote = getEmptyNote();
   editor = {
     dirty: false
+  };
+  customModulesForEditor = [
+    { alias: 'imageDrop', module: ImageDrop },
+    { alias: 'imageResize', module: ImageResize }
+  ];
+  editorSettings = {
+    modules: {
+      imageDrop: true,
+      imageResize: {}
+    }
   };
 
   onTextChanged() {

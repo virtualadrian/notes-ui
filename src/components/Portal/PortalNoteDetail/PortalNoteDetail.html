@@ -1,43 +1,37 @@
 <section class="portal-note-detail" id="portalNoteDetail" xmlns:v-on="http://www.w3.org/1999/xhtml">
-  <div class="container-fluid" >
-    <div class="row note-action" >
-      <div class="col-sm-1 note-action-back">
-        <button v-on:click="cancel()" class="btn btn-danger btn-shadow btn-rounded" title="Cancel">
-         Back &nbsp; <i class="zmdi zmdi-close"></i>
-        </button>
-      </div>
-      <div class="col-sm-5 note-title-row">
-        <div class="input-group mb-2">
+  <div class="container-fluid">
+    <div class="row note-action">
+      <div class="col-sm-12 note-title-row">
+        <div class="input-group">
           <div class="input-group-prepend">
-            <span class="input-group-text" id="note-title">Title</span>
+            <span class="input-group-text">
+                <b-form-checkbox v-model="currentNote.isPrivate"
+                                 value="true"
+                                 unchecked-value="false">Shared</b-form-checkbox>
+            </span>
           </div>
           <input v-model="currentNote.noteTitle" type="text"
-                 class="form-control note-title-input" placeholder="Add A Title" aria-label="Title" aria-describedby="note-title">
+                 class="form-control note-title-input" placeholder="Add A Title" aria-label="Title"
+                 aria-describedby="note-title">
+          &nbsp;
+            <div class="input-group-prepend">
+              <span class="input-group-text">Tags</span>
+            </div>
+            <input v-model="currentNote.noteTags" type="text"
+                   class="form-control note-title-input" placeholder="Add Some Tags" aria-label="Tags"
+                   aria-describedby="note-tags">
+          &nbsp;
+          <b-button v-on:click="cancel()" title="Cancel" variant="secondary">Close</b-button>
+          &nbsp;
+          <b-button v-on:click="saveNote()" v-shortkey="['ctrl', 's']" @shortkey="saveNote()" title="Save" variant="success">Save Note</b-button>
         </div>
-
-      </div>
-      <div class="col-sm-4 note-title-row">
-        <div class="input-group mb-2">
-          <div class="input-group-prepend">
-            <span class="input-group-text" id="note-tags">Tags</span>
-          </div>
-          <input v-model="currentNote.noteTags" type="text"
-                 class="form-control note-title-input" placeholder="Add Some Tags" aria-label="Tags" aria-describedby="note-tags">
-        </div>
-
-      </div>
-      <div class="col-sm-2 note-action-save">
-        <button v-shortkey="['meta', 's']" @shortkey="saveNote()" class="invisible"></button>
-        <button v-on:click="saveNote()"
-                v-shortkey="['ctrl', 's']" @shortkey="saveNote()"
-                class="btn btn-success btn-shadow btn-rounded" title="Save">
-          Save &nbsp; <i class="zmdi zmdi-check"></i>
-        </button>
       </div>
     </div>
     <div class="row">
       <div class="col-sm-12 padding-0">
         <vue-editor
+          :customModules="customModulesForEditor"
+          :editorOptions="editorSettings"
           ref="noteEditor"
           useCustomImageHandler
           @imageAdded="insertS3Image"
@@ -50,10 +44,12 @@
     <div slot="modal-footer" class="w-100">
       <b-btn @click="backNoSave" class="btn btn-danger btn-shadow btn-rounded float-sm-left">Don't Save</b-btn>
       <b-btn @click="backWithSave"
-             class="btn btn-success btn-shadow btn-rounded float-sm-right">Save</b-btn>
+             class="btn btn-success btn-shadow btn-rounded float-sm-right">Save Note
+      </b-btn>
       <span class="float-sm-right"> &nbsp; </span>
       <b-btn @click="backCancel"
-             class="btn btn-secondary btn-shadow btn-rounded float-sm-right">Cancel</b-btn>
+             class="btn btn-secondary btn-shadow btn-rounded float-sm-right">Cancel
+      </b-btn>
     </div>
 
   </b-modal>

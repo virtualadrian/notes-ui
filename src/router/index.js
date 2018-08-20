@@ -12,6 +12,7 @@ import RegistrationConfirm from '@/components/Landing/RegistrationConfirm/Regist
 import PasswordReset from '@/components/Landing/PasswordReset/PasswordReset.vue';
 import PasswordResetComplete from '@/components/Landing/PasswordResetComplete/PasswordResetComplete.vue';
 import SupportHome from '@/components/Landing/SupportHome/SupportHome.vue';
+import NoteView from '@/components/Landing/NoteView/NoteView.vue';
 
 import PortalLayout from '@/components/Portal/PortalLayout/PortalLayout.vue';
 import PortalDashboard from '@/components/Portal/PortalDashboard/PortalDashboard.vue';
@@ -62,13 +63,26 @@ export default new Router({
           path: 'support/help',
           name: 'SupportHome',
           component: SupportHome
+        },
+        {
+          path: 'note/shared/:id',
+          name: 'NoteView',
+          component: NoteView
         }
       ]
     },
     {
       path: '/portal',
       component: PortalLayout,
-      beforeEnter: auth.guardRoute,
+      beforeEnter: (to, from, next) => {
+        if (!auth.isLoggedIn()) {
+          next({
+            path: '/account/login'
+          });
+        } else {
+          next();
+        }
+      },
       children: [
         {
           path: '',

@@ -11,13 +11,10 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
 import 'animate.css/animate.min.css';
 
-import 'highlight.js/styles/default.css';
-import 'highlight.js/styles/arta.css';
-
 import VueShortkey from 'vue-shortkey';
 
 import 'highlight.js/styles/default.css';
-import 'highlight.js/styles/arta.css';
+import 'highlight.js/styles/agate.css';
 
 Vue.config.productionTip = false;
 

@@ -1,18 +1,15 @@
 import { Component, Vue } from 'vue-property-decorator';
-import { VueEditor } from 'vue2-editor';
 import router from '@/router';
 import http from '@/services/http';
 import environment from '@/services/environment';
 import hljs from 'highlight.js';
 
 const api = {
-  getNote: (id) => environment.getEndpoint(`note/${id}`)
+  getNote: (id) => environment.getEndpoint(`note/shared/${id}`)
 };
 
-@Component({
-  components: {VueEditor}
-})
-export default class PortalNoteView extends Vue {
+@Component()
+export default class NoteView extends Vue {
   currentNote = {id: 0, noteTitle: '', noteBody: ''};
   mounted() {
     this.currentNote.id = this.$route.params.id;
@@ -26,11 +23,7 @@ export default class PortalNoteView extends Vue {
   }
 
   cancel() {
-    router.push({name: 'PortalNotes'});
-  }
-
-  edit() {
-    router.push({name: 'PortalNoteDetail', params: { id: this.$route.params.id }});
+    router.push({name: 'Home'});
   }
 
   getNoteDetail() {
