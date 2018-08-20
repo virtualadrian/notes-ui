@@ -7,7 +7,6 @@ import s3image from '@/services/s3image';
 import environment from '@/services/environment';
 import {ImageDrop} from 'quill-image-drop-module';
 import ImageResize from 'quill-image-resize-module';
-import InputTag from 'vue-input-tag';
 
 Quill.register('modules/imageResize', ImageResize);
 Quill.register('modules/imageDrop', ImageDrop);
@@ -23,10 +22,7 @@ const api = {
 };
 
 @Component({
-  components: {
-    VueEditor,
-    InputTag
-  }
+  components: {VueEditor}
 })
 export default class PortalNoteDetail extends Vue {
   currentNote = getEmptyNote();
@@ -44,13 +40,6 @@ export default class PortalNoteDetail extends Vue {
     }
   };
 
-  get tagsArray() {
-    return this.currentNote.noteTags ? this.currentNote.noteTags.split(',') : [];
-  }
-
-  set tagsArray(tags) {
-    this.currentNote.noteTags = tags.join(',');
-  }
   onTextChanged() {
     this.editor.dirty = true;
   }

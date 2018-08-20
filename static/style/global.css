@@ -37,3 +37,16 @@ body {
 .navbar-custom .navbar-nav li a {
   color: #333;
 }
+
+.vue-input-tag-wrapper .input-tag .remove {
+  color: #ffffff!important;;
+}
+
+.vue-input-tag-wrapper .input-tag {
+  color: #fff!important;
+  background-color: #9c27b0!important;;
+  border: 1px solid #481151!important;;
+  padding: 0 5px!important;;
+  font-size: 14px!important;;
+  margin: 0 2px!important;;
+}

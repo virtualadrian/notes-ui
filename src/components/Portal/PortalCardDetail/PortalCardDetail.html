@@ -14,15 +14,16 @@
                  class="form-control note-title-input" placeholder="Add A Title" aria-label="Title"
                  aria-describedby="note-title">
           &nbsp;
-          <div class="input-group-prepend"><span class="input-group-text">Tags</span></div>
-          <input-tag type="text" :tags.sync="tagsArray"
-                           class="form-control note-title-input" placeholder="Add Some Tags"></input-tag>
-
+            <div class="input-group-prepend">
+              <span class="input-group-text">Tags</span>
+            </div>
+            <input v-model="currentNote.noteTags" type="text"
+                   class="form-control note-title-input" placeholder="Add Some Tags" aria-label="Tags"
+                   aria-describedby="note-tags">
+          &nbsp;
           <b-button v-on:click="cancel()" title="Cancel" variant="secondary">Close</b-button>
           &nbsp;
-          <b-button v-on:click="saveNote()" v-shortkey="['ctrl', 's']" @shortkey="saveNote()" title="Save"
-                    variant="success">Save Note
-          </b-button>
+          <b-button v-on:click="saveNote()" v-shortkey="['ctrl', 's']" @shortkey="saveNote()" title="Save" variant="success">Save Note</b-button>
         </div>
       </div>
     </div>
