@@ -21,6 +21,9 @@ import PortalNoteDetail from '@/components/Portal/PortalNoteDetail/PortalNoteDet
 import PortalNoteView from '@/components/Portal/PortalNoteView/PortalNoteView.vue';
 import PortalSearchNote from '@/components/Portal/PortalSearchNote/PortalSearchNote.vue';
 
+import PortalCardDeckList from '@/components/Portal/PortalCardDeckList/PortalCardDeckList.vue';
+import PortalCardDeckDetail from '@/components/Portal/PortalCardDeckDetail/PortalCardDeckDetail.vue';
+
 Vue.use(Router);
 
 export default new Router({
@@ -113,6 +116,22 @@ export default new Router({
           path: 'note/search/:term?/:page?/:size?',
           name: 'PortalSearchNote',
           component: PortalSearchNote
+        },
+        {
+          path: 'deck',
+          name: 'PortalCardDeckList',
+          component: PortalCardDeckList
+        },
+        {
+          path: 'deck',
+          name: 'PortalCardDeckList',
+          component: PortalCardDeckList,
+          props: true
+        },
+        {
+          path: 'deck/:id',
+          name: 'PortalCardDeckDetail',
+          component: PortalCardDeckDetail
         }
       ]
     }

@@ -3,6 +3,7 @@
 import Vue from 'vue';
 import App from './App';
 import router from './router';
+import store from './store';
 import VueMoment from 'vue-moment';
 import Toastr from 'vue-toastr';
 import 'vue-toastr/src/vue-toastr.scss';
@@ -27,6 +28,7 @@ Vue.use(Toastr);
 new Vue({
   el: '#app',
   router,
+  store,
   components: {App},
   mounted: function() {
     this.$toastr.defaultTimeout = 1000;

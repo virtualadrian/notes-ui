@@ -1,0 +1,21 @@
+.portal-decks {
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .row > div[class*='col-'] {
+    display: flex;
+  }
+
+  .card {
+    width: 100%;
+    margin-top: 20px;
+  }
+  label {
+    &.deck-dtl{
+      margin-bottom: 0;
+      margin-top: 5px;
+    }
+  }
+}
