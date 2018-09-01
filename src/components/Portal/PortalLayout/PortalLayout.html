@@ -1,8 +1,11 @@
 <section class="portal-layout">
   <PortalNavigation/>
 
-  <router-view :key="$route.fullPath"></router-view>
+  <section class="router-view-content">
+    <router-view :key="$route.fullPath"></router-view>
+  </section>
 
+  <div class="push"></div>
   <PortalFooter/>
 </section>
 
