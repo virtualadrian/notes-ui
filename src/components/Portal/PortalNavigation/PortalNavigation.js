@@ -50,8 +50,7 @@ export default class PortalNavigation extends Vue {
   }
 
   addNewCardDeck() {
-    this.$store.commit('isAddNewCardDeck', true);
-    router.push({name: 'PortalCardDeckList'});
+    router.push({name: 'PortalCardDeckDetail'});
   }
 
   studySession() {

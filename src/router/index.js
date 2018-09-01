@@ -123,13 +123,7 @@ export default new Router({
           component: PortalCardDeckList
         },
         {
-          path: 'deck',
-          name: 'PortalCardDeckList',
-          component: PortalCardDeckList,
-          props: true
-        },
-        {
-          path: 'deck/:id',
+          path: 'deck/edit/:id?',
           name: 'PortalCardDeckDetail',
           component: PortalCardDeckDetail
         }

@@ -1,55 +1,26 @@
-<section class="portal-note-detail" id="portalNoteDetail" xmlns:v-on="http://www.w3.org/1999/xhtml">
-  <div class="container">
-    <div class="row">
-      <div class="col-sm-8">
-        <h3>{{currentUserFirstName}}'s Card Decks</h3>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-sm-4" v-for="deck in decks.content">
-        <div class="card card-shadow" >
-          <div class="card-body">
-            <h5 class="card-title">
-              <router-link :to="{ name: 'PortalNoteView', params: { id: note.id }}">
-                <strong>{{ deck.deckName}}</strong>
-              </router-link>
-            </h5>
-            <p class="card-text">{{ deck.deckName }}</p>
-            <p class="card-text"><small class="text-muted">{{deck.noteCreatedTime | moment("MMMM Do YYYY, h:mm:ss a") }}</small></p>
-          </div>
-          <div class="card-footer">
-            <!--<button class="btn btn-danger btn-shadow btn-rounded float-sm-left" v-on:click="toggleDeleteConfirm(note)">-->
-              <!--<i class="zmdi zmdi-delete"></i>-->
-            <!--</button>-->
+<section class="portal-note-detail" id="portalCardDeckDetail">
+  <div class="container-fluid">
+    <div class="row note-action">
+      <div class="col-sm-12 note-title-row">
 
-            <!--<router-link :to="{ name: 'PortalNoteView', params: { id: note.id }}" class="btn btn-info btn-shadow btn-rounded float-sm-right">-->
-              <!--<i class="zmdi zmdi-eye"></i>-->
-            <!--</router-link>-->
-            <!--<span class="float-sm-right">&nbsp;</span>-->
-            <!--<router-link :to="{ name: 'PortalNoteDetail', params: { id: note.id }}" class="btn btn-success btn-shadow btn-rounded float-sm-right">-->
-              <!--<i class="zmdi zmdi-edit"></i>-->
-            <!--</router-link>-->
-          </div>
+        <div class="input-group">
+          <!-- Name -->
+          <div class="input-group-prepend"><span class="input-group-text">Name:</span></div>
+          <input type="text" v-model="currentDeck.deckName"
+                 class="form-control note-title-input" placeholder="Deck Name">
+
+          <!-- Description -->&nbsp;
+          <div class="input-group-prepend"><span class="input-group-text">Description</span></div>
+          <input type="text" v-model="currentDeck.deckDescription"
+                 class="form-control note-title-input" placeholder="Deck Description" >
+
+          &nbsp;
+          <b-button title="Cancel" variant="secondary">Close</b-button>
+          &nbsp;
+          <b-button  v-shortkey="['ctrl', 's']" @shortkey="saveDeck()" title="Save" variant="success">Save</b-button>
         </div>
-
       </div>
     </div>
   </div>
-
-  <b-modal id="modal-center" ref="unsavedChanges" centered title="Save Changes First?">
-    <p class="my-4">You have unsaved changes! Would you like save before you leave?</p>
-
-    <div slot="modal-footer" class="w-100">
-      <b-btn @click="backNoSave" class="btn btn-danger btn-shadow btn-rounded float-sm-left">Don't Save</b-btn>
-      <b-btn @click="backWithSave"
-             class="btn btn-success btn-shadow btn-rounded float-sm-right">Save Note
-      </b-btn>
-      <span class="float-sm-right"> &nbsp; </span>
-      <b-btn @click="backCancel"
-             class="btn btn-secondary btn-shadow btn-rounded float-sm-right">Cancel
-      </b-btn>
-    </div>
-
-  </b-modal>
 </section>
 

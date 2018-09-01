@@ -1,4 +1,4 @@
-<section class="portal-decks" id="portalNoteDetail">
+<section class="portal-decks section-pad" id="portalNoteDetail">
   <div class="container">
     <div class="row">
       <div class="col-sm-8">
@@ -22,11 +22,11 @@
               <i class="zmdi zmdi-delete"></i>
             </button>
 
-            <button v-on:click="toggleMaintain(deck)" class="btn btn-info btn-shadow btn-rounded float-sm-right">
-              <i class="zmdi zmdi-edit"></i>
-            </button>
-            <span class="float-sm-right">&nbsp;</span>
             <router-link :to="{ name: 'PortalCardDeckDetail', params: { id: deck.id }}" class="btn btn-success btn-shadow btn-rounded float-sm-right">
+              <i class="zmdi zmdi-edit"></i>
+            </router-link>
+            <span class="float-sm-right">&nbsp;</span>
+            <router-link :to="{ name: 'PortalCardDeckDetail', params: { id: deck.id }}" class="btn btn-info btn-shadow btn-rounded float-sm-right">
               <i class="zmdi zmdi-eye"></i>
             </router-link>
           </div>

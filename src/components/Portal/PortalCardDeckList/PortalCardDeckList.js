@@ -1,13 +1,7 @@
 import {Component, Vue} from 'vue-property-decorator';
-import {Quill, VueEditor} from 'vue2-editor';
 import http from '@/services/http';
 import auth from '@/services/authentication';
 import environment from '@/services/environment';
-import {ImageDrop} from 'quill-image-drop-module';
-import ImageResize from 'quill-image-resize-module';
-
-Quill.register('modules/imageResize', ImageResize);
-Quill.register('modules/imageDrop', ImageDrop);
 
 const api = {
   getDecks: () => environment.getEndpoint(`carddeck`),
@@ -15,11 +9,9 @@ const api = {
   deleteDeck: (id) => environment.getEndpoint(`carddeck/${id}`)
 };
 
-@Component({
-  components: {VueEditor}
-})
+@Component()
 export default class PortalCardDeckList extends Vue {
-  decks = {};
+  decks = [];
   deletingDeck = {};
   currentDeck = {};
 
@@ -27,17 +19,8 @@ export default class PortalCardDeckList extends Vue {
     return auth.getCurrentUserFirstName();
   }
 
-  get adding() {
-    return this.$store.state.portal.addNewCardDeck;
-  }
-
   mounted() {
     this.getDecks();
-    // .then(() => {
-    //   if (this.action === 'add') {
-    //
-    //   }
-    // });
   }
 
   getDecks() {
@@ -77,10 +60,15 @@ export default class PortalCardDeckList extends Vue {
       : http.post(api.saveDeck(), this.currentDeck);
 
     return save.then((response) => {
-      this.currentDeck.deckName = response.data.deckName;
-      this.currentDeck.deckDescription = response.data.deckDescription;
+      if (this.currentDeck.id >= 0) {
+        this.currentDeck.deckName = response.data.deckName;
+        this.currentDeck.deckDescription = response.data.deckDescription;
+      } else {
+        this.decks.push(response.data);
+      }
       this.$refs.manageDeck.hide();
       this.currentDeck = {};
+      this.$store.commit('isAddNewCardDeck', false);
     });
   }
 
