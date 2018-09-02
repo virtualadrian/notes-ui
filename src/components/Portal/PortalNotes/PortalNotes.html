@@ -7,24 +7,20 @@
               transition="dialog-top-transition" ref="noteEditor">
       <v-card>
         <v-toolbar dark color="primary">
-          <v-btn color="danger" icon @click.native="editingNote = false">
+          <v-btn color="danger" icon @click.native="cancel()">
             <v-icon>close</v-icon>
           </v-btn>
           <v-toolbar-title>Edit Note</v-toolbar-title>
           <v-spacer></v-spacer>
           <v-toolbar-items>
-            <v-btn color="success" @click.native="dialog = false">Save</v-btn>
+            <v-btn color="success" @click.native="saveNote()">Save</v-btn>
           </v-toolbar-items>
         </v-toolbar>
 
         <v-container fluid>
-
-
           <v-form ref="noteEditorForm">
-
             <v-container fluid>
               <v-layout row wrap>
-
                 <!-- S:TITLE -->
                 <v-flex xs12 sm6>
                   <v-text-field
@@ -37,31 +33,25 @@
 
                 <!-- S:TAGS -->
                 <v-flex xs12 sm6>
-                  <v-select v-model="tagsArray" label="Tags" chips deletable-chips tags
-                            small-chips :search-input.sync="search" @paste="pasted">
-                  </v-select>
+                  <v-combobox multiple
+                    v-model="editor.tags" label="Tags"
+                    append-icon chips small-chips deletable-chips
+                    class="tag-input"
+                    :search-input.sync="editor.tag"
+                    @keyup.tab="pasted"
+                    @paste="pasted">
+
+                  </v-combobox>
                 </v-flex>
                 <!-- E:TAGS -->
 
               </v-layout>
             </v-container>
-            <tiny-mce id="noteEditor" v-model="currentNote.noteBody"
-                      :toolbar2="toolbar2" ref="noteEditor" :other_options="otherOptions">
-
-            </tiny-mce>
-
+            <tinymce id="noteEditor" v-model="currentNote.noteBody"
+                      :toolbar2="toolbar2" ref="editorBody" :other_options="otherOptions">
+            </tinymce>
           </v-form>
         </v-container>
-
-
-        <!--<vue-editor-->
-        <!--:customModules="customModulesForEditor"-->
-        <!--:editorOptions="editorSettings"-->
-        <!--ref="noteEditor"-->
-        <!--useCustomImageHandler-->
-        <!--@imageAdded="insertS3Image"-->
-        <!--v-model="currentNote.noteBody"></vue-editor>-->
-
 
       </v-card>
     </v-dialog>

@@ -21,16 +21,16 @@ class S3ImageUpload {
         this.policy = result.data;
       });
   }
-  uploadImage(file) {
+  uploadImage(blobInfo) {
     const formData = new FormData();
-    const fileKey = `images/${auth.getCurrentUserAccountId()}/${file.name}`;
+    const fileKey = `images/${auth.getCurrentUserAccountId()}/${blobInfo.filename()}`;
 
     formData.append('key', fileKey);
     formData.append('AWSAccessKeyId', environment.getValue('AWSAccessKeyId'));
     formData.append('acl', environment.getValue('AWSS3Acl'));
     formData.append('policy', this.policy.postPolicy);
     formData.append('signature', this.policy.policySignature);
-    formData.append('file', file);
+    formData.append('file', blobInfo.blob(), blobInfo.filename());
 
     return s3http.post(s3api.upload(), formData);
   }

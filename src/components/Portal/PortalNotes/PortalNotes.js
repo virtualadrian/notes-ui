@@ -12,13 +12,16 @@ import tinymce from 'vue-tinymce-editor';
 
 const api = {
   getNotes: () => environment.getEndpoint(`note`),
-  deleteNote: (id) => environment.getEndpoint(`note/${id}`)
+  getEditorImage: (userId, name) => environment.getS3Endpoint(`/images/${userId}/${name}`),
+  deleteNote: (id) => environment.getEndpoint(`note/${id}`),
+  saveNote: () => environment.getEndpoint(`note`),
+  currentUserAccountId: 0
 };
 
 @Component({
   components: {
     'note-detail': PortalNoteDetail,
-    'tiny-mce': tinymce,
+    tinymce,
     InputTag
   },
   filters: {striphtml}
@@ -33,55 +36,42 @@ export default class PortalNotes extends Vue {
 
   otherOptions = {
     branding: false,
+    file_picker_types: 'image',
+    image_title: true,
     automatic_uploads: true,
-    images_upload_handler(blobInfo, success, failure) {
-      console.log(blobInfo.filename());
-    },
-    file_picker_callback: function(cb, value, meta) {
-      var input = document.createElement('input');
+    images_upload_handler: this.uploadToAwsS3,
+    file_picker_callback: function(callback, value, meta) {
+      const input = document.createElement('input');
       input.setAttribute('type', 'file');
       input.setAttribute('accept', 'image/*');
 
-      // Note: In modern browsers input[type="file"] is functional without
-      // even adding it to the DOM, but that might not be the case in some older
-      // or quirky browsers like IE, so you might want to add it to the DOM
-      // just in case, and visually hide it. And do not forget do remove it
-      // once you do not need it anymore.
-
+      const editor = this;
       input.onchange = function() {
-        var file = this.files[0];
-
-        var reader = new FileReader();
+        const file = this.files[0];
+        const reader = new FileReader();
         reader.onload = function() {
-          // Note: Now we need to register the blob in TinyMCEs image blob
-          // registry. In the next release this part hopefully won't be
-          // necessary, as we are looking to handle it internally.
-          var id = 'blobid' + (new Date()).getTime();
-          var blobCache = tinymce.activeEditor.editorUpload.blobCache;
+          const id = 'blobid' + (new Date()).getTime();
+          const blobCache = editor.editorUpload.blobCache;
           var base64 = reader.result.split(',')[1];
           var blobInfo = blobCache.create(id, file, base64);
           blobCache.add(blobInfo);
-
-          // call the callback and populate the Title field with the file name
-          cb(blobInfo.blobUri(), {title: file.name});
+          callback(blobInfo.blobUri(), {title: file.name});
         };
         reader.readAsDataURL(file);
       };
 
       input.click();
-
-      // win.document.getElementById(fieldName).value = 'my browser value';
     }
   };
   editor = {
-    dirty: false
+    dirty: false,
+    tag: '',
+    tags: []
   };
-
-  search = '';
 
   mounted() {
     this.getNotes();
-    this.getUserName();
+    this.getUser();
   }
 
   updated() {
@@ -91,19 +81,12 @@ export default class PortalNotes extends Vue {
     });
   }
 
-  get tagsArray() {
-    return this.currentNote.noteTags ? this.currentNote.noteTags.split(',') : [];
-  }
-
-  set tagsArray(tags) {
-    this.currentNote.noteTags = tags.join(',');
-  }
-
   pasted() {
+    if (!this.editor.tag) { return; }
     this.$nextTick(() => {
-      this.select.push(...this.search.split(','));
+      this.editor.tags.push(...this.editor.tag.split(','));
       this.$nextTick(() => {
-        this.search = '';
+        this.editor.tag = '';
       });
     });
   }
@@ -118,28 +101,28 @@ export default class PortalNotes extends Vue {
     }
   }
 
-  insertS3Image(file, Editor, cursorLocation) {
+  uploadToAwsS3(blobInfo, success, failure) {
     s3image.getSignature()
       .then(() => {
-        s3image.uploadImage(file)
+        s3image.uploadImage(blobInfo)
           .then(() => {
-            Editor.insertEmbed(cursorLocation,
-              'image',
-              api.getEditorImage(auth.getCurrentUserAccountId(), file.name));
+            success(api.getEditorImage(api.currentUserAccountId, blobInfo.filename()), 2000);
           })
           .catch((err) => {
-            console.log(err);
+            failure(err);
           });
       });
   }
 
-  getUserName() {
+  getUser() {
+    api.currentUserAccountId = auth.getCurrentUserAccountId();
     this.currentUserFirstName = auth.getCurrentUserFirstName();
   }
 
   openNoteEditor(note) {
     this.currentNote = note;
     this.editingNote = true;
+    this.editor.tags = this.currentNote.noteTags.split(',') || [];
     setTimeout(() => {
       this.editor.dirty = false;
     }, 500);
@@ -175,6 +158,44 @@ export default class PortalNotes extends Vue {
         this.$refs.deleteNote.hide();
         this.$toastr.s('Note has been removed.');
         this.getNotes();
+      });
+  }
+
+  cancel() {
+    this.editingNote = false;
+    this.editor.dirty = false;
+    return;
+    // editor-change
+    if (!this.editor.dirty) {
+      this.editingNote = false;
+      this.editor.dirty = false;
+      this.currentNote = null;
+    } else {
+      this.$refs.unsavedChanges.show();
+    }
+  }
+
+  saveNote() {
+    this.currentNote.noteTags = this.editor.tags.join(',');
+    const save = (this.currentNote.id >= 0)
+      ? http.put(api.saveNote(), this.currentNote)
+      : http.post(api.saveNote(), this.currentNote);
+
+    return save
+      .then(response => { return response.data; })
+      .then(response => {
+        if (this.currentNote.id >= 0) {
+          this.currentNote.noteTitle = response.noteTitle;
+          this.currentNote.noteBody = response.noteBody;
+          this.currentNote.noteTags = response.noteTags;
+        } else {
+          this.notesResult.content.push(response);
+        }
+
+        this.$toastr.defaultTimeout = 1000;
+        this.$toastr.s('Note has been saved.');
+        this.editingNote = false;
+        this.editor.dirty = false;
       });
   }
 }
