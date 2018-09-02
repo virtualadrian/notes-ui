@@ -4,24 +4,21 @@ import auth from '@/services/authentication';
 import environment from '@/services/environment';
 import striphtml from '@/shared/filter/striphtml';
 import PortalNoteDetail from '@/components/Portal/PortalNoteDetail/PortalNoteDetail.vue';
-import { VueEditor, Quill } from 'vue2-editor';
-import ImageResize from 'quill-image-resize-module';
-import {ImageDrop} from 'quill-image-drop-module';
+
 import InputTag from 'vue-input-tag';
 import s3image from '@/services/s3image';
+
+import tinymce from 'vue-tinymce-editor';
 
 const api = {
   getNotes: () => environment.getEndpoint(`note`),
   deleteNote: (id) => environment.getEndpoint(`note/${id}`)
 };
 
-Quill.register('modules/imageResize', ImageResize);
-Quill.register('modules/imageDrop', ImageDrop);
-
 @Component({
   components: {
     'note-detail': PortalNoteDetail,
-    VueEditor,
+    'tiny-mce': tinymce,
     InputTag
   },
   filters: {striphtml}
@@ -31,24 +28,94 @@ export default class PortalNotes extends Vue {
   currentUserFirstName = 'Awesomeness';
   currentNote = {};
   editingNote = false;
-  customModulesForEditor = [
-    { alias: 'imageDrop', module: ImageDrop },
-    { alias: 'imageResize', module: ImageResize }
-  ];
-  editorSettings = {
-    modules: {
-      imageDrop: true,
-      imageResize: {}
+
+  toolbar2 = 'codesample';
+
+  otherOptions = {
+    branding: false,
+    automatic_uploads: true,
+    images_upload_handler(blobInfo, success, failure) {
+      console.log(blobInfo.filename());
+    },
+    file_picker_callback: function(cb, value, meta) {
+      var input = document.createElement('input');
+      input.setAttribute('type', 'file');
+      input.setAttribute('accept', 'image/*');
+
+      // Note: In modern browsers input[type="file"] is functional without
+      // even adding it to the DOM, but that might not be the case in some older
+      // or quirky browsers like IE, so you might want to add it to the DOM
+      // just in case, and visually hide it. And do not forget do remove it
+      // once you do not need it anymore.
+
+      input.onchange = function() {
+        var file = this.files[0];
+
+        var reader = new FileReader();
+        reader.onload = function() {
+          // Note: Now we need to register the blob in TinyMCEs image blob
+          // registry. In the next release this part hopefully won't be
+          // necessary, as we are looking to handle it internally.
+          var id = 'blobid' + (new Date()).getTime();
+          var blobCache = tinymce.activeEditor.editorUpload.blobCache;
+          var base64 = reader.result.split(',')[1];
+          var blobInfo = blobCache.create(id, file, base64);
+          blobCache.add(blobInfo);
+
+          // call the callback and populate the Title field with the file name
+          cb(blobInfo.blobUri(), {title: file.name});
+        };
+        reader.readAsDataURL(file);
+      };
+
+      input.click();
+
+      // win.document.getElementById(fieldName).value = 'my browser value';
     }
   };
   editor = {
     dirty: false
   };
+
+  search = '';
+
   mounted() {
     this.getNotes();
     this.getUserName();
-    this.$refs.noteEditor.quill.on('editor-change', this.onTextChanged);
-    window.addEventListener('resize', this.resizeEditor);
+  }
+
+  updated() {
+    const vm = this;
+    this.$nextTick(function() {
+      vm.onResize();
+    });
+  }
+
+  get tagsArray() {
+    return this.currentNote.noteTags ? this.currentNote.noteTags.split(',') : [];
+  }
+
+  set tagsArray(tags) {
+    this.currentNote.noteTags = tags.join(',');
+  }
+
+  pasted() {
+    this.$nextTick(() => {
+      this.select.push(...this.search.split(','));
+      this.$nextTick(() => {
+        this.search = '';
+      });
+    });
+  }
+
+  onResize() {
+    if (window.tinymce && window.tinymce.activeEditor) {
+      this.windowSize = {
+        x: this.$refs.noteEditorForm.$el.clientWidth,
+        y: window.innerHeight - 340
+      };
+      window.tinymce.activeEditor.theme.resizeTo(this.windowSize.x, this.windowSize.y);
+    }
   }
 
   insertS3Image(file, Editor, cursorLocation) {
@@ -65,6 +132,7 @@ export default class PortalNotes extends Vue {
           });
       });
   }
+
   getUserName() {
     this.currentUserFirstName = auth.getCurrentUserFirstName();
   }
@@ -72,18 +140,9 @@ export default class PortalNotes extends Vue {
   openNoteEditor(note) {
     this.currentNote = note;
     this.editingNote = true;
-    setTimeout(() => { this.editor.dirty = false; }, 500);
-  }
-  beforeDestroy() {
-    window.removeEventListener('resize', this.resizeEditor);
-  }
-
-  resizeEditor() {
-    const quillWrapper = document.querySelectorAll('.quillWrapper')[0];
-    if (quillWrapper) {
-      const height = document.body.clientHeight - 217;
-      quillWrapper.style.height = `${height}px`;
-    }
+    setTimeout(() => {
+      this.editor.dirty = false;
+    }, 500);
   }
 
   onTextChanged() {
@@ -108,7 +167,9 @@ export default class PortalNotes extends Vue {
   }
 
   deleteNote() {
-    if (!this.currentNote) { return; }
+    if (!this.currentNote) {
+      return;
+    }
     http.delete(api.deleteNote(this.currentNote.id))
       .then(() => {
         this.$refs.deleteNote.hide();

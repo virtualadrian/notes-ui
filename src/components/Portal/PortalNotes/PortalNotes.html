@@ -1,8 +1,10 @@
 <!--<section class="portal-notes section-pad h-auto">-->
 <section class="portal-notes">
-  <v-layout justify-center>
+  <v-layout v-resize="onResize" justify-center>
 
-    <v-dialog v-model="editingNote" fullscreen hide-overlay transition="dialog-bottom-transition">
+    <v-dialog v-model="editingNote"
+              fullscreen hide-overlay
+              transition="dialog-top-transition" ref="noteEditor">
       <v-card>
         <v-toolbar dark color="primary">
           <v-btn color="danger" icon @click.native="editingNote = false">
@@ -15,19 +17,50 @@
           </v-toolbar-items>
         </v-toolbar>
 
+        <v-container fluid>
 
-        <v-text-field v-model="currentNote.noteTitle" label="title" id="noteTitle"></v-text-field>
 
-        <v-divider></v-divider>
+          <v-form ref="noteEditorForm">
 
-        <vue-editor
-          :customModules="customModulesForEditor"
-          :editorOptions="editorSettings"
-          ref="noteEditor"
-          useCustomImageHandler
-          @imageAdded="insertS3Image"
-          v-model="currentNote.noteBody"></vue-editor>
+            <v-container fluid>
+              <v-layout row wrap>
 
+                <!-- S:TITLE -->
+                <v-flex xs12 sm6>
+                  <v-text-field
+                    v-model="currentNote.noteTitle"
+                    label="Note Title" id="noteTitle" color="primary accent-4"></v-text-field>
+                </v-flex>
+                <!-- E:TITLE -->
+
+                <v-spacer></v-spacer>
+
+                <!-- S:TAGS -->
+                <v-flex xs12 sm6>
+                  <v-select v-model="tagsArray" label="Tags" chips deletable-chips tags
+                            small-chips :search-input.sync="search" @paste="pasted">
+                  </v-select>
+                </v-flex>
+                <!-- E:TAGS -->
+
+              </v-layout>
+            </v-container>
+            <tiny-mce id="noteEditor" v-model="currentNote.noteBody"
+                      :toolbar2="toolbar2" ref="noteEditor" :other_options="otherOptions">
+
+            </tiny-mce>
+
+          </v-form>
+        </v-container>
+
+
+        <!--<vue-editor-->
+        <!--:customModules="customModulesForEditor"-->
+        <!--:editorOptions="editorSettings"-->
+        <!--ref="noteEditor"-->
+        <!--useCustomImageHandler-->
+        <!--@imageAdded="insertS3Image"-->
+        <!--v-model="currentNote.noteBody"></vue-editor>-->
 
 
       </v-card>
