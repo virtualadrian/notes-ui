@@ -2,4 +2,16 @@
   .note-body-description {
     min-height: 50%;
   }
+  .pinned {
+    transform: rotate(45deg);
+  }
+
+  #noteTitle, #noteBody {
+    color: #656565!important;
+  }
+  #noteTitle {
+    font-size: 20px;
+    font-weight: bolder;
+  }
 }
+

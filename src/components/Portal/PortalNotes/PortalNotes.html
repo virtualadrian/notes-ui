@@ -2,21 +2,53 @@
 <section class="portal-notes">
   <v-layout justify-center>
 
+    <v-dialog v-model="editingNote" fullscreen hide-overlay transition="dialog-bottom-transition">
+      <v-card>
+        <v-toolbar dark color="primary">
+          <v-btn color="danger" icon @click.native="editingNote = false">
+            <v-icon>close</v-icon>
+          </v-btn>
+          <v-toolbar-title>Edit Note</v-toolbar-title>
+          <v-spacer></v-spacer>
+          <v-toolbar-items>
+            <v-btn color="success" @click.native="dialog = false">Save</v-btn>
+          </v-toolbar-items>
+        </v-toolbar>
+
+
+        <v-text-field v-model="currentNote.noteTitle" label="title" id="noteTitle"></v-text-field>
+
+        <v-divider></v-divider>
+
+        <vue-editor
+          :customModules="customModulesForEditor"
+          :editorOptions="editorSettings"
+          ref="noteEditor"
+          useCustomImageHandler
+          @imageAdded="insertS3Image"
+          v-model="currentNote.noteBody"></vue-editor>
+
+
+
+      </v-card>
+    </v-dialog>
+
+
     <v-flex xs12 sm12>
       <!-- S: CARD GROUP WRAPPER -->
       <v-card color="transparent" flat>
         <v-container fluid grid-list-md>
           <v-layout row wrap>
-            <v-flex v-for="note in notesResult.content" xs4>
+            <v-flex v-for="note in notesResult.content" :key="note.id" xs4>
 
               <!-- S: NOTE CARD -->
               <v-card class="fill-height fluid">
                 <v-card-title primary-title>
-                  <v-text-field v-model="note.noteTitle" label="title" solo flat
-                                class="font-weight-bold"></v-text-field>
+                  <v-text-field v-model="note.noteTitle" solo flat @click="openNoteEditor(note)"
+                                label="title" id="noteTitle" readonly></v-text-field>
                   <v-tooltip bottom>
-                    <v-btn icon slot="activator" dark>
-                      <v-icon color="accent">beenhere</v-icon>
+                    <v-btn slot="activator" flat solo icon>
+                      <i :class="[note.isPinned ? 'pinned' : '']" class="fas fa-thumbtack"></i>
                     </v-btn>
                     <span>Pin</span>
                   </v-tooltip>
@@ -25,12 +57,9 @@
                 <v-container class="note-body-description" fluid>
                   <v-layout fill-height>
                     <v-flex xs12 align-end flexbox>
-                      <v-textarea
-                        solo
-                        flat
-                        label="Note Body"
-                        auto-grow
-                        :value="note.noteBody.substring(0, 280).concat('...') | striphtml"></v-textarea>
+                      <v-textarea solo flat label="Note Body" auto-grow id="noteBody" readonly
+                                  @click="openNoteEditor(note)"
+                                  :value="note.noteBody.substring(0, 280).concat('...') | striphtml"></v-textarea>
                     </v-flex>
                   </v-layout>
                 </v-container>
@@ -103,52 +132,3 @@
     </v-flex>
   </v-layout>
 </section>
-<!--<section class="portal-notes section-pad h-auto">-->
-<!---->
-<!--<div class="container">-->
-<!--<div class="row">-->
-<!--<div class="col-sm-8">-->
-<!--<h3>{{currentUserFirstName}}'s Notes</h3>-->
-<!--</div>-->
-<!--</div>-->
-<!--<div class="row">-->
-<!--<div class="col-sm-4" v-for="note in notesResult.content">-->
-<!--<div class="card card-shadow" >-->
-<!--<div class="card-body">-->
-<!--<h5 class="card-title">-->
-<!--<router-link :to="{ name: 'PortalNoteView', params: { id: note.id }}">-->
-<!--<strong>{{ note.noteTitle }}</strong>-->
-<!--</router-link>-->
-<!--</h5>-->
-<!--<p class="card-text">{{ note.noteBody.substring(0, 350).concat('...') | striphtml }}</p>-->
-<!--<p class="card-text"><small class="text-muted">{{note.noteCreatedTime | moment("MMMM Do YYYY, h:mm:ss a") }}</small></p>-->
-<!--</div>-->
-<!--<div class="card-footer">-->
-<!--<button class="btn btn-danger btn-shadow btn-rounded float-sm-left" v-on:click="toggleDeleteConfirm(note)">-->
-<!--<i class="zmdi zmdi-delete"></i>-->
-<!--</button>-->
-
-<!--<router-link :to="{ name: 'PortalNoteView', params: { id: note.id }}" class="btn btn-info btn-shadow btn-rounded float-sm-right">-->
-<!--<i class="zmdi zmdi-eye"></i>-->
-<!--</router-link>-->
-<!--<span class="float-sm-right">&nbsp;</span>-->
-<!--<router-link :to="{ name: 'PortalNoteDetail', params: { id: note.id }}" class="btn btn-success btn-shadow btn-rounded float-sm-right">-->
-<!--<i class="zmdi zmdi-edit"></i>-->
-<!--</router-link>-->
-<!--</div>-->
-<!--</div>-->
-
-<!--</div>-->
-<!--</div>-->
-<!--</div>-->
-<!--<b-modal id="modal-center" ref="deleteNote"-->
-<!--@ok="deleteNote"-->
-<!--:ok-title="'Delete'"-->
-<!--:ok-variant="'danger'"-->
-<!--@cancel="toggleDeleteConfirm()"-->
-<!--:cancel-title="'Cancel'"-->
-<!--centered title="Confirm Note Delete?">-->
-<!--<p class="my-4">Are you sure you want to delete this note?</p>-->
-<!--</b-modal>-->
-<!--</section>-->
-
