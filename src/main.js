@@ -8,13 +8,13 @@ import store from './store';
 import VueMoment from 'vue-moment';
 import Toastr from 'vue-toastr';
 import BootstrapVue from 'bootstrap-vue';
-
 import 'vuetify/dist/vuetify.min.css';
-import 'material-design-icons-iconfont/dist/material-design-icons.css';
+
+// import 'material-design-icons-iconfont/dist/material-design-icons.css';
+// import 'bootstrap/dist/css/bootstrap.css';
+// import 'bootstrap-vue/dist/bootstrap-vue.css';
 
 import 'vue-toastr/src/vue-toastr.scss';
-import 'bootstrap/dist/css/bootstrap.css';
-import 'bootstrap-vue/dist/bootstrap-vue.css';
 import 'animate.css/animate.min.css';
 import 'font-awesome/css/font-awesome.min.css';
 
@@ -32,7 +32,7 @@ Vue.use(Vuetify, {
     accent: '#212121',
     error: '#f44336',
     danger: '#f44336',
-    info: '#ffc107',
+    info: '#b7bccf',
     success: '#5ca266',
     warning: '#d9922e'
   }
