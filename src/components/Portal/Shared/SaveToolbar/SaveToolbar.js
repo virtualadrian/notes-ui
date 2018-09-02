@@ -26,7 +26,7 @@ const api = {
   },
   filters: {striphtml}
 })
-export default class PortalNotes extends Vue {
+export default class SaveToolbar extends Vue {
   dropdownFont = [
     { text: 'Arial' },
     { text: 'Calibri' },

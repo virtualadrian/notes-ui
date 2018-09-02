@@ -51,6 +51,7 @@ export default class PortalNoteDetail extends Vue {
   set tagsArray(tags) {
     this.currentNote.noteTags = tags.join(',');
   }
+
   onTextChanged() {
     this.editor.dirty = true;
   }
