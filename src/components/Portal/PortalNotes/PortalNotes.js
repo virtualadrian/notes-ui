@@ -3,7 +3,10 @@ import http from '@/services/http';
 import auth from '@/services/authentication';
 import environment from '@/services/environment';
 import striphtml from '@/shared/filter/striphtml';
-import PortalNoteDetail from '@/components/Portal/PortalNoteDetail/PortalNoteDetail.vue';
+
+import NoteCard from '@/components/Portal/Shared/NoteCard/NoteCard.vue';
+import NoteEditor from '@/components/Portal/Shared/NoteEditor/NoteEditor.vue';
+import PreviewNote from '@/components/Portal/Shared/PreviewNote/PreviewNote.vue';
 
 import InputTag from 'vue-input-tag';
 import s3image from '@/services/s3image';
@@ -20,9 +23,10 @@ const api = {
 
 @Component({
   components: {
-    'note-detail': PortalNoteDetail,
-    tinymce,
-    InputTag
+    'notecard': NoteCard,
+    'previewnote': PreviewNote,
+    'noteeditor': NoteEditor,
+    tinymce
   },
   filters: {striphtml}
 })
@@ -49,6 +53,7 @@ export default class PortalNotes extends Vue {
   notesResult = {};
   currentUserFirstName = 'Awesomeness';
   currentNote = {};
+  previewingNote = {};
   editingNote = false;
 
   toolbar2 = 'codesample';
@@ -93,6 +98,48 @@ export default class PortalNotes extends Vue {
     this.getUser();
   }
 
+  previewNote(note) {
+    this.previewingNote = note;
+    this.$refs.previewDialog.show();
+  }
+
+  editNote(note) {
+    this.currentNote = note;
+    this.$refs.noteDetail.show();
+  }
+
+  createSnippet(note) {
+    console.log('createSnippet');
+  }
+
+  createFavorite(note) {
+    console.log('createFavorite');
+  }
+
+  createSharedNote(note) {
+    console.log('createSharedNote');
+  }
+
+  createCards(note) {
+    console.log('createCards');
+  }
+
+  duplicateNote(note) {
+    console.log('duplicateNote');
+  }
+
+  archiveNote(note) {
+
+  }
+
+  pinNote(note) {
+
+  }
+
+  confirmDeleteNote(note) {
+
+  }
+
   updated() {
     const vm = this;
     this.$nextTick(function() {
@@ -120,18 +167,6 @@ export default class PortalNotes extends Vue {
     }
   }
 
-  uploadToAwsS3(blobInfo, success, failure) {
-    s3image.getSignature()
-      .then(() => {
-        s3image.uploadImage(blobInfo)
-          .then(() => {
-            success(api.getEditorImage(api.currentUserAccountId, blobInfo.filename()), 2000);
-          })
-          .catch((err) => {
-            failure(err);
-          });
-      });
-  }
 
   getUser() {
     api.currentUserAccountId = auth.getCurrentUserAccountId();

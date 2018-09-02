@@ -1,0 +1,29 @@
+<v-layout row justify-center>
+  <v-dialog v-model="showPreview" fullscreen hide-overlay transition="dialog-bottom-transition">
+    <v-card>
+      <v-toolbar dark color="primary">
+        <v-btn icon dark @click.native="showPreview = false">
+          <v-icon>close</v-icon>
+        </v-btn>
+        <v-toolbar-title>Preview: {{note.noteTitle}}</v-toolbar-title>
+        <v-spacer></v-spacer>
+        <v-toolbar-items>
+          <v-btn dark flat @click.native="showPreview = false">Edit</v-btn>
+        </v-toolbar-items>
+      </v-toolbar>
+
+      <v-alert :value="note.isPublic" color="info" icon="new_releases" dismissible>
+        Heads up, this note is public. To make it private again, head over to the Edit area.
+      </v-alert>
+
+      <v-container fluid>
+        <v-layout justify-center row>
+          <v-flex xs12 sm10>
+            <div v-html="note.noteBody"></div>
+          </v-flex>
+        </v-layout>
+      </v-container>
+
+    </v-card>
+  </v-dialog>
+</v-layout>

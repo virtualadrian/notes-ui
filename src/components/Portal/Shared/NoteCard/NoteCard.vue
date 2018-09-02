@@ -1,3 +1,3 @@
-<template src="./PortalNotes.html"></template>
-<script src="./PortalNotes.js"></script>
-<style src="./PortalNotes.scss" lang="scss"></style>
+<template src="./NoteCard.html"></template>
+<script src="./NoteCard.js"></script>
+<style src="./NoteCard.scss" lang="scss"></style>

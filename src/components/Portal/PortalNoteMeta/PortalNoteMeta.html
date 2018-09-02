@@ -1,253 +1,32 @@
-<!--<section class="portal-notes section-pad h-auto">-->
-<section class="portal-notes">
-  <v-layout v-resize="onResize" >
+<v-container fluid>
+  <v-layout row wrap>
 
-    <v-dialog v-model="editingNote"
-              fullscreen hide-overlay
-              transition="slide-y-transition" ref="noteEditor">
-      <v-card>
+    <!-- S:TITLE -->
+    <v-flex xs12 sm6>
+      <v-text-field
+        v-model="note.noteTitle"
+        label="Note Title" id="noteTitle" color="primary accent-4"></v-text-field>
+    </v-flex>
+    <!-- E:TITLE -->
 
-        <v-toolbar light color="amber">
-          <v-btn icon light @click.native="cancel()">
-            <v-icon>close</v-icon>
-          </v-btn>
-          <v-toolbar-title>Edit Note</v-toolbar-title>
-          <v-spacer></v-spacer>
-          <v-toolbar-items>
-            <v-btn light flat @click.native="saveNote()">Save</v-btn>
-          </v-toolbar-items>
-        </v-toolbar>
+    <v-spacer></v-spacer>
 
-        <v-container fluid>
-          <v-form ref="noteEditorForm">
-            <v-container fluid>
-              <v-layout row wrap>
+    <!-- S:TAGS -->
+    <v-flex xs12 sm5>
+      <v-combobox multiple
+                  v-model="tags" label="Tags"
+                  append-icon chips small-chips deletable-chips
+                  class="tag-input"
+                  :search-input.sync="tag"
+                  @keyup.tab="insertTag"
+                  @paste="insertTag">
 
-                <!-- S:TITLE -->
-                <v-flex xs12 sm6>
-                  <v-text-field
-                    v-model="currentNote.noteTitle"
-                    label="Note Title" id="noteTitle" color="primary accent-4"></v-text-field>
-                </v-flex>
-                <!-- E:TITLE -->
-
-                <v-spacer></v-spacer>
-
-                <!-- S:TAGS -->
-                <v-flex xs12 sm5>
-                  <v-combobox multiple
-                              v-model="editor.tags" label="Tags"
-                              append-icon chips small-chips deletable-chips
-                              class="tag-input"
-                              :search-input.sync="editor.tag"
-                              @keyup.tab="pasted"
-                              @paste="pasted">
-
-                  </v-combobox>
-                </v-flex>
-                <v-flex xs12 sm1>
-                  <v-switch label="Private" color="success" class="note-private-toggle"
-                            v-model="currentNote.isPrivate"></v-switch>
-                </v-flex>
-                <!-- E:TAGS -->
-              </v-layout>
-            </v-container>
-
-
-
-
-            <tinymce id="noteEditor" v-model="currentNote.noteBody"
-                     :toolbar2="toolbar2" ref="editorBody" :other_options="otherOptions">
-            </tinymce>
-
-          </v-form>
-        </v-container>
-
-      </v-card>
-    </v-dialog>
-
-    <v-container fluid>
-      <v-layout row wrap>
-
-        <v-flex xs12 sm12>
-          <v-container grid-list-md fluid>
-            <v-layout row wrap>
-
-              <!-- QUICK NOTE FORM -->
-              <v-expansion-panel>
-                <v-expansion-panel-content :expand-icon="isComposeVisible ? 'mdi-chevron-up' : 'mdi-chevron-down'"
-                                           class="quick-compose">
-                  <div class="qc-header" slot="header" @click="isComposeVisible=!!isComposeVisible">Quick Compose</div>
-                  <v-card>
-                    <v-form>
-                      <v-text-field label="Title" single-line full-width hide-details>
-                        <div class="text-xs-center" slot="append" title="Save And Close">
-                          <v-btn round color="success" icon dark>
-                            <v-icon>done_all</v-icon>
-                          </v-btn>
-                        </div>
-                        <div class="text-xs-center" slot="append" title="Open Editor">
-                          <v-btn round color="primary" icon dark>
-                            <v-icon>fullscreen</v-icon>
-                          </v-btn>
-                        </div>
-                      </v-text-field>
-                      <v-divider></v-divider>
-                      <v-textarea no-resize full-width></v-textarea>
-                    </v-form>
-                  </v-card>
-
-
-                  <v-toolbar color="amber" single-line flat class="text--black text--darken-1">
-                    <v-overflow-btn :items="dropdownFont" label="Select font" hide-details single-line depressed></v-overflow-btn>
-                    <v-divider vertical></v-divider>
-                    <v-overflow-btn :items="dropdownEdit" editable label="Select size" hide-details single-line depressed></v-overflow-btn>
-                    <v-divider class="mr-2" vertical></v-divider>
-                    <v-btn-toggle v-model="toggleMultiple" class="amber text--black" multiple single-line depressed>
-                      <v-btn :value="1" flat solo>
-                        <v-icon>format_bold</v-icon>
-                      </v-btn>
-                      <v-btn :value="2" flat solo>
-                        <v-icon>format_italic</v-icon>
-                      </v-btn>
-                      <v-btn :value="3" flat solo>
-                        <v-icon>format_underlined</v-icon>
-                      </v-btn>
-                      <v-btn :value="4" flat solo>
-                        <v-icon>format_color_fill</v-icon>
-                      </v-btn>
-                    </v-btn-toggle>
-
-                    <v-divider class="mx-2" vertical></v-divider>
-
-                    <v-btn-toggle v-model="toggleExclusive" class="transparent">
-                      <v-btn :value="1" flat solo>
-                        <v-icon>format_align_left</v-icon>
-                      </v-btn>
-
-                      <v-btn :value="2" flat solo>
-                        <v-icon>format_align_center</v-icon>
-                      </v-btn>
-
-                      <v-btn :value="3" flat solo>
-                        <v-icon>format_align_right</v-icon>
-                      </v-btn>
-
-                      <v-btn :value="4" flat solo>
-                        <v-icon>format_align_justify</v-icon>
-                      </v-btn>
-                    </v-btn-toggle>
-                  </v-toolbar>
-                </v-expansion-panel-content>
-              </v-expansion-panel>
-
-
-            </v-layout>
-          </v-container>
-
-        </v-flex>
-
-        <v-flex xs12 sm12>
-          <!-- S: CARD GROUP WRAPPER -->
-          <v-card color="transparent" flat>
-
-            <v-container fluid grid-list-xl>
-              <v-layout row wrap>
-                <v-flex v-for="note in notesResult.content" :key="note.id" xs4>
-
-                  <!-- S: NOTE CARD -->
-                  <v-card class="fill-height fluid">
-                    <v-card-title primary-title>
-                      <v-text-field v-model="note.noteTitle" solo flat @click="openNoteEditor(note)"
-                                    label="title" id="noteTitle" readonly></v-text-field>
-                      <v-tooltip bottom>
-                        <v-btn slot="activator" flat solo icon>
-                          <i :class="[note.isPinned ? 'pinned' : '']" class="fas fa-thumbtack"></i>
-                        </v-btn>
-                        <span>Pin</span>
-                      </v-tooltip>
-                    </v-card-title>
-
-                    <v-container class="note-body-description" fluid>
-                      <v-layout fill-height>
-                        <v-flex xs12 align-end flexbox>
-                          <v-textarea solo flat label="Note Body" auto-grow id="noteBody" readonly
-                                      @click="openNoteEditor(note)"
-                                      :value="note.noteBody.substring(0, 280).concat('...') | striphtml"></v-textarea>
-                        </v-flex>
-                      </v-layout>
-                    </v-container>
-
-                    <v-card-actions>
-
-                      <v-toolbar solo flat color="transparent">
-
-                        <v-tooltip bottom>
-                          <v-btn icon slot="activator" dark>
-                            <v-icon color="danger">delete</v-icon>
-                          </v-btn>
-                          <span>Trash</span>
-                        </v-tooltip>
-
-                        <v-spacer></v-spacer>
-
-                        <v-tooltip bottom>
-                          <v-btn icon slot="activator" dark>
-                            <v-icon color="accent">layers</v-icon>
-                          </v-btn>
-                          <span>Create Cards</span>
-                        </v-tooltip>
-
-                        <v-tooltip bottom>
-                          <v-btn icon slot="activator" dark>
-                            <v-icon color="accent">filter_list</v-icon>
-                          </v-btn>
-                          <span>Create Snippet</span>
-                        </v-tooltip>
-
-                        <v-tooltip bottom>
-                          <v-btn icon slot="activator" dark>
-                            <v-icon color="accent">star</v-icon>
-                          </v-btn>
-                          <span>Add Favorite</span>
-                        </v-tooltip>
-
-                        <v-menu bottom left>
-                          <v-btn slot="activator" icon>
-                            <v-icon>more_vert</v-icon>
-                          </v-btn>
-
-                          <v-list>
-                            <v-list-tile @click="">
-                              <v-list-tile-title>Share</v-list-tile-title>
-                            </v-list-tile>
-                            <v-list-tile @click="">
-                              <v-list-tile-title>Duplicate</v-list-tile-title>
-                            </v-list-tile>
-                            <v-list-tile @click="">
-                              <v-list-tile-title>Archive</v-list-tile-title>
-                            </v-list-tile>
-                          </v-list>
-                        </v-menu>
-
-                      </v-toolbar>
-                      <!---->
-                      <!--<v-btn flat color="orange">Share</v-btn>-->
-                      <!--<v-btn flat color="orange">Explore</v-btn>-->
-                    </v-card-actions>
-                  </v-card>
-                  <!-- E: NOTE CARD -->
-
-                </v-flex>
-              </v-layout>
-            </v-container>
-          </v-card>
-          <!-- E: CARD GROUP WRAPPER -->
-        </v-flex>
-
-      </v-layout>
-    </v-container>
-
-
+      </v-combobox>
+    </v-flex>
+    <v-flex xs12 sm1>
+      <v-switch label="Private" color="success" class="note-private-toggle"
+                v-model="note.isPrivate"></v-switch>
+    </v-flex>
+    <!-- E:TAGS -->
   </v-layout>
-</section>
+</v-container>

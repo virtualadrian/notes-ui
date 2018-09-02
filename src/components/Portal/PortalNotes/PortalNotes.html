@@ -66,6 +66,9 @@
       </v-card>
     </v-dialog>
 
+    <notedetail :note.sync="this.currentNote" ref="noteDetail"></notedetail>
+    <previewnote @edit-note="editNote" :note.sync="previewingNote" ref="previewDialog"></previewnote>
+
     <v-container fluid>
       <v-layout row wrap>
 
@@ -150,89 +153,16 @@
         <v-flex xs12 sm12>
           <!-- S: CARD GROUP WRAPPER -->
           <v-card color="transparent" flat>
-
             <v-container fluid grid-list-xl>
               <v-layout row wrap>
                 <v-flex v-for="note in notesResult.content" :key="note.id" xs4>
 
-                  <!-- S: NOTE CARD -->
-                  <v-card class="fill-height fluid">
-                    <v-card-title primary-title>
-                      <v-text-field v-model="note.noteTitle" solo flat @click="openNoteEditor(note)"
-                                    label="title" id="noteTitle" readonly></v-text-field>
-                      <v-tooltip bottom>
-                        <v-btn slot="activator" flat solo icon>
-                          <i :class="[note.isPinned ? 'pinned' : '']" class="fas fa-thumbtack"></i>
-                        </v-btn>
-                        <span>Pin</span>
-                      </v-tooltip>
-                    </v-card-title>
-
-                    <v-container class="note-body-description" fluid>
-                      <v-layout fill-height>
-                        <v-flex xs12 align-end flexbox>
-                          <v-textarea solo flat label="Note Body" auto-grow id="noteBody" readonly
-                                      @click="openNoteEditor(note)"
-                                      :value="note.noteBody.substring(0, 280).concat('...') | striphtml"></v-textarea>
-                        </v-flex>
-                      </v-layout>
-                    </v-container>
-
-                    <v-card-actions>
-                      <v-toolbar solo flat color="transparent">
-
-                        <v-tooltip bottom>
-                          <v-btn icon slot="activator" dark>
-                            <v-icon color="danger">delete</v-icon>
-                          </v-btn>
-                          <span>Trash</span>
-                        </v-tooltip>
-
-                        <v-spacer></v-spacer>
-
-                        <v-tooltip bottom>
-                          <v-btn icon slot="activator" dark>
-                            <v-icon color="accent">layers</v-icon>
-                          </v-btn>
-                          <span>Create Cards</span>
-                        </v-tooltip>
-
-                        <v-tooltip bottom>
-                          <v-btn icon slot="activator" dark>
-                            <v-icon color="accent">filter_list</v-icon>
-                          </v-btn>
-                          <span>Create Snippet</span>
-                        </v-tooltip>
-
-                        <v-tooltip bottom>
-                          <v-btn icon slot="activator" dark>
-                            <v-icon color="accent">star</v-icon>
-                          </v-btn>
-                          <span>Add Favorite</span>
-                        </v-tooltip>
-
-                        <v-menu bottom left>
-                          <v-btn slot="activator" icon>
-                            <v-icon>more_vert</v-icon>
-                          </v-btn>
-
-                          <v-list>
-                            <v-list-tile @click="">
-                              <v-list-tile-title>Share</v-list-tile-title>
-                            </v-list-tile>
-                            <v-list-tile @click="">
-                              <v-list-tile-title>Duplicate</v-list-tile-title>
-                            </v-list-tile>
-                            <v-list-tile @click="">
-                              <v-list-tile-title>Archive</v-list-tile-title>
-                            </v-list-tile>
-                          </v-list>
-                        </v-menu>
-
-                      </v-toolbar>
-                    </v-card-actions>
-                  </v-card>
-                  <!-- E: NOTE CARD -->
+                  <notecard :note="note" @view-note="previewNote" @pin-note="pinNote"
+                            @edit-note="editNote" @delete-note="confirmDeleteNote"
+                            @create-cards-from-note="createCards"
+                            @create-snippet-fromnnote="createSnippet"
+                            @create-favorite-note="createFavorite" @share-note="createSharedNote"
+                            @duplicate-note="duplicateNote" @archive-note="archiveNote"></notecard>
 
                 </v-flex>
               </v-layout>
@@ -240,10 +170,10 @@
           </v-card>
           <!-- E: CARD GROUP WRAPPER -->
         </v-flex>
-
       </v-layout>
     </v-container>
 
 
   </v-layout>
 </section>
+
