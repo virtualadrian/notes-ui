@@ -14,15 +14,15 @@ import PasswordResetComplete from '@/components/Landing/PasswordResetComplete/Pa
 import SupportHome from '@/components/Landing/SupportHome/SupportHome.vue';
 import NoteView from '@/components/Landing/NoteView/NoteView.vue';
 
-import PortalLayout from '@/components/Portal/PortalLayout/PortalLayout.vue';
-import PortalDashboard from '@/components/Portal/PortalDashboard/PortalDashboard.vue';
-import PortalNotes from '@/components/Portal/PortalNotes/PortalNotes.vue';
-import PortalNoteDetail from '@/components/Portal/PortalNoteDetail/PortalNoteDetail.vue';
-import PortalNoteView from '@/components/Portal/PortalNoteView/PortalNoteView.vue';
-import PortalSearchNote from '@/components/Portal/PortalSearchNote/PortalSearchNote.vue';
+import PortalLayout from '@/components/Portal/layout/PortalLayout/PortalLayout.vue';
+import PortalDashboard from '@/components/Portal/layout/PortalDashboard/PortalDashboard.vue';
+import PortalNotes from '@/components/Portal/notes/PortalNotes/PortalNotes.vue';
+import PortalNoteDetail from '@/components/Portal/notes/PortalNoteDetail/PortalNoteDetail.vue';
+import PortalNoteView from '@/components/Portal/notes/PortalNoteView/PortalNoteView.vue';
+import PortalSearchNote from '@/components/Portal/notes/PortalSearchNote/PortalSearchNote.vue';
 
-import PortalCardDeckList from '@/components/Portal/PortalCardDeckList/PortalCardDeckList.vue';
-import PortalCardDeckDetail from '@/components/Portal/PortalCardDeckDetail/PortalCardDeckDetail.vue';
+import PortalCardDeckList from '@/components/Portal/deck/PortalCardDeckList/PortalCardDeckList.vue';
+import PortalCardDeckDetail from '@/components/Portal/deck/PortalCardDeckDetail/PortalCardDeckDetail.vue';
 
 Vue.use(Router);
 

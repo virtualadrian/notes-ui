@@ -1,5 +1,5 @@
 import { Component, Vue } from 'vue-property-decorator';
-import PortalNavigation from '@/components/Portal/PortalNavigation/PortalNavigation.vue';
+import PortalNavigation from '@/components/Portal/layout/PortalNavigation/PortalNavigation.vue';
 import Navigation from '@/components/Landing/Navigation/Navigation.vue';
 import Footer from '@/components/Landing/Footer/Footer.vue';
 import auth from '@/services/authentication';

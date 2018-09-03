@@ -1,0 +1,60 @@
+<v-card>
+  <v-toolbar card prominent color="blue-grey lighten-5">
+    <v-toolbar-title class="subheading grey--text text--darken-1">{{note.noteTitle}}</v-toolbar-title>
+    <v-spacer></v-spacer>
+
+    <v-btn icon @click="pinNote(note)">
+      <i :pinned="!!note.pinIndex" class="fas fa-thumbtack notepin"></i>
+    </v-btn>
+  </v-toolbar>
+  <v-textarea auto-grow color="white" solo flat readonly
+              :value="note.noteBody.substring(0, 180).concat('...') | striphtml">
+  </v-textarea>
+  <v-card-actions>
+    <v-toolbar solo flat dense color="transparent">
+
+      <v-tooltip bottom>
+        <v-btn icon slot="activator" dark @click="archiveNote(note)">
+          <v-icon color="secondary">archive</v-icon>
+        </v-btn>
+        <span>Archive</span>
+      </v-tooltip>
+
+      <v-spacer></v-spacer>
+
+      <v-tooltip bottom>
+        <v-btn icon slot="activator" dark @click="viewNote(note)">
+          <v-icon color="primary">remove_red_eye</v-icon>
+        </v-btn>
+        <span>Note Preview</span>
+      </v-tooltip>
+
+      <v-tooltip bottom>
+        <v-btn icon slot="activator" dark @click="createFavoriteNote(note)">
+          <v-icon
+            :large.sync="!!note.favoriteIndex"
+            :color.sync="note.favoriteIndex ? 'amber darken-2' : 'primary'"
+          >star
+          </v-icon>
+        </v-btn>
+        <span>Add Favorite</span>
+      </v-tooltip>
+
+      <v-tooltip bottom>
+        <v-btn icon slot="activator" dark @click="editNote(note)">
+          <v-icon color="primary">edit</v-icon>
+        </v-btn>
+        <span>Edit</span>
+      </v-tooltip>
+
+      <v-tooltip bottom>
+        <v-btn icon slot="activator" dark @click="duplicateNote(note)">
+          <v-icon color="primary">library_add</v-icon>
+        </v-btn>
+        <span>Duplicate</span>
+      </v-tooltip>
+
+    </v-toolbar>
+  </v-card-actions>
+</v-card>
+
