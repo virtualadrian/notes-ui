@@ -5,7 +5,10 @@ import striphtml from '@/shared/filter/striphtml';
   filters: {striphtml}
 })
 export default class NoteCard extends Vue {
-  @Prop({ default: {} })
+  @Prop({
+    type: Object,
+    default: () => { return {}; }
+  })
   note;
 
   @Emit()

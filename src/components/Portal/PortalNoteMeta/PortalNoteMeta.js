@@ -5,7 +5,10 @@ export default class PortalNoteMeta extends Vue {
   tags = [];
   tag = '';
 
-  @Prop()
+  @Prop({
+    type: Object,
+    default: () => { return {}; }
+  })
   note;
 
   insertTag() {

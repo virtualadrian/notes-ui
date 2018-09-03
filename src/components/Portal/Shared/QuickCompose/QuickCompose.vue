@@ -1,3 +1,3 @@
-<template src="./PortalNotes.html"></template>
-<script src="./PortalNotes.js"></script>
-<style src="./PortalNotes.scss" lang="scss"></style>
+<template src="./QuickCompose.html"></template>
+<script src="./QuickCompose.js"></script>
+<style src="./QuickCompose.scss" lang="scss"></style>

@@ -6,17 +6,11 @@
     <v-container fluid>
       <v-form ref="noteEditorForm">
 
-        <note-meta :note="this.currentNote"></note-meta>
+        <!-- Note title, tags, etc -->
+        <note-meta :note="note"></note-meta>
 
-
-
-
-
-
-
-        <tinymce id="noteEditor" v-model="currentNote.noteBody"
-                 :toolbar2="toolbar2" ref="editorBody" :other_options="otherOptions">
-        </tinymce>
+        <!-- Note Body WYSIWYG -->
+        <note-editor></note-editor>
 
       </v-form>
     </v-container>

@@ -47,7 +47,10 @@ export default class NoteEditor extends Vue {
     file_picker_callback: this.handleFilePick
   };
 
-  @Prop()
+  @Prop({
+    type: Object,
+    default: () => { return {}; }
+  })
   note;
 
   mounted() {

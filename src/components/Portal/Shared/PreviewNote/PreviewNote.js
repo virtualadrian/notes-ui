@@ -4,7 +4,10 @@ import {Emit, Prop, Component, Vue} from 'vue-property-decorator';
 export default class PreviewNote extends Vue {
   showPreview = false;
 
-  @Prop({default: null})
+  @Prop({
+    type: Object,
+    default: () => { return {}; }
+  })
   note;
 
   @Emit()
