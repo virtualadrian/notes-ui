@@ -1,3 +1,3 @@
-<template src="./PortalNotes.html"></template>
-<script src="./PortalNotes.js"></script>
-<style src="./PortalNotes.scss" lang="scss"></style>
+<template src="./TextToolbar.html"></template>
+<script src="./TextToolbar.js"></script>
+<style src="./TextToolbar.scss" lang="scss"></style>

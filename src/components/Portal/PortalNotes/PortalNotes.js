@@ -4,9 +4,9 @@ import auth from '@/services/authentication';
 import environment from '@/services/environment';
 
 import PreviewNote from '@/components/Portal/Shared/PreviewNote/PreviewNote.vue';
+import NoteGrid from '@/components/Portal/Shared/NoteGrid/NoteGrid.vue';
 import PortalNoteDetail from '@/components/Portal/PortalNoteDetail/PortalNoteDetail.vue';
 import NotesQuickCompose from '@/components/Portal/PortalNotes/NotesQuickCompose.vue';
-import NotesGrid from '@/components/Portal/PortalNotes/NotesGrid.vue';
 
 const api = {
   getNotes: () => environment.getEndpoint(`note`),
@@ -21,7 +21,7 @@ const api = {
     'preview-note': PreviewNote,
     'note-detail': PortalNoteDetail,
     'note-compose': NotesQuickCompose,
-    'notes-grid': NotesGrid
+    'note-grid': NoteGrid
   }
 })
 export default class PortalNotes extends Vue {

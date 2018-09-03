@@ -1,12 +1,15 @@
 import {Emit, Component, Vue} from 'vue-property-decorator';
 import http from '@/services/http';
+import TextToolbar from '@/components/Portal/Shared/TextToolbar/TextToolbar.vue';
 
 import environment from '@/services/environment';
 const api = {
   saveNote: () => environment.getEndpoint(`note`)
 };
 
-@Component()
+@Component({
+  components: {'text-toolbar': TextToolbar}
+})
 export default class QuickCompose extends Vue {
   isComposeVisible = false;
   note = {};
