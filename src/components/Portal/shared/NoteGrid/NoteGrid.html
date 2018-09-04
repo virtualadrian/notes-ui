@@ -3,7 +3,7 @@
     <v-container fluid grid-list-xl>
       <v-layout row wrap>
 
-        <v-flex v-for="note in notes" :key="note.id" xs4>
+        <v-flex v-for="note in notes" :key="note.id" xs12 sm6 md4>
 
           <note-card :note="note" @view-note="viewNote"
                      @edit-note="editNote" @pin-note="pinNote"

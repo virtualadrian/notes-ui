@@ -1,5 +1,4 @@
 <section >
-
   <v-snackbar top right :timeout="3000"
               multi-line="multi-line"
               v-model="snack.isVisible" :color="snack.color">
@@ -9,13 +8,15 @@
     <v-flex xs3><v-btn icon flat @click="snack.isVisible = false"><v-icon>close</v-icon></v-btn></v-flex>
   </v-snackbar>
 
-
-
   <note-detail :note.sync="currentNote" ref="noteDetail"></note-detail>
   <preview-note @edit-note="editNote" :note.sync="previewingNote" ref="previewDialog"></preview-note>
 
 
-  <note-compose></note-compose>
+  <template>
+    <v-flex xs12 sm12>
+      <quick-compose></quick-compose>
+    </v-flex>
+  </template>
 
   <note-grid :notes.sync="notesResult.content"
              @view-note="viewNote"

@@ -6,7 +6,7 @@ import _ from 'lodash';
 import PreviewNote from '@/components/Portal/shared/PreviewNote/PreviewNote.vue';
 import NoteGrid from '@/components/Portal/shared/NoteGrid/NoteGrid.vue';
 import PortalNoteDetail from '@/components/Portal/notes/PortalNoteDetail/PortalNoteDetail.vue';
-import NotesQuickCompose from '@/components/Portal/notes/PortalNotes/NotesQuickCompose.vue';
+import QuickCompose from '@/components/Portal/shared/QuickCompose/QuickCompose.vue';
 
 import noteService from '@/components/Portal/notes/core/note.service.js';
 
@@ -22,7 +22,7 @@ const api = {
   components: {
     'preview-note': PreviewNote,
     'note-detail': PortalNoteDetail,
-    'note-compose': NotesQuickCompose,
+    'quick-compose': QuickCompose,
     'note-grid': NoteGrid
   }
 })

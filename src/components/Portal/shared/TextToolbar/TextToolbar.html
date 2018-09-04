@@ -5,7 +5,7 @@
                   depressed></v-overflow-btn>
   <v-divider class="mt-0 mr-2" vertical></v-divider>
   <v-btn-toggle v-model="toggleMultiple" class="amber text--black" multiple single-line depressed>
-    <v-btn :value="1" flat solo>
+    <v-btn :value="1" flat solo @click="boldClicked">
       <v-icon>format_bold</v-icon>
     </v-btn>
     <v-btn :value="2" flat solo>

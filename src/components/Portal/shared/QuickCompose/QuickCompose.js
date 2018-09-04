@@ -1,31 +1,31 @@
 import {Emit, Component, Vue} from 'vue-property-decorator';
+import { VueEditor } from 'vue2-editor';
 import http from '@/services/http';
-import TextToolbar from '@/components/Portal/shared/TextToolbar/TextToolbar.vue';
 
 import environment from '@/services/environment';
+
 const api = {
   saveNote: () => environment.getEndpoint(`note`)
 };
 
 @Component({
-  components: {'text-toolbar': TextToolbar}
+  components: {'vue-editor': VueEditor}
 })
 export default class QuickCompose extends Vue {
   isComposeVisible = false;
   note = {};
+  editor = {
+    dirty: false
+  };
+  editorSettings = {
+    editorOptions: 'editorWrap'
+  };
 
-  @Emit()
-  openNoteEditor(note) {}
+  composing = false;
 
-  save() {
-    return http.post(api.saveNote())
-      .then(result => result.data);
-  }
+  @Emit
+  saveChanges(note) {}
 
-  saveContinueEdit() {
-    this.save()
-      .then((saved) => {
-        this.openNoteEditor(saved);
-      });
-  }
+  @Emit
+  clearChanges(note) {}
 }

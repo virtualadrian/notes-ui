@@ -1,10 +1,9 @@
 import {Prop, Component, Vue} from 'vue-property-decorator';
 import PortalNavigation from '@/components/Portal/layout/PortalNavigation/PortalNavigation.vue';
 import Footer from '@/components/Portal/layout/Footer.vue';
-import Drawer from '@/components/Portal/shared/Drawer/Drawer.vue';
 
 @Component({
-  components: {PortalNavigation, Footer, Drawer}
+  components: {PortalNavigation, Footer}
 })
 export default class PortalLayout extends Vue {
   drawer = null;
