@@ -11,13 +11,6 @@
   <note-detail :note.sync="currentNote" ref="noteDetail"></note-detail>
   <preview-note @edit-note="editNote" :note.sync="previewingNote" ref="previewDialog"></preview-note>
 
-
-  <template>
-    <v-flex xs12 sm12>
-      <quick-compose></quick-compose>
-    </v-flex>
-  </template>
-
   <note-grid :notes.sync="notesResult.content"
              @view-note="viewNote"
              @edit-note="editNote" @pin-note="pinNote"

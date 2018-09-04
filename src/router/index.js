@@ -94,12 +94,12 @@ export default new Router({
         },
         {
           path: 'notes',
-          name: 'PortalNotes',
+          name: 'Notes',
           component: PortalNotes
         },
         {
           path: 'note/edit/:id?',
-          name: 'PortalNoteDetail',
+          name: 'NoteDetail',
           component: PortalNoteDetail
         },
         {

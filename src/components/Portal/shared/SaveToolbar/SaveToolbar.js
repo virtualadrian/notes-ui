@@ -4,6 +4,7 @@ import {Emit, Prop, Component, Vue} from 'vue-property-decorator';
 export default class SaveToolbar extends Vue {
   @Prop({default: false})
   hasChanges;
+
   saveDialog = false;
 
   @Emit()

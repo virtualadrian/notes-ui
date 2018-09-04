@@ -1,29 +1,22 @@
 <section class="portal-layout">
   <v-app id="keep">
 
-    <drawer></drawer>
 
-    <v-toolbar color="amber" app absolute clipped-left flat>
+    <drawer :drawer="drawer"></drawer>
+
+    <v-toolbar color="amber" app clipped-left flat fixed>
       <v-toolbar-side-icon @click.native="drawer = !drawer"></v-toolbar-side-icon>
       <span class="title ml-3 ml-5 mr-5">Noteler&nbsp;<span class="font-weight-light">Portal</span></span>
       <v-text-field class="ml-3" solo-inverted flat hide-details label="Search" prepend-inner-icon="search"></v-text-field>
     </v-toolbar>
 
-    <v-content class="content-main-wrap">
+    <v-content>
+
       <v-flex>
         <router-view :key="$route.fullPath"></router-view>
       </v-flex>
+
     </v-content>
 
-    <v-footer absolute clipped-left app height="auto" color="primary lighten-1">
-      <v-layout justify-center row wrap>
-        <v-btn v-for="link in links" :key="link" color="white" flat round>
-          {{ link }}
-        </v-btn>
-        <v-flex primary lighten-2 py-3 text-xs-center white--text xs12>
-          &copy;2018 — <strong>Vuetify</strong>
-        </v-flex>
-      </v-layout>
-    </v-footer>
   </v-app>
 </section>

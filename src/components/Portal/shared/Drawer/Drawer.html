@@ -1,12 +1,12 @@
-<v-navigation-drawer v-model="drawer" fixed clipped class="grey lighten-4" app>
+<v-navigation-drawer v-model="showing" fixed clipped class="grey lighten-4" app>
   <v-list dense class="grey lighten-4">
     <template>
+
       <v-layout row align-center>
         <v-flex xs6>
           <v-subheader>&nbsp; Notes</v-subheader>
         </v-flex>
         <v-flex xs6 class="text-xs-right">
-
         </v-flex>
       </v-layout>
 
@@ -40,7 +40,7 @@
         </v-list-tile-action>
         <v-list-tile-content>
           <v-list-tile-title class="grey--text">
-            Starred
+            Favories
           </v-list-tile-title>
         </v-list-tile-content>
       </v-list-tile>
@@ -74,7 +74,6 @@
           <v-subheader>&nbsp; Study Card Decks</v-subheader>
         </v-flex>
         <v-flex xs6 class="text-xs-right">
-          <!--<v-btn small flat>edit</v-btn>-->
         </v-flex>
       </v-layout>
 
@@ -99,7 +98,6 @@
           </v-list-tile-title>
         </v-list-tile-content>
       </v-list-tile>
-
 
       <v-list-tile @click="">
         <v-list-tile-action>
