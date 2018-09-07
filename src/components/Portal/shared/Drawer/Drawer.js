@@ -1,6 +1,4 @@
 import {Emit, Prop, Component, Vue} from 'vue-property-decorator';
-import PortalNavigation from '@/components/Portal/layout/PortalNavigation/PortalNavigation.vue';
-import Footer from '@/components/Portal/layout/Footer.vue';
 
 const LinkType = {
   HEADING: 1,
@@ -10,20 +8,21 @@ const LinkType = {
 
 class NavDrawerLink {
   constructor(type, icon, text, action) {
-    this.type = 0;
+    this.type = type;
     this.icon = icon;
     this.text = text;
     this.action = action;
   }
 }
 
-@Component({
-  components: {PortalNavigation, Footer}
-})
-export default class PortalLayout extends Vue {
+@Component()
+export default class Drawer extends Vue {
   @Prop({default: true}) drawer;
 
-  drawerItems = [
+  visible = true;
+  TYPE = LinkType;
+
+  DRAWER = [
     new NavDrawerLink(LinkType.HEADING, null, 'Notes', null),
     new NavDrawerLink(LinkType.ITEM, 'add', 'Add Note', () => this.$router.push({name: 'NoteDetail'})),
     new NavDrawerLink(LinkType.DIVIDER, null, null, null),
@@ -33,7 +32,21 @@ export default class PortalLayout extends Vue {
     new NavDrawerLink(LinkType.ITEM, 'star', 'Favorites', () => this.$router.push({name: 'Notes'})),
     new NavDrawerLink(LinkType.ITEM, 'short_text', 'Tags', () => this.$router.push({name: 'Tags'})),
     new NavDrawerLink(LinkType.DIVIDER, null, null, null),
-    new NavDrawerLink(LinkType.HEADING, null, 'Study Card Decks', null)
+    new NavDrawerLink(LinkType.HEADING, null, 'Study Card Decks', null),
+    new NavDrawerLink(LinkType.ITEM, 'add', 'Add Deck', () => this.$router.push({name: 'DeckDetail'})),
+    new NavDrawerLink(LinkType.ITEM, 'layers', 'All Decks', () => this.$router.push({name: 'Decks'})),
+    new NavDrawerLink(LinkType.ITEM, 'touch_app', 'Review Deck', () => this.$router.push({name: 'ViewDeck'})),
+    new NavDrawerLink(LinkType.ITEM, 'lightbulb_outline', 'Study Session', () => this.$router.push({name: 'Study Deck'})),
+    new NavDrawerLink(LinkType.DIVIDER, null, null, null),
+    new NavDrawerLink(LinkType.HEADING, null, 'Note Bin', null),
+    new NavDrawerLink(LinkType.ITEM, 'archive', 'Archive', () => this.$router.push({name: 'Archived'})),
+    new NavDrawerLink(LinkType.ITEM, 'delete', 'Trash', () => this.$router.push({name: 'Trash'})),
+    new NavDrawerLink(LinkType.DIVIDER, null, null, null),
+    new NavDrawerLink(LinkType.HEADING, null, 'Settings', null),
+    new NavDrawerLink(LinkType.ITEM, 'arrow_upward', 'Pro Upgrade', () => this.$router.push({name: 'Subscription'})),
+    new NavDrawerLink(LinkType.ITEM, 'person', 'Profile', () => this.$router.push({name: 'Profile'})),
+    new NavDrawerLink(LinkType.ITEM, 'chat', 'Feedback', () => this.$router.push({name: 'Feedback'})),
+    new NavDrawerLink(LinkType.ITEM, 'help', 'Help', () => this.$router.push({name: 'Help'}))
   ];
 
   links = [

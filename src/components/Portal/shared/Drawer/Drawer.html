@@ -1,213 +1,28 @@
-<v-navigation-drawer v-model="showing" fixed clipped class="grey lighten-4" app>
+<v-navigation-drawer v-model="visible" fixed clipped class="grey lighten-4" app>
   <v-list dense class="grey lighten-4">
-    <template>
+    <template v-for="(link, i) in DRAWER">
 
-      <v-layout row align-center>
+      <v-layout v-if="link.type === TYPE.HEADING" row align-center :key="i">
         <v-flex xs6>
-          <v-subheader>&nbsp; Notes</v-subheader>
+          <v-subheader>&nbsp; {{link.text}}</v-subheader>
         </v-flex>
         <v-flex xs6 class="text-xs-right">
         </v-flex>
       </v-layout>
 
-      <v-list-tile @click="">
+      <v-list-tile v-else-if="link.type === TYPE.ITEM" @click="" :key="i">
         <v-list-tile-action>
-          <v-icon>add</v-icon>
+          <v-icon>{{link.icon}}</v-icon>
         </v-list-tile-action>
         <v-list-tile-content>
           <v-list-tile-title class="grey--text">
-            Add Note
+            {{link.text}}
           </v-list-tile-title>
         </v-list-tile-content>
       </v-list-tile>
 
-      <v-divider dark class="my-3"></v-divider>
+      <v-divider v-else-if="link.type === TYPE.DIVIDER" dark class="my-3" :key="i"></v-divider>
 
-      <v-list-tile @click="">
-        <v-list-tile-action>
-          <v-icon>library_books</v-icon>
-        </v-list-tile-action>
-        <v-list-tile-content>
-          <v-list-tile-title class="grey--text">
-            All Notes
-          </v-list-tile-title>
-        </v-list-tile-content>
-      </v-list-tile>
-
-      <v-list-tile @click="">
-        <v-list-tile-action>
-          <v-icon>star</v-icon>
-        </v-list-tile-action>
-        <v-list-tile-content>
-          <v-list-tile-title class="grey--text">
-            Favories
-          </v-list-tile-title>
-        </v-list-tile-content>
-      </v-list-tile>
-
-      <v-list-tile @click="">
-        <v-list-tile-action>
-          <v-icon>filter_list</v-icon>
-        </v-list-tile-action>
-        <v-list-tile-content>
-          <v-list-tile-title class="grey--text">
-            Snippets
-          </v-list-tile-title>
-        </v-list-tile-content>
-      </v-list-tile>
-
-      <v-list-tile @click="">
-        <v-list-tile-action>
-          <v-icon>short_text</v-icon>
-        </v-list-tile-action>
-        <v-list-tile-content>
-          <v-list-tile-title class="grey--text">
-            Tags
-          </v-list-tile-title>
-        </v-list-tile-content>
-      </v-list-tile>
-
-      <v-divider dark class="my-3"></v-divider>
-
-      <v-layout row align-center>
-        <v-flex xs6>
-          <v-subheader>&nbsp; Study Card Decks</v-subheader>
-        </v-flex>
-        <v-flex xs6 class="text-xs-right">
-        </v-flex>
-      </v-layout>
-
-      <v-list-tile @click="">
-        <v-list-tile-action>
-          <v-icon>add</v-icon>
-        </v-list-tile-action>
-        <v-list-tile-content>
-          <v-list-tile-title class="grey--text">
-            Add Deck
-          </v-list-tile-title>
-        </v-list-tile-content>
-      </v-list-tile>
-
-      <v-list-tile @click="">
-        <v-list-tile-action>
-          <v-icon>layers</v-icon>
-        </v-list-tile-action>
-        <v-list-tile-content>
-          <v-list-tile-title class="grey--text">
-            All Decks
-          </v-list-tile-title>
-        </v-list-tile-content>
-      </v-list-tile>
-
-      <v-list-tile @click="">
-        <v-list-tile-action>
-          <v-icon>touch_app</v-icon>
-        </v-list-tile-action>
-        <v-list-tile-content>
-          <v-list-tile-title class="grey--text">
-            Review Deck
-          </v-list-tile-title>
-        </v-list-tile-content>
-      </v-list-tile>
-
-      <v-list-tile @click="">
-        <v-list-tile-action>
-          <v-icon>lightbulb_outline</v-icon>
-        </v-list-tile-action>
-        <v-list-tile-content>
-          <v-list-tile-title class="grey--text">
-            Study Session
-          </v-list-tile-title>
-        </v-list-tile-content>
-      </v-list-tile>
-
-      <v-divider dark class="my-3"></v-divider>
-
-      <v-layout row align-center>
-        <v-flex xs6>
-          <v-subheader>&nbsp; Note Bin</v-subheader>
-        </v-flex>
-        <v-flex xs6 class="text-xs-right">
-          <!--<v-btn small flat>edit</v-btn>-->
-        </v-flex>
-      </v-layout>
-
-      <v-list-tile @click="">
-        <v-list-tile-action>
-          <v-icon>archive</v-icon>
-        </v-list-tile-action>
-        <v-list-tile-content>
-          <v-list-tile-title class="grey--text">
-            Archive
-          </v-list-tile-title>
-        </v-list-tile-content>
-      </v-list-tile>
-
-      <v-list-tile @click="">
-        <v-list-tile-action>
-          <v-icon>delete</v-icon>
-        </v-list-tile-action>
-        <v-list-tile-content>
-          <v-list-tile-title class="grey--text">
-            Trash
-          </v-list-tile-title>
-        </v-list-tile-content>
-      </v-list-tile>
-
-      <v-divider dark class="my-3"></v-divider>
-
-      <v-layout row align-center>
-        <v-flex xs6>
-          <v-subheader>&nbsp; Settings</v-subheader>
-        </v-flex>
-        <v-flex xs6 class="text-xs-right">
-          <!--<v-btn small flat>edit</v-btn>-->
-        </v-flex>
-      </v-layout>
-
-      <v-list-tile @click="">
-        <v-list-tile-action>
-          <v-icon>arrow_upward</v-icon>
-        </v-list-tile-action>
-        <v-list-tile-content>
-          <v-list-tile-title class="grey--text">
-            Pro Upgrade
-          </v-list-tile-title>
-        </v-list-tile-content>
-      </v-list-tile>
-
-      <v-list-tile @click="">
-        <v-list-tile-action>
-          <v-icon>person</v-icon>
-        </v-list-tile-action>
-        <v-list-tile-content>
-          <v-list-tile-title class="grey--text">
-            Profile
-          </v-list-tile-title>
-        </v-list-tile-content>
-      </v-list-tile>
-
-      <v-list-tile @click="">
-        <v-list-tile-action>
-          <v-icon>chat</v-icon>
-        </v-list-tile-action>
-        <v-list-tile-content>
-          <v-list-tile-title class="grey--text">
-            Site Feedback
-          </v-list-tile-title>
-        </v-list-tile-content>
-      </v-list-tile>
-
-      <v-list-tile @click="">
-        <v-list-tile-action>
-          <v-icon>help</v-icon>
-        </v-list-tile-action>
-        <v-list-tile-content>
-          <v-list-tile-title class="grey--text">
-            Help
-          </v-list-tile-title>
-        </v-list-tile-content>
-      </v-list-tile>
     </template>
   </v-list>
 </v-navigation-drawer>
