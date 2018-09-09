@@ -11,10 +11,13 @@
     </v-toolbar>
 
     <v-content>
+      <v-layout justify-center row fill-height>
 
-      <v-flex>
-        <router-view :key="$route.fullPath"></router-view>
-      </v-flex>
+        <v-flex xs12>
+          <router-view :key="$route.fullPath"></router-view>
+        </v-flex>
+
+      </v-layout>
 
     </v-content>
 

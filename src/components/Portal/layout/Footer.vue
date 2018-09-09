@@ -25,7 +25,7 @@
         white--text
         xs12
       >
-        &copy;2018 — <strong>Vuetify</strong>
+        &copy; {{currentYear}} — <strong>Noteler</strong>
       </v-flex>
     </v-layout>
   </v-footer>
@@ -44,5 +44,7 @@ export default class Footer extends Vue {
       'Blog',
       'Contact Us'
     ];
+
+    currentYear = (new Date()).getFullYear();
   }
 </script>

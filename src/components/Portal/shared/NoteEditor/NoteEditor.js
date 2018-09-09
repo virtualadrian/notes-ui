@@ -80,6 +80,18 @@ export default class NoteEditor extends Vue {
           });
       });
   }
+
+  onResize() {
+    console.dir(window.tinymce.activeEditor);
+    if (window.tinymce && window.tinymce.activeEditor) {
+      this.windowSize = {
+        x: this.$refs.editorBody.$el.clientWidth,
+        y: window.innerHeight - 440
+      };
+      window.tinymce.activeEditor.theme.resizeTo(this.windowSize.x, this.windowSize.y);
+    }
+  }
+
   getNoteBody() {
     return this.note.noteBody;
   }

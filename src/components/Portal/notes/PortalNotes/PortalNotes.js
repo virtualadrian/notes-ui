@@ -41,6 +41,10 @@ export default class PortalNotes extends Vue {
     this.getUser();
   }
 
+  get notes() {
+    return _.orderBy(this.notesResult.content, ['noteOrderIndex'], ['desc']);
+  }
+
   success(message) {
     this.snack.isVisible = true;
     this.snack.color = 'green';
@@ -102,7 +106,7 @@ export default class PortalNotes extends Vue {
     return noteService.duplicateNote(note)
       .then((res) => {
         this.notesResult.content.push(res.data);
-        _.sortBy(this.notesResult.content, ['noteOrderId', 'pinIndex', 'id']);
+        this.notesResult.content = _.orderBy(this.notesResult.content, ['noteOrderIndex'], ['desc']);
       });
   }
 

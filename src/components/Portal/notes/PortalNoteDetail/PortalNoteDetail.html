@@ -1,20 +1,15 @@
-<v-dialog v-model="editingNote" fullscreen hide-overlay transition="slide-y-transition" ref="noteEditor">
-  <v-card>
+<v-card>
+  <save-toolbar @save-changes="saveNote" @clear-changes="clearChanges"></save-toolbar>
+  <v-container fluid>
+    <v-form ref="noteEditorForm">
 
-    <save-toolbar @save-changes="saveNote" @clear-changes="clearChanges"></save-toolbar>
+      <!-- Note title, tags, etc -->
+      <note-meta :note="note"></note-meta>
 
-    <v-container fluid>
-      <v-form ref="noteEditorForm">
+      <!-- Note Body WYSIWYG -->
+      <note-editor></note-editor>
 
-        <!-- Note title, tags, etc -->
-        <note-meta :note="note"></note-meta>
+    </v-form>
+  </v-container>
 
-        <!-- Note Body WYSIWYG -->
-        <note-editor></note-editor>
-
-      </v-form>
-    </v-container>
-
-  </v-card>
-</v-dialog>
-
+</v-card>
