@@ -2,7 +2,6 @@ import {Component, Emit, Vue} from 'vue-property-decorator';
 import http from '@/services/http';
 import auth from '@/services/authentication';
 import environment from '@/services/environment';
-import _ from 'lodash';
 import PreviewNote from '@/components/Portal/shared/PreviewNote/PreviewNote.vue';
 import NoteGrid from '@/components/Portal/shared/NoteGrid/NoteGrid.vue';
 import PortalNoteDetail from '@/components/Portal/notes/PortalNoteDetail/PortalNoteDetail.vue';

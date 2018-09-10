@@ -27,14 +27,14 @@ Vue.config.productionTip = false;
 
 Vue.use(Vuetify, {
   theme: {
-    primary: '#808598',
-    secondary: '#999999',
-    accent: '#212121',
+    primary: '#2a56c6',
+    secondary: '#3b78e7',
+    accent: '#f7f7f7',
     error: '#f44336',
-    danger: '#f44336',
-    info: '#b7bccf',
-    success: '#5ca266',
-    warning: '#d9922e'
+    danger: '#f80054',
+    info: '#039be5',
+    success: '#37b74a',
+    warning: '#fbd050'
   }
 });
 Vue.use(VueShortkey);

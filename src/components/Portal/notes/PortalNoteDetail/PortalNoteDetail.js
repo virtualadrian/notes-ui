@@ -23,6 +23,11 @@ export default class PortalNoteDetail extends Vue {
   saveDialog = false;
   editingNote = false;
   note = {};
+  snack = {
+    isVisible: false,
+    color: 'success',
+    message: ''
+  };
 
   mounted() {
     this.loadNoteDetail();
@@ -62,6 +67,18 @@ export default class PortalNoteDetail extends Vue {
       });
   }
 
+  success(message) {
+    this.snack.isVisible = true;
+    this.snack.color = 'secondary';
+    this.snack.message = message;
+  }
+
+  error(message) {
+    this.snack.isVisible = true;
+    this.snack.color = 'error lighten-1 white--text';
+    this.snack.message = message;
+  }
+
   saveNote() {
     this.note.noteBody = this.$refs.editor.getNoteSaveBody();
 
@@ -73,8 +90,7 @@ export default class PortalNoteDetail extends Vue {
       .then(response => { return response.data; })
       .then(response => {
         this.note = response;
-        this.$toastr.defaultTimeout = 1000;
-        this.$toastr.s('Note has been saved.');
+        this.success('Note has been saved.');
         this.editingNote = false;
       })
       .then(() => {

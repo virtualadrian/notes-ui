@@ -4,7 +4,7 @@
 
     <drawer :drawer="drawer"></drawer>
 
-    <v-toolbar color="amber" app clipped-left flat fixed>
+    <v-toolbar color="#2a56c6" app clipped-left flat fixed dark>
       <v-toolbar-side-icon @click.native="drawer = !drawer"></v-toolbar-side-icon>
       <span @click="$router.push({name: 'Notes', params: {filter: 'ALL'}})" class="title ml-3 ml-5 mr-5">Noteler&nbsp;<span class="font-weight-light">Portal</span></span>
       <v-text-field class="ml-3" solo-inverted flat hide-details label="Search" prepend-inner-icon="search"></v-text-field>
