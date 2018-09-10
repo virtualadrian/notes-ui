@@ -54,3 +54,8 @@
   -webkit-font-feature-settings: 'liga';
   -webkit-font-smoothing: antialiased;
 }
+
+.drag-card-icon, .card-detail-drag-handle {
+  cursor: grab;
+  user-select: none;
+}

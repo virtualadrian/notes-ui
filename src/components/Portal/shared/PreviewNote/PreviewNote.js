@@ -10,6 +10,9 @@ import hljs from 'highlight.js';
 })
 export default class PreviewNote extends Vue {
   showPreview = false;
+  addingCard = false;
+  fab=false;
+  card = {question: '', answer: ''};
 
   @Prop({
     type: Object,
@@ -19,6 +22,13 @@ export default class PreviewNote extends Vue {
 
   @Emit()
   editNote(note) {}
+
+  populateQuestion() {
+    this.card.question = window.getSelection().toString();
+  }
+  populateAnswer() {
+    this.card.answer = window.getSelection().toString();
+  }
 
   updated() {
     this.$refs.noteBody.querySelectorAll('code').forEach((el, idx, arr) => {
