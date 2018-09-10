@@ -27,6 +27,7 @@
     "quill-image-drop-module": "^1.0.3",
     "quill-image-resize-module": "^3.0.0",
     "vue": "^2.5.2",
+    "vue-draggable-resizable": "^1.7.1",
     "vue-fab": "^2.1.4",
     "vue-input-tag": "^1.0.4",
     "vue-material-design-icons": "^2.0.0",

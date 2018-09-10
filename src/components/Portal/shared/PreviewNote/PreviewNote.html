@@ -1,5 +1,6 @@
 <v-layout row justify-center>
   <v-dialog v-model="showPreview" fullscreen hide-overlay transition="dialog-bottom-transition">
+
     <v-card>
       <v-toolbar dark color="primary">
         <v-btn icon dark @click.native="showPreview = false">
@@ -16,6 +17,71 @@
         Heads up, this note is public. To make it private again, head over to the Edit area.
       </v-alert>
 
+      <vue-draggable-resizable :active="true" :w="400" :h="600" :y="250" :x="250" :handles="[]" >
+        <v-container fluid >
+          <v-layout align-space-between justify-space-around row fill-height>
+            <v-flex xs12 sm12>
+
+              <v-card class="elevation-16">
+                <v-toolbar color="teal" dark>
+                  <v-toolbar-side-icon></v-toolbar-side-icon>
+
+                  <v-toolbar-title>Settings</v-toolbar-title>
+                </v-toolbar>
+
+                <v-list two-line subheader>
+                  <v-subheader>General</v-subheader>
+
+                  <v-list-tile avatar>
+                    <v-list-tile-content>
+                      <v-list-tile-title>Profile photo</v-list-tile-title>
+                      <v-list-tile-sub-title>Change your Google+ profile photo</v-list-tile-sub-title>
+                    </v-list-tile-content>
+                  </v-list-tile>
+
+                  <v-list-tile avatar>
+                    <v-list-tile-content>
+                      <v-list-tile-title>Show your status</v-list-tile-title>
+                      <v-list-tile-sub-title>Your status is visible to everyone</v-list-tile-sub-title>
+                    </v-list-tile-content>
+                  </v-list-tile>
+                </v-list>
+
+                <v-divider></v-divider>
+
+                <v-list subheader two-line>
+                  <v-subheader>Hangout notifications</v-subheader>
+
+                  <v-list-tile @click="">
+                    <v-list-tile-action>
+                      <v-checkbox></v-checkbox>
+                    </v-list-tile-action>
+
+                    <v-list-tile-content @click="">
+                      <v-list-tile-title>Notifications</v-list-tile-title>
+                      <v-list-tile-sub-title>Allow notifications</v-list-tile-sub-title>
+                    </v-list-tile-content>
+                  </v-list-tile>
+
+                  <v-list-tile @click="">
+                    <v-list-tile-action>
+                      <v-checkbox></v-checkbox>
+                    </v-list-tile-action>
+
+                    <v-list-tile-content @click="">
+                      <v-list-tile-title>Sound</v-list-tile-title>
+                      <v-list-tile-sub-title>Hangouts message</v-list-tile-sub-title>
+                    </v-list-tile-content>
+                  </v-list-tile>
+
+                </v-list>
+              </v-card>
+
+            </v-flex>
+          </v-layout>
+        </v-container>
+      </vue-draggable-resizable>
+
       <v-container fluid>
         <v-layout justify-center row>
           <v-flex xs12 sm10>
@@ -24,97 +90,7 @@
         </v-layout>
       </v-container>
 
-      <v-bottom-sheet v-model="sheet">
-        <v-btn
-          slot="activator"
-          color="purple"
-          dark
-        >
-          Click me
-        </v-btn>
 
-        <v-card>
-          <v-toolbar color="teal" dark>
-            <v-toolbar-side-icon></v-toolbar-side-icon>
-
-            <v-toolbar-title>Settings</v-toolbar-title>
-          </v-toolbar>
-
-          <v-list two-line subheader>
-            <v-subheader>General</v-subheader>
-
-            <v-list-tile avatar>
-              <v-list-tile-content>
-                <v-list-tile-title>Profile photo</v-list-tile-title>
-                <v-list-tile-sub-title>Change your Google+ profile photo</v-list-tile-sub-title>
-              </v-list-tile-content>
-            </v-list-tile>
-
-            <v-list-tile avatar>
-              <v-list-tile-content>
-                <v-list-tile-title>Show your status</v-list-tile-title>
-                <v-list-tile-sub-title>Your status is visible to everyone</v-list-tile-sub-title>
-              </v-list-tile-content>
-            </v-list-tile>
-          </v-list>
-
-          <v-divider></v-divider>
-
-          <v-list
-            subheader
-            two-line
-          >
-            <v-subheader>Hangout notifications</v-subheader>
-
-            <v-list-tile @click="">
-              <v-list-tile-action>
-                <v-checkbox v-model="notifications"></v-checkbox>
-              </v-list-tile-action>
-
-              <v-list-tile-content @click="notifications = !notifications">
-                <v-list-tile-title>Notifications</v-list-tile-title>
-                <v-list-tile-sub-title>Allow notifications</v-list-tile-sub-title>
-              </v-list-tile-content>
-            </v-list-tile>
-
-            <v-list-tile @click="">
-              <v-list-tile-action>
-                <v-checkbox v-model="sound"></v-checkbox>
-              </v-list-tile-action>
-
-              <v-list-tile-content @click="sound = !sound">
-                <v-list-tile-title>Sound</v-list-tile-title>
-                <v-list-tile-sub-title>Hangouts message</v-list-tile-sub-title>
-              </v-list-tile-content>
-            </v-list-tile>
-
-            <v-list-tile @click="">
-              <v-list-tile-action>
-                <v-checkbox v-model="video"></v-checkbox>
-              </v-list-tile-action>
-
-              <v-list-tile-content @click="video = !video">
-                <v-list-tile-title>Video sounds</v-list-tile-title>
-                <v-list-tile-sub-title>Hangouts video call</v-list-tile-sub-title>
-              </v-list-tile-content>
-            </v-list-tile>
-
-            <v-list-tile @click="">
-              <v-list-tile-action>
-                <v-checkbox v-model="invites"></v-checkbox>
-              </v-list-tile-action>
-
-              <v-list-tile-content @click="invites = !invites">
-                <v-list-tile-title>Invites</v-list-tile-title>
-                <v-list-tile-sub-title>Notify when receiving invites</v-list-tile-sub-title>
-              </v-list-tile-content>
-            </v-list-tile>
-          </v-list>
-        </v-card>
-
-
-
-      </v-bottom-sheet>
 
     </v-card>
   </v-dialog>
