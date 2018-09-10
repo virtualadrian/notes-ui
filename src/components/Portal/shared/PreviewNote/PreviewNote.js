@@ -1,7 +1,13 @@
 import {Emit, Prop, Component, Vue} from 'vue-property-decorator';
+import VueDraggableResizable from 'vue-draggable-resizable'
+
 import hljs from 'highlight.js';
 
-@Component()
+@Component({
+  components: {
+    'vue-draggable-resizable': VueDraggableResizable
+  }
+})
 export default class PreviewNote extends Vue {
   showPreview = false;
 
