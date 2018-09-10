@@ -15,7 +15,6 @@ import SupportHome from '@/components/Landing/SupportHome/SupportHome.vue';
 import NoteView from '@/components/Landing/NoteView/NoteView.vue';
 
 import PortalLayout from '@/components/Portal/layout/PortalLayout/PortalLayout.vue';
-import PortalDashboard from '@/components/Portal/layout/PortalDashboard/PortalDashboard.vue';
 import PortalNotes from '@/components/Portal/notes/PortalNotes/PortalNotes.vue';
 import PortalNoteDetail from '@/components/Portal/notes/PortalNoteDetail/PortalNoteDetail.vue';
 import PortalNoteView from '@/components/Portal/notes/PortalNoteView/PortalNoteView.vue';
@@ -31,6 +30,15 @@ export default new Router({
     {
       path: '/',
       component: LandingLayout,
+      beforeEnter: (to, from, next) => {
+        if (auth.isLoggedIn()) {
+          next({
+            path: '/portal/notes/ALL'
+          });
+        } else {
+          next();
+        }
+      },
       children: [
         {
           path: '',
@@ -89,8 +97,7 @@ export default new Router({
       children: [
         {
           path: '',
-          name: 'PortalDashboard',
-          component: PortalDashboard
+          redirect: { name: 'Notes', params: {filter: 'ALL'} }
         },
         {
           path: 'notes/:filter?',
