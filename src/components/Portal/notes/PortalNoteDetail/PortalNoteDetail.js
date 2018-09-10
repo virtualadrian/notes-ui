@@ -2,7 +2,7 @@ import { Component, Vue } from 'vue-property-decorator';
 import http from '@/services/http';
 import environment from '@/services/environment';
 
-import SaveToolbar from '@/components/Portal/Shared/SaveToolbar/SaveToolbar.vue';
+import SaveToolbar from '@/components/Portal/shared/SaveToolbar/SaveToolbar.vue';
 import PortalNoteMeta from '@/components/Portal/notes/PortalNoteMeta/PortalNoteMeta.vue';
 import NoteEditor from '@/components/Portal/shared/NoteEditor/NoteEditor.vue';
 
@@ -20,7 +20,7 @@ const api = {
   }
 })
 export default class PortalNoteDetail extends Vue {
-  hasChanges = false;
+  saveDialog = false;
   editingNote = false;
   note = {};
 
@@ -29,24 +29,42 @@ export default class PortalNoteDetail extends Vue {
   }
 
   loadNoteDetail() {
+    this.note.id = this.$route.params.id;
+    this.getNoteDetail();
+  }
 
+  discardChanges() {
+    window.tinymce.activeEditor.setDirty(false);
+    this.$router.push({name: 'Notes', params: { filter: 'ALL' }});
+  }
+
+  saveAndClose() {
+    this.saveNote();
+    this.$router.push({name: 'Notes', params: { filter: 'ALL' }});
   }
 
   clearChanges() {
-
-  }
-
-  saveChanges(note) {
-
+    if (this.$refs.editor.hasChanges()) {
+      this.saveDialog = true;
+      return;
+    }
+    this.$router.push({name: 'Notes', params: { filter: 'ALL' }});
   }
 
   getNoteDetail() {
     if (!this.note.id) { return; }
-    return http.get(api.getNote(this.note.id));
+    return http.get(api.getNote(this.note.id))
+      .then((res) => {
+        this.note = res.data;
+      })
+      .then(() => {
+        window.tinymce.activeEditor.setDirty(false);
+      });
   }
 
   saveNote() {
-    this.note.noteTags = this.editor.tags.join(',');
+    this.note.noteBody = this.$refs.editor.getNoteSaveBody();
+
     const save = (this.note.id >= 0)
       ? http.put(api.saveNote(), this.note)
       : http.post(api.saveNote(), this.note);
@@ -54,18 +72,13 @@ export default class PortalNoteDetail extends Vue {
     return save
       .then(response => { return response.data; })
       .then(response => {
-        if (this.note.id >= 0) {
-          this.note.noteTitle = response.noteTitle;
-          this.note.noteBody = response.noteBody;
-          this.note.noteTags = response.noteTags;
-        } else {
-          this.notesResult.content.push(response);
-        }
-
+        this.note = response;
         this.$toastr.defaultTimeout = 1000;
         this.$toastr.s('Note has been saved.');
         this.editingNote = false;
-        this.editor.dirty = false;
+      })
+      .then(() => {
+        window.tinymce.activeEditor.setDirty(false);
       });
   }
 }

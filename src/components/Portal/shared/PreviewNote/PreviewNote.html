@@ -8,7 +8,7 @@
         <v-toolbar-title>Preview: {{note.noteTitle}}</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-toolbar-items>
-          <v-btn dark flat @click.native="showPreview = false">Edit</v-btn>
+          <v-btn dark flat :to="{name: 'NoteDetail', params: { id: note.id }}">Edit</v-btn>
         </v-toolbar-items>
       </v-toolbar>
 
@@ -19,7 +19,7 @@
       <v-container fluid>
         <v-layout justify-center row>
           <v-flex xs12 sm10>
-            <div v-html="note.noteBody"></div>
+            <div ref="noteBody" v-html="note.noteBody"></div>
           </v-flex>
         </v-layout>
       </v-container>

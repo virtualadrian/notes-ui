@@ -39,6 +39,8 @@ export default class NoteEditor extends Vue {
   toolbar2 = 'codesample';
 
   otherOptions = {
+    codesample_content_css: '/static/style/prism.css',
+    menubar: 'edit insert view format table tools',
     branding: false,
     file_picker_types: 'image',
     image_title: true,
@@ -57,6 +59,7 @@ export default class NoteEditor extends Vue {
 
   mounted() {
     api.currentUserAccountId = auth.getCurrentUserAccountId();
+    setTimeout(this.onResize, 200);
   }
 
   handleFilePick(callback, value, meta) {
@@ -82,7 +85,6 @@ export default class NoteEditor extends Vue {
   }
 
   onResize() {
-    console.dir(window.tinymce.activeEditor);
     if (window.tinymce && window.tinymce.activeEditor) {
       this.windowSize = {
         x: this.$refs.editorBody.$el.clientWidth,
@@ -92,10 +94,11 @@ export default class NoteEditor extends Vue {
     }
   }
 
-  getNoteBody() {
-    return this.note.noteBody;
+  getNoteSaveBody() {
+    return window.tinymce.activeEditor.save();
   }
-  getHasChanges() {
-    return tinymce.activeEditor.isDirty();
+
+  hasChanges() {
+    return window.tinymce.activeEditor.isDirty() || this.note.hasChanges;
   }
 }

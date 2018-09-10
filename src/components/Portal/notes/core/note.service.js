@@ -11,7 +11,7 @@ const api = {
   deleteNote: (id) => environment.getEndpoint(`note/${id}`),
   createPinnedNote: () => environment.getEndpoint(`note/pin`),
   createFavoriteNote: () => environment.getEndpoint(`note/favorite`),
-  archiveNote: () => environment.getEndpoint(`note/arvhive`),
+  archiveNote: () => environment.getEndpoint(`note/archive`),
   duplicateNote: () => environment.getEndpoint(`note/duplicate`),
   shareNote: () => environment.getEndpoint(`note`)
 };

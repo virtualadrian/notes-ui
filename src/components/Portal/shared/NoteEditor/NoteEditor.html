@@ -1,11 +1,9 @@
-<v-container>
-  <v-layout v-resize="onResize">
-    <v-flex>
-      <tinymce id="noteEditor" v-model="note.noteBody"
-               :toolbar2="toolbar2" ref="editorBody" :other_options="otherOptions">
-      </tinymce>
-    </v-flex>
-  </v-layout>
-</v-container>
+<v-layout v-resize="onResize">
+  <v-flex>
+    <tinymce id="noteEditor" v-model="note.noteBody"
+             :toolbar2="toolbar2" ref="editorBody" :other_options="otherOptions">
+    </tinymce>
+  </v-flex>
+</v-layout>
 
 

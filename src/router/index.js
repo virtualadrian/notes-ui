@@ -93,7 +93,7 @@ export default new Router({
           component: PortalDashboard
         },
         {
-          path: 'notes',
+          path: 'notes/:filter?',
           name: 'Notes',
           component: PortalNotes
         },

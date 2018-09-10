@@ -11,7 +11,7 @@ import QuickCompose from '@/components/Portal/shared/QuickCompose/QuickCompose.v
 import noteService from '@/components/Portal/notes/core/note.service.js';
 
 const api = {
-  getNotes: () => environment.getEndpoint(`note`),
+  getNotes: (term) => environment.getEndpoint(`note/filter/${term}`),
   getEditorImage: (userId, name) => environment.getS3Endpoint(`/images/${userId}/${name}`),
   deleteNote: (id) => environment.getEndpoint(`note/${id}`),
   saveNote: () => environment.getEndpoint(`note`),
@@ -42,7 +42,7 @@ export default class PortalNotes extends Vue {
   }
 
   get notes() {
-    return _.orderBy(this.notesResult.content, ['noteOrderIndex'], ['desc']);
+    return this.notesResult.content;
   }
 
   success(message) {
@@ -96,22 +96,15 @@ export default class PortalNotes extends Vue {
   }
 
   shareNote(note) {
-    return noteService.shareNote(note)
-      .then((res) => {
-        _.cloneDeep(res.data, note);
-      });
+    return noteService.shareNote(note).then(() => this.getNotes);
   }
 
   duplicateNote(note) {
-    return noteService.duplicateNote(note)
-      .then((res) => {
-        this.notesResult.content.push(res.data);
-        this.notesResult.content = _.orderBy(this.notesResult.content, ['noteOrderIndex'], ['desc']);
-      });
+    return noteService.duplicateNote(note).then(() => this.getNotes);
   }
 
   archiveNote(note) {
-    return noteService.archiveNote(note);
+    return noteService.archiveNote(note).then(() => this.getNotes);
   }
 
   getUser() {
@@ -119,12 +112,9 @@ export default class PortalNotes extends Vue {
     this.currentUserFirstName = auth.getCurrentUserFirstName();
   }
 
-  onTextChanged() {
-    this.editor.dirty = true;
-  }
-
   getNotes() {
-    http.get(api.getNotes())
+    const filter = this.$route.params.filter || 'ALL'
+    http.get(api.getNotes(filter))
       .then((result) => {
         this.notesResult = result.data;
       });

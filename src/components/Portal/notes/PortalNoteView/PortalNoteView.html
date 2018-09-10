@@ -2,7 +2,7 @@
   <div class="container-fluid" >
     <div class="row note-action">
       <div class="col-sm-2 note-action-back">
-        <button v-on:click="cancel()" class="btn btn-warning btn-shadow btn-rounded">
+        <button @click.native="cancel()" class="btn btn-warning btn-shadow btn-rounded">
           <i class="zmdi zmdi-arrow-back"></i>
         </button>
       </div>
@@ -10,7 +10,7 @@
         <h2>{{currentNote.noteTitle}}</h2>
       </div>
       <div class="col-sm-2 note-action-edit">
-        <button v-on:click="edit()" class="btn btn-success btn-shadow btn-rounded">
+        <button @click="editNote()" class="btn btn-success btn-shadow btn-rounded">
           <i class="zmdi zmdi-edit"></i>
         </button>
       </div>

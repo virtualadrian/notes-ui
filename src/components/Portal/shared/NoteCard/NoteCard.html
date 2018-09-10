@@ -7,9 +7,14 @@
       <i :pinned="!!note.pinIndex" class="fas fa-thumbtack notepin"></i>
     </v-btn>
   </v-toolbar>
-  <v-textarea auto-grow color="white" solo flat readonly
-              :value="note.noteBody.substring(0, 180).concat('...') | striphtml">
-  </v-textarea>
+  <!--<v-textarea auto-grow color="white" solo flat readonly height="120"-->
+              <!--:value="noteText">-->
+  <!--</v-textarea> -->
+  <v-card-title primary-title class="notebody" >
+    <div>
+      <span class="grey--text text--darken-2">{{this.note.noteBody.substring(0, 220).concat('...') | striphtml}}</span>
+    </div>
+  </v-card-title>
   <v-card-actions>
     <v-toolbar solo flat dense color="transparent">
 
@@ -41,7 +46,7 @@
       </v-tooltip>
 
       <v-tooltip bottom>
-        <v-btn icon slot="activator" dark @click="editNote(note)">
+        <v-btn icon slot="activator" dark :to="{ name: 'NoteDetail', params: { id: note.id }}">
           <v-icon color="primary">edit</v-icon>
         </v-btn>
         <span>Edit</span>

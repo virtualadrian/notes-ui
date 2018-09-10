@@ -4,13 +4,13 @@
 
       <v-layout v-if="link.type === TYPE.HEADING" row align-center :key="i">
         <v-flex xs6>
-          <v-subheader>&nbsp; {{link.text}}</v-subheader>
+          <v-subheader>&nbsp{{link.text}}</v-subheader>
         </v-flex>
         <v-flex xs6 class="text-xs-right">
         </v-flex>
       </v-layout>
 
-      <v-list-tile v-else-if="link.type === TYPE.ITEM" @click="" :key="i">
+      <v-list-tile v-else-if="link.type === TYPE.ITEM"  @click="link.action($router)" :key="i">
         <v-list-tile-action>
           <v-icon>{{link.icon}}</v-icon>
         </v-list-tile-action>

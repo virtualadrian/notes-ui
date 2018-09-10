@@ -1,27 +1,12 @@
 <section>
   <v-toolbar light color="amber">
-    <v-btn icon light @click.native="close()">
+    <v-btn icon light @click.native="clearNote">
       <v-icon>close</v-icon>
     </v-btn>
     <v-toolbar-title>Edit Note</v-toolbar-title>
     <v-spacer></v-spacer>
     <v-toolbar-items>
-      <v-btn light flat @click.native="saveChanges(note)">Save</v-btn>
+      <v-btn light flat @click="saveNote">Save</v-btn>
     </v-toolbar-items>
   </v-toolbar>
-
-  <v-dialog v-model="saveDialog" refs="saveDialog"
-            persistent max-width="290">
-    <v-card>
-      <v-card-title class="headline">Save Changes?</v-card-title>
-      <v-card-text>
-        You have unsaved changes! Would you like save before you leave?
-      </v-card-text>
-      <v-card-actions>
-        <v-spacer></v-spacer>
-        <v-btn color="danger" flat @click.native="cancelChanges()">Don't Save</v-btn>
-        <v-btn color="success" flat @click.native="saveChanges(note)">Save</v-btn>
-      </v-card-actions>
-    </v-card>
-  </v-dialog>
 </section>

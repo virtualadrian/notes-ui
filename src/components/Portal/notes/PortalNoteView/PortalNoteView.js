@@ -29,8 +29,8 @@ export default class PortalNoteView extends Vue {
     router.push({name: 'PortalNotes'});
   }
 
-  edit() {
-    router.push({name: 'PortalNoteDetail', params: { id: this.$route.params.id }});
+  editNote() {
+    router.push({name: 'NoteDetail', params: { id: this.currentNote.id }});
   }
 
   getNoteDetail() {

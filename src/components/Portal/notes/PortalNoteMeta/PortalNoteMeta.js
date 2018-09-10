@@ -2,7 +2,6 @@ import {Prop, Component, Vue} from 'vue-property-decorator';
 
 @Component()
 export default class PortalNoteMeta extends Vue {
-  tags = [];
   tag = '';
 
   @Prop({
@@ -11,10 +10,19 @@ export default class PortalNoteMeta extends Vue {
   })
   note;
 
+  get tags() {
+    return this.note && this.note.noteTags ? this.note.noteTags.split(',') : [];
+  }
+
+  set tags(value) {
+    this.note.hasChanges = true;
+    this.note.noteTags = value.join(',');
+  }
+
   insertTag() {
     if (!this.tag) { return; }
     this.$nextTick(() => {
-      this.tags.push(...this.tag.split(','));
+      this.tags.concat(...this.tag.split(','));
       this.$nextTick(() => {
         this.tag = '';
       });
@@ -22,7 +30,7 @@ export default class PortalNoteMeta extends Vue {
   }
 
   getNoteTags() {
-    return this.tags.split(',');
+    return this.tags.join(',');
   }
 
   getNoteTitle() {
