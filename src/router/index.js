@@ -15,10 +15,10 @@ import SupportHome from '@/components/Landing/SupportHome/SupportHome.vue';
 import NoteView from '@/components/Landing/NoteView/NoteView.vue';
 
 import PortalLayout from '@/components/Portal/layout/PortalLayout/PortalLayout.vue';
-import PortalNotes from '@/components/Portal/notes/PortalNotes/PortalNotes.vue';
-import PortalNoteDetail from '@/components/Portal/notes/PortalNoteDetail/PortalNoteDetail.vue';
-import PortalNoteView from '@/components/Portal/notes/PortalNoteView/PortalNoteView.vue';
-import PortalSearchNote from '@/components/Portal/notes/PortalSearchNote/PortalSearchNote.vue';
+import PortalNotes from '@/components/Portal/notes/PortalNotes.vue';
+import PortalNoteDetail from '@/components/Portal/notes/PortalNoteDetail.vue';
+import PortalNoteView from '@/components/Portal/notes/PortalNoteView.vue';
+import PortalSearchNote from '@/components/Portal/notes/PortalSearchNote.vue';
 
 import PortalCardDeckList from '@/components/Portal/deck/PortalCardDeckList/PortalCardDeckList.vue';
 import PortalCardDeckDetail from '@/components/Portal/deck/PortalCardDeckDetail/PortalCardDeckDetail.vue';

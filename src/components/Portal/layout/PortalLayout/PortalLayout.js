@@ -1,8 +1,8 @@
 import {Prop, Component, Vue} from 'vue-property-decorator';
 import PortalNavigation from '@/components/Portal/layout/PortalNavigation/PortalNavigation.vue';
 import Footer from '@/components/Portal/layout/Footer.vue';
-import Drawer from '@/components/Portal/shared/Drawer/Drawer.vue';
-import QuickCompose from '@/components/Portal/shared/QuickCompose/QuickCompose';
+import Drawer from '@/components/Portal/shared/Drawer.vue';
+import QuickCompose from '@/components/Portal/shared/QuickCompose';
 
 @Component({
   components: {PortalNavigation, Footer, Drawer, 'quick-compose': QuickCompose}
