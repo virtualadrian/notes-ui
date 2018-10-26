@@ -23,7 +23,7 @@
   </section>
 </template>
 <script>
-import {Component, Emit, Vue} from 'vue-property-decorator';
+import { Component, Emit, Vue } from 'vue-property-decorator';
 import http from '@/services/http';
 import auth from '@/services/authentication';
 import environment from '@/services/environment';
