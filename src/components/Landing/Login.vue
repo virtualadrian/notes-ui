@@ -44,9 +44,9 @@
 <script>
 import Vue from 'vue';
 import Component from 'vue-class-component';
-import auth from '@/services/authentication';
+import auth from '@/global/services/authentication';
 import router from '@/router';
-import AccountInstructions from '@/components/Landing/AccountInstructions/AccountInstructions.vue';
+import AccountInstructions from '@/components/Landing/AccountInstructions.vue';
 
   @Component({
     components: {

@@ -51,4 +51,3 @@ export default class PasswordValidate {
     return /[!@#$%^&*()]/.test(this.passwordInfo.password);
   };
 }
-

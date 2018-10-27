@@ -1,6 +1,6 @@
 import axios from 'axios';
 import decode from 'jwt-decode';
-import environment from '@/services/environment';
+import environment from '@/global/services/environment';
 
 const AUTH_CLIENT_ID = environment.getValue('clientId');
 const AUTH_CLIENT_KEY = environment.getValue('clientKey');

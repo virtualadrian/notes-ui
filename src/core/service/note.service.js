@@ -1,5 +1,5 @@
-import http from '@/services/http';
-import environment from '@/services/environment';
+import http from '@/global/services/http';
+import environment from '@/global/services/environment';
 
 const api = {
   getPublicNote: (id) => environment.getEndpoint(`note/public/${id}`),

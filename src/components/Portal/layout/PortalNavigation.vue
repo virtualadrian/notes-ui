@@ -92,7 +92,7 @@
 </template>
 <script>
 import { Component, Vue } from 'vue-property-decorator';
-import auth from '@/services/authentication';
+import auth from '@/global/services/authentication';
 import router from '@/router';
 import fab from 'vue-fab';
 

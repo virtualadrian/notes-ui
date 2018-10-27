@@ -29,8 +29,8 @@
 <script>
 import { Component, Vue } from 'vue-property-decorator';
 import router from '@/router';
-import http from '@/services/http';
-import environment from '@/services/environment';
+import http from '@/global/services/http';
+import environment from '@/global/services/environment';
 
 const api = {
   getDeck: (id) => environment.getEndpoint(`carddeck/${id}`)

@@ -9,9 +9,9 @@
 </template>
 <script>
   import {Prop, Component, Vue} from 'vue-property-decorator';
-  import environment from '@/services/environment';
-  import auth from '@/services/authentication';
-  import s3image from '@/services/s3image';
+  import environment from '@/global/services/environment';
+  import auth from '@/global/services/authentication';
+  import s3image from '@/global/services/s3image';
   import tinymce from 'vue-tinymce-editor';
 
   const api = {

@@ -65,10 +65,10 @@
 </template>
 <script>
 import {Component, Vue} from 'vue-property-decorator';
-import http from '@/services/http';
-import environment from '@/services/environment';
+import http from '@/global/services/http';
+import environment from '@/global/services/environment';
 import router from '@/router';
-import AccountInstructions from '@/components/Landing/AccountInstructions/AccountInstructions.vue';
+import AccountInstructions from '@/components/Landing/AccountInstructions.vue';
 
 const api = {
   setNewPassword: () => environment.getEndpoint(`account/register/confirm`)

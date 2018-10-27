@@ -60,56 +60,56 @@
   </v-card>
 </template>
 <script>
-  import {Emit, Prop, Component, Vue} from 'vue-property-decorator';
-  import striphtml from '@/shared/filter/striphtml';
+import {Emit, Prop, Component, Vue} from 'vue-property-decorator';
+import striphtml from '@/global/filter/striphtml';
 
-  @Component({
-    filters: {striphtml}
+@Component({
+  filters: {striphtml}
+})
+export default class NoteCard extends Vue {
+  @Prop({
+    type: Object,
+    default: () => { return {}; }
   })
-  export default class NoteCard extends Vue {
-    @Prop({
-      type: Object,
-      default: () => { return {}; }
-    })
-    note;
+  note;
 
-    notifications = false;
-    sound = true;
-    widgets = false;
-    isPrivate = true;
+  notifications = false;
+  sound = true;
+  widgets = false;
+  isPrivate = true;
 
-    @Emit()
-    createCardsFromNote(note) {
-      console.log('createCardsFromNote');
-    }
-
-    @Emit()
-    editNote(note) {}
-
-    @Emit()
-    deleteNote(note) {}
-
-    @Emit()
-    viewNote(note) {}
-
-    @Emit()
-    pinNote(note) {}
-
-    @Emit()
-    createSnippetFromNote(note) {}
-
-    @Emit()
-    createFavoriteNote(note) {}
-
-    @Emit()
-    shareNote(note) {}
-
-    @Emit()
-    duplicateNote(note) {}
-
-    @Emit()
-    archiveNote(note) {}
+  @Emit()
+  createCardsFromNote(note) {
+    console.log('createCardsFromNote');
   }
+
+  @Emit()
+  editNote(note) {}
+
+  @Emit()
+  deleteNote(note) {}
+
+  @Emit()
+  viewNote(note) {}
+
+  @Emit()
+  pinNote(note) {}
+
+  @Emit()
+  createSnippetFromNote(note) {}
+
+  @Emit()
+  createFavoriteNote(note) {}
+
+  @Emit()
+  shareNote(note) {}
+
+  @Emit()
+  duplicateNote(note) {}
+
+  @Emit()
+  archiveNote(note) {}
+}
 </script>
 <style lang="scss">
   i[pinned].notepin {

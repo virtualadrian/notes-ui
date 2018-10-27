@@ -65,10 +65,10 @@
   import { Component, Vue } from 'vue-property-decorator';
   import { VueEditor } from 'vue2-editor';
   import router from '@/router/index';
-  import http from '@/services/http';
-  import auth from '@/services/authentication';
-  import s3image from '@/services/s3image';
-  import environment from '@/services/environment';
+  import http from '@/global/services/http';
+  import auth from '@/global/services/authentication';
+  import s3image from '@/global/services/s3image';
+  import environment from '@/global/services/environment';
 
   const getEmptyNote = function() {
     return {id: -1, noteBody: '', noteTitle: '', noteTags: ''};

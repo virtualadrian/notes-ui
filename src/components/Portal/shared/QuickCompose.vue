@@ -39,9 +39,9 @@
 <script>
   import {Emit, Component, Vue} from 'vue-property-decorator';
   import { VueEditor } from 'vue2-editor';
-  // import http from '@/services/http';
+  // import http from '@/global/services/http';
 
-  // import environment from '@/services/environment';
+  // import environment from '@/global/services/environment';
 
   // const api = {
   //   saveNote: () => environment.getEndpoint(`note`)

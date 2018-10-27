@@ -30,8 +30,8 @@
 import { Component, Vue } from 'vue-property-decorator';
 import { VueEditor } from 'vue2-editor';
 import router from '@/router/index';
-import http from '@/services/http';
-import environment from '@/services/environment';
+import http from '@/global/services/http';
+import environment from '@/global/services/environment';
 import hljs from 'highlight.js';
 
 const api = {

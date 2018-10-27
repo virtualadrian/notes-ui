@@ -72,9 +72,9 @@
 <script>
 import { Component, Vue } from 'vue-property-decorator';
 import router from '@/router/index';
-import http from '@/services/http';
-import environment from '@/services/environment';
-import striphtml from '@/shared/filter/striphtml';
+import http from '@/global/services/http';
+import environment from '@/global/services/environment';
+import striphtml from '@/global/filter/striphtml';
 
 const api = {
   searchNotes: (term, page, size) => environment.getEndpoint(`note/search/${term}/${page}/${size}`)

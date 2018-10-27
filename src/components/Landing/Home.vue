@@ -5,8 +5,8 @@
   </section>
 </template>
 <script>
-import RegistrationSimple from '@/components/Landing/RegistrationSimple/RegistrationSimple.vue';
-import FeatureList from '@/components/Landing/FeatureList/FeatureList.vue';
+import RegistrationSimple from '@/components/Landing/RegistrationSimple.vue';
+import FeatureList from '@/components/Landing/FeatureList.vue';
 
 export default {
   name: 'home',

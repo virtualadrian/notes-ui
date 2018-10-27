@@ -24,15 +24,15 @@
 </template>
 <script>
 import { Component, Emit, Vue } from 'vue-property-decorator';
-import http from '@/services/http';
-import auth from '@/services/authentication';
-import environment from '@/services/environment';
+import http from '@/global/services/http';
+import auth from '@/global/services/authentication';
+import environment from '@/global/services/environment';
 import PreviewNote from '@/components/Portal/shared/PreviewNote.vue';
 import NoteGrid from '@/components/Portal/shared/NoteGrid.vue';
 import PortalNoteDetail from '@/components/Portal/notes/PortalNoteDetail.vue';
 import QuickCompose from '@/components/Portal/shared/QuickCompose.vue';
 
-import noteService from '@/core/note.service.js';
+import noteService from '@/core/service/note.service.js';
 
 const api = {
   getNotes: (term) => environment.getEndpoint(`note/filter/${term}`),

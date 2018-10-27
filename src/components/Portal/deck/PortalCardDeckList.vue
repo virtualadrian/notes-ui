@@ -83,9 +83,9 @@
 </template>
 <script>
   import {Component, Vue} from 'vue-property-decorator';
-  import http from '@/services/http';
-  import auth from '@/services/authentication';
-  import environment from '@/services/environment';
+  import http from '@/global/services/http';
+  import auth from '@/global/services/authentication';
+  import environment from '@/global/services/environment';
 
   const api = {
     getDecks: () => environment.getEndpoint(`carddeck`),
