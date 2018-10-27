@@ -9,11 +9,10 @@
       <v-flex xs3><v-btn icon flat @click="snack.isVisible = false"><v-icon>close</v-icon></v-btn></v-flex>
     </v-snackbar>
 
-    <preview-note @edit-note="editNote" :note.sync="previewingNote" ref="previewDialog"></preview-note>
+    <preview-note :note.sync="previewingNote" ref="previewDialog"></preview-note>
 
     <note-grid :notes.sync="noteList"
-               @view-note="viewNote"
-               @edit-note="editNote" @pin-note="pinNote"
+               @view-note="viewNote" @pin-note="pinNote"
                @delete-note="deleteNote" @create-cards-from-note="createCardsFromNote"
                @create-favorite-note="createFavoriteNote"
                @duplicate-note="duplicateNote" @archive-note="archiveNote">
@@ -23,43 +22,32 @@
   </section>
 </template>
 <script>
-import { Component, Emit, Vue } from 'vue-property-decorator';
+import { Component, Vue, Emit } from 'vue-property-decorator';
+
 import auth from '@/global/services/authentication';
-import environment from '@/global/services/environment';
 import PreviewNote from '@/components/Portal/shared/PreviewNote.vue';
 import NoteGrid from '@/components/Portal/shared/NoteGrid.vue';
-import PortalNoteDetail from '@/components/Portal/notes/PortalNoteDetail.vue';
 import QuickCompose from '@/components/Portal/shared/QuickCompose.vue';
 import {mapActions, mapGetters} from 'vuex';
-
-import noteService from '@/core/service/note.service.js';
-
-const api = {
-  getNotes: (term) => environment.getEndpoint(`note/filter/${term}`),
-  getEditorImage: (userId, name) => environment.getS3Endpoint(`/images/${userId}/${name}`),
-  deleteNote: (id) => environment.getEndpoint(`note/${id}`),
-  saveNote: () => environment.getEndpoint(`note`),
-  currentUserAccountId: 0
-};
 
 @Component({
   components: {
     'preview-note': PreviewNote,
-    'note-detail': PortalNoteDetail,
     'quick-compose': QuickCompose,
     'note-grid': NoteGrid
   },
   computed: {
-    ...mapGetters('note', ['noteList'])
+    ...mapGetters('noteStore', ['noteList'])
   },
   methods: {
-    ...mapActions('note', ['getNotes'])
+    ...mapActions('noteStore', ['getNotes', 'pinNote', 'createFavoriteNote', 'shareNote', 'duplicateNote', 'archiveNote'])
   }
 })
 export default class PortalNotes extends Vue {
-  notesResult = [];
   currentNote = {};
   previewingNote = {};
+  filter = 'ALL';
+
   snack = {
     isVisible: false,
     color: 'success',
@@ -67,12 +55,9 @@ export default class PortalNotes extends Vue {
   };
 
   mounted() {
-    this.getNoteList();
+    this.filter = this.$route.params.filter || 'ALL';
+    this.getNotes(this.filter);
     this.getUser();
-  }
-
-  get notes() {
-    return this.notesResult.content;
   }
 
   success(message) {
@@ -92,11 +77,6 @@ export default class PortalNotes extends Vue {
     this.$refs.previewDialog.show();
   }
 
-  editNote(note) {
-    this.currentNote = note;
-    this.$refs.noteDetail.show();
-  }
-
   @Emit()
   createCardsFromNote(note) {
     console.log('createCardsFromNote');
@@ -111,44 +91,9 @@ export default class PortalNotes extends Vue {
 
   }
 
-  pinNote(note) {
-    return noteService.createPinnedNote(note)
-      .then((res) => {
-        note.pinIndex = res.data.pinIndex;
-      });
-  }
-
-  createFavoriteNote(note) {
-    return noteService.createFavoriteNote(note)
-      .then((res) => {
-        note.favoriteIndex = res.data.favoriteIndex;
-      });
-  }
-
-  shareNote(note) {
-    return noteService.shareNote(note).then(() => this.getNotes());
-  }
-
-  duplicateNote(note) {
-    return noteService.duplicateNote(note).then(() => this.getNotes());
-  }
-
-  archiveNote(note) {
-    return noteService.archiveNote(note).then(() => this.getNotes());
-  }
-
   getUser() {
-    api.currentUserAccountId = auth.getCurrentUserAccountId();
+    // api.currentUserAccountId = auth.getCurrentUserAccountId();
     this.currentUserFirstName = auth.getCurrentUserFirstName();
-  }
-
-  getNoteList() {
-    this.getNotes();
-    // const filter = this.$route.params.filter || 'ALL';
-    // http.get(api.getNotes(filter))
-    //   .then((result) => {
-    //     this.notesResult = result.data;
-    //   });
   }
 
   toggleDeleteConfirm(note) {

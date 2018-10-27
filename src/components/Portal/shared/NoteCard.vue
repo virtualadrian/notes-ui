@@ -84,9 +84,6 @@ export default class NoteCard extends Vue {
   }
 
   @Emit()
-  editNote(note) {}
-
-  @Emit()
   deleteNote(note) {}
 
   @Emit()

@@ -6,7 +6,7 @@
         <!-- S:TITLE -->
         <v-flex xs5 sm6>
           <v-text-field
-            v-model="note.noteTitle"
+            v-model="currentNote.noteTitle"
             label="Note Title" id="noteTitle" color="primary accent-4"></v-text-field>
         </v-flex>
         <!-- E:TITLE -->
@@ -27,7 +27,7 @@
         </v-flex>
         <v-flex xs1 sm1>
           <v-switch label="Private" color="success" class="note-private-toggle"
-                    v-model="note.isPrivate"></v-switch>
+                    v-model="currentNote.isPrivate"></v-switch>
         </v-flex>
         <!-- E:TAGS -->
       </v-layout>
@@ -36,25 +36,26 @@
 
 </template>
 <script>
-import {Prop, Component, Vue} from 'vue-property-decorator';
+import {Component, Vue} from 'vue-property-decorator';
+import {mapGetters, mapMutations} from 'vuex';
 
-@Component()
+@Component({
+  computed: {
+    ...mapGetters('noteStore', ['currentNote'])
+  },
+  methods: {
+    ...mapMutations('noteStore', ['setNoteTags'])
+  }
+})
 export default class PortalNoteMeta extends Vue {
   tag = '';
 
-  @Prop({
-    type: Object,
-    default: () => { return {}; }
-  })
-  note;
-
   get tags() {
-    return this.note && this.note.noteTags ? this.note.noteTags.split(',') : [];
+    return this.currentNote && this.currentNote.noteTags ? this.currentNote.noteTags.split(',') : [];
   }
 
   set tags(value) {
-    this.note.hasChanges = true;
-    this.note.noteTags = value.join(',');
+    this.setNoteTags(value);
   }
 
   insertTag() {
@@ -65,18 +66,6 @@ export default class PortalNoteMeta extends Vue {
         this.tag = '';
       });
     });
-  }
-
-  getNoteTags() {
-    return this.tags.join(',');
-  }
-
-  getNoteTitle() {
-    return this.note.noteTitle;
-  }
-
-  getNoteIsPrivate() {
-    return this.note.isPrivate;
   }
 }
 

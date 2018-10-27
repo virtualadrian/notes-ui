@@ -1,53 +1,30 @@
 <template>
   <v-layout v-resize="onResize">
     <v-flex>
-      <tinymce id="noteEditor" v-model="note.noteBody"
-               :toolbar2="toolbar2" ref="editorBody" :other_options="otherOptions">
+      <tinymce id="noteEditor" v-model="noteBody"
+               :toolbar2="'codesample'" ref="editorBody" :other_options="otherOptions">
       </tinymce>
     </v-flex>
   </v-layout>
 </template>
 <script>
-import {Prop, Component, Vue} from 'vue-property-decorator';
-import environment from '@/global/services/environment';
-import auth from '@/global/services/authentication';
-import s3image from '@/global/services/s3image';
+import {Watch, Component, Vue} from 'vue-property-decorator';
 import tinymce from 'vue-tinymce-editor';
-
-const api = {
-  getEditorImage: (userId, name) => environment.getS3Endpoint(`/images/${userId}/${name}`),
-  currentUserAccountId: 0
-};
-
-const fileUpload = {
-  handleFileReaderLoad(editor, reader, file, callback) {
-    return function() {
-      const id = 'blobid' + (new Date()).getTime();
-      const blobCache = editor.editorUpload.blobCache;
-      const base64 = reader.result.split(',')[1];
-      const blobInfo = blobCache.create(id, file, base64);
-      blobCache.add(blobInfo);
-      callback(blobInfo.blobUri(), {title: file.name});
-    };
-  },
-  handleFileInputChange(editor, callback) {
-    return function() {
-      const file = this.files[0];
-      const reader = new FileReader();
-      reader.onload = fileUpload.handleFileReaderLoad(editor, reader, file, callback);
-      reader.readAsDataURL(file);
-    };
-  }
-};
+import {mapGetters, mapActions} from 'vuex';
+import imageService from '@/core/service/image.service';
 
 @Component({
   components: {
     tinymce
+  },
+  computed: {
+    ...mapGetters('noteStore', ['currentNote'])
+  },
+  methods: {
+    ...mapActions('noteStore', ['getNoteDetail'])
   }
 })
 export default class NoteEditor extends Vue {
-  toolbar2 = 'codesample';
-
   otherOptions = {
     codesample_content_css: '/static/style/prism.css',
     menubar: 'edit insert view format table tools',
@@ -55,42 +32,24 @@ export default class NoteEditor extends Vue {
     file_picker_types: 'image',
     image_title: true,
     automatic_uploads: true,
-    images_upload_handler: this.handleUpload,
-    file_picker_callback: this.handleFilePick
+    images_upload_handler: imageService.handleUpload,
+    file_picker_callback: imageService.handleFilePick
   };
+  noteBody = '';
 
-  @Prop({
-    type: Object,
-    default: () => {
-      return {};
-    }
-  })
-  note;
+  @Watch('noteBody')
+  noteBodyChanged(value) {
+    this.currentNote.noteBody = value;
+  }
 
   mounted() {
-    api.currentUserAccountId = auth.getCurrentUserAccountId();
-    setTimeout(this.onResize, 200);
-  }
-
-  handleFilePick(callback, value, meta) {
-    const fileInput = document.createElement('input');
-    fileInput.setAttribute('type', 'file');
-    fileInput.setAttribute('accept', 'image/*');
-
-    fileInput.onchange = fileUpload.handleFileInputChange(this, callback);
-    fileInput.click();
-  }
-
-  handleUpload(blobInfo, success, failure) {
-    s3image.getSignature()
+    const $vm = this;
+    this.getNoteDetail(this.$route.params.id)
       .then(() => {
-        s3image.uploadImage(blobInfo)
-          .then(() => {
-            success(api.getEditorImage(api.currentUserAccountId, blobInfo.filename()), 2000);
-          })
-          .catch((err) => {
-            failure(err);
-          });
+        $vm.noteBody = $vm.currentNote.noteBody;
+        setTimeout(this.onResize, 200);
+
+        window.tinymce.activeEditor.execCommand('mceRepaint');
       });
   }
 
@@ -109,7 +68,7 @@ export default class NoteEditor extends Vue {
   }
 
   hasChanges() {
-    return window.tinymce.activeEditor.isDirty() || this.note.hasChanges;
+    return window.tinymce.activeEditor.isDirty() || this.currentNote.hasChanges;
   }
 }
 

@@ -4,7 +4,7 @@ import environment from '@/global/services/environment';
 const api = {
   getPublicNote: (id) => environment.getEndpoint(`note/public/${id}`),
   getNote: (id) => environment.getEndpoint(`note/${id}`),
-  getNotes: () => environment.getEndpoint(`note`),
+  getNotes: (term) => environment.getEndpoint(`note/filter/${term}`),
   getNotesPaged: (page, size) => environment.getEndpoint(`note/${page}/${size}`),
   searchNotesPaged: (term, page, size) => environment.getEndpoint(`note//search/${term}/${page}/${size}`),
   saveNote: () => environment.getEndpoint(`note`),
@@ -18,22 +18,20 @@ const api = {
 
 class NoteService {
   getNote(id) {
-    return http.get(api.getNote(id));
+    return http.get(api.getNote(id)).then(res => res.data);
   }
 
-  getNotes() {
-    http.get(api.getNotes())
-      .then((result) => {
-        this.notesResult = result.data;
-      });
-  }
-
-  updateNote(note) {
-    return http.put(api.saveNote(), note);
+  getNotes(term) {
+    return http.get(api.getNotes(term)).then(res => res.data);
   }
 
   saveNote(note) {
-    return http.post(api.saveNote(), note);
+    const save = (note.id >= 0)
+      ? http.put(api.saveNote(), note)
+      : http.post(api.saveNote(), note);
+
+    return save
+      .then(response => { return response.data; });
   }
 
   deleteNote(id) {

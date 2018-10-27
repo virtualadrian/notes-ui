@@ -17,11 +17,11 @@ import {Emit, Component, Vue} from 'vue-property-decorator';
 
 @Component()
 export default class SaveToolbar extends Vue {
-    @Emit()
+  @Emit()
   saveNote() {};
 
-    @Emit()
-    clearNote() {};
+  @Emit()
+  clearNote() {};
 }
 </script>
 <style lang="scss">

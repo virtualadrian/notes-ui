@@ -9,16 +9,16 @@
       <v-flex xs3><v-btn icon flat @click="snack.isVisible = false"><v-icon>close</v-icon></v-btn></v-flex>
     </v-snackbar>
     <v-card>
-      <save-toolbar @save-note="saveNote" @clear-note="clearChanges"></save-toolbar>
+      <save-toolbar @save-note="save" @clear-note="clearChanges"></save-toolbar>
       <v-container fluid>
         <v-layout>
           <v-flex xs12>
 
             <!-- Note title, tags, etc -->
-            <note-meta :note="note"></note-meta>
+            <note-meta></note-meta>
 
             <!-- Note Body WYSIWYG -->
-            <note-editor :note="note" ref="editor"></note-editor>
+            <note-editor ref="editor"></note-editor>
 
           </v-flex>
         </v-layout>
@@ -42,54 +42,43 @@
   </section>
 </template>
 <script>
-import { Component, Vue } from 'vue-property-decorator';
-import http from '@/global/services/http';
-import environment from '@/global/services/environment';
+import {Component, Vue} from 'vue-property-decorator';
+import {mapActions, mapGetters} from 'vuex';
 
 import SaveToolbar from '@/components/Portal/shared/SaveToolbar.vue';
 import PortalNoteMeta from '@/components/Portal/notes/PortalNoteMeta.vue';
 import NoteEditor from '@/components/Portal/shared/NoteEditor.vue';
-
-const api = {
-  getNote: (id) => environment.getEndpoint(`note/${id}`),
-  getEditorImage: (userId, name) => environment.getS3Endpoint(`/images/${userId}/${name}`),
-  saveNote: () => environment.getEndpoint(`note`)
-};
 
 @Component({
   components: {
     'save-toolbar': SaveToolbar,
     'note-meta': PortalNoteMeta,
     'note-editor': NoteEditor
+  },
+  computed: {
+    ...mapGetters('noteStore', ['currentNote'])
+  },
+  methods: {
+    ...mapActions('noteStore', ['saveNote', 'getNoteDetail', 'clearNote'])
   }
 })
 export default class PortalNoteDetail extends Vue {
   saveDialog = false;
-  editingNote = false;
-  note = {};
   snack = {
     isVisible: false,
     color: 'success',
     message: ''
   };
 
-  mounted() {
-    this.loadNoteDetail();
-  }
-
-  loadNoteDetail() {
-    this.note.id = this.$route.params.id;
-    this.getNoteDetail();
-  }
-
-  discardChanges() {
+  closeEditor() {
+    this.clearNote();
     window.tinymce.activeEditor.setDirty(false);
     this.$router.push({name: 'Notes', params: { filter: 'ALL' }});
   }
 
   saveAndClose() {
-    this.saveNote();
-    this.$router.push({name: 'Notes', params: { filter: 'ALL' }});
+    this.save();
+    this.closeEditor();
   }
 
   clearChanges() {
@@ -97,18 +86,7 @@ export default class PortalNoteDetail extends Vue {
       this.saveDialog = true;
       return;
     }
-    this.$router.push({name: 'Notes', params: { filter: 'ALL' }});
-  }
-
-  getNoteDetail() {
-    if (!this.note.id) { return; }
-    return http.get(api.getNote(this.note.id))
-      .then((res) => {
-        this.note = res.data;
-      })
-      .then(() => {
-        window.tinymce.activeEditor.setDirty(false);
-      });
+    this.closeEditor();
   }
 
   success(message) {
@@ -123,19 +101,10 @@ export default class PortalNoteDetail extends Vue {
     this.snack.message = message;
   }
 
-  saveNote() {
-    this.note.noteBody = this.$refs.editor.getNoteSaveBody();
-
-    const save = (this.note.id >= 0)
-      ? http.put(api.saveNote(), this.note)
-      : http.post(api.saveNote(), this.note);
-
-    return save
-      .then(response => { return response.data; })
-      .then(response => {
-        this.note = response;
+  save() {
+    return this.saveNote(this.$refs.editor.getNoteSaveBody())
+      .then(() => {
         this.success('Note has been saved.');
-        this.editingNote = false;
       })
       .then(() => {
         window.tinymce.activeEditor.setDirty(false);
