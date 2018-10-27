@@ -10,10 +10,6 @@ import Toastr from 'vue-toastr';
 import BootstrapVue from 'bootstrap-vue';
 import 'vuetify/dist/vuetify.min.css';
 
-// import 'material-design-icons-iconfont/dist/material-design-icons.css';
-// import 'bootstrap/dist/css/bootstrap.css';
-// import 'bootstrap-vue/dist/bootstrap-vue.css';
-
 import 'vue-toastr/src/vue-toastr.scss';
 import 'animate.css/animate.min.css';
 import 'font-awesome/css/font-awesome.min.css';

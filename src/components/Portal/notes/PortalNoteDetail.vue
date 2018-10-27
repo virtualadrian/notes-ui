@@ -14,9 +14,6 @@
         <v-layout>
           <v-flex xs12>
 
-            <!-- Note title, tags, etc -->
-            <note-meta></note-meta>
-
             <!-- Note Body WYSIWYG -->
             <note-editor ref="editor"></note-editor>
 
@@ -46,13 +43,11 @@ import {Component, Vue} from 'vue-property-decorator';
 import {mapActions, mapGetters} from 'vuex';
 
 import SaveToolbar from '@/components/Portal/shared/SaveToolbar.vue';
-import PortalNoteMeta from '@/components/Portal/notes/PortalNoteMeta.vue';
 import NoteEditor from '@/components/Portal/shared/NoteEditor.vue';
 
 @Component({
   components: {
     'save-toolbar': SaveToolbar,
-    'note-meta': PortalNoteMeta,
     'note-editor': NoteEditor
   },
   computed: {
@@ -73,6 +68,7 @@ export default class PortalNoteDetail extends Vue {
   closeEditor() {
     this.clearNote();
     window.tinymce.activeEditor.setDirty(false);
+    this.currentNote.hasChanges = false;
     this.$router.push({name: 'Notes', params: { filter: 'ALL' }});
   }
 
@@ -102,12 +98,12 @@ export default class PortalNoteDetail extends Vue {
   }
 
   save() {
+    window.tinymce.activeEditor.setDirty(false);
+    this.currentNote.hasChanges = false;
+
     return this.saveNote(this.$refs.editor.getNoteSaveBody())
       .then(() => {
         this.success('Note has been saved.');
-      })
-      .then(() => {
-        window.tinymce.activeEditor.setDirty(false);
       });
   }
 }

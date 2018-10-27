@@ -1,10 +1,27 @@
 <template>
   <section>
-    <v-toolbar light color="accent">
+    <v-toolbar light color="accent" class="toolbar-container">
       <v-btn icon light @click.native="clearNote">
         <v-icon>close</v-icon>
       </v-btn>
-      <v-toolbar-title>Edit Note</v-toolbar-title>
+      <v-toolbar-title class="title">
+          <v-text-field v-model="currentNote.noteTitle" flat label="Title" id="noteTitle" color="primary accent-4"></v-text-field>
+      </v-toolbar-title>
+      <v-toolbar-title class="tags">
+        <v-combobox multiple
+                    v-model="tags" label="Tags"
+                    append-icon small-chips deletable-chips dense
+                    class="tag-input"
+                    :search-input.sync="tag"
+                    @keyup.tab="insertTag"
+                    @paste="insertTag">
+
+        </v-combobox>
+      </v-toolbar-title>
+      <v-toolbar-title class="private">
+          <v-switch color="success" class="note-private-toggle" :label="!currentNote.isPrivate ? 'Public' : 'Private'"
+                    v-model="currentNote.isPrivate"></v-switch>
+      </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-toolbar-items>
         <v-btn light flat @click="saveNote">Save</v-btn>
@@ -14,17 +31,64 @@
 </template>
 <script>
 import {Emit, Component, Vue} from 'vue-property-decorator';
+import {mapMutations, mapGetters} from 'vuex';
 
-@Component()
+@Component({
+  computed: {
+    ...mapGetters('noteStore', ['currentNote'])
+  },
+  methods: {
+    ...mapMutations('noteStore', ['setNoteTags'])
+  }
+})
 export default class SaveToolbar extends Vue {
   @Emit()
   saveNote() {};
 
   @Emit()
   clearNote() {};
+
+  tag = '';
+
+  get tags() {
+    return this.currentNote && this.currentNote.noteTags ? this.currentNote.noteTags.split(',') : [];
+  }
+
+  set tags(value) {
+    this.setNoteTags(value);
+  }
+
+  insertTag() {
+    if (!this.tag) { return; }
+    this.$nextTick(() => {
+      this.tags.concat(...this.tag.split(','));
+      this.$nextTick(() => {
+        this.tag = '';
+      });
+    });
+  }
 }
 </script>
-<style lang="scss">
+<style scoped lang="scss">
+  .toolbar-container {
+    min-width: 40%;
+
+    .title {
+      min-width: 30%;
+      max-width: 30%;
+      margin-top: 20px;
+    }
+
+    .tags {
+      min-width: 40%;
+      max-width: 40%;
+      margin-top: 50px;
+    }
+
+    .private {
+      margin-top: 24px;
+    }
+  }
   .portal-notes {
 
     .pinned {
@@ -58,28 +122,4 @@ export default class SaveToolbar extends Vue {
   .note-private-toggle label {
     top: 5px!important;
   }
-
-  .tag-input span.chip, .tag-input span.v-chip {
-    background-color: #1976d2;
-    color: #fff;
-    padding-left:7px;
-  }
-
-  .tag-input span.chip::before, .tag-input span.v-chip::before {
-    content: "label";
-    font-family: 'Material Icons';
-    font-weight: normal;
-    font-style: normal;
-    font-size: 1em;
-    line-height: 1;
-    letter-spacing: normal;
-    text-transform: none;
-    display: inline-block;
-    white-space: nowrap;
-    word-wrap: normal;
-    direction: ltr;
-    -webkit-font-feature-settings: 'liga';
-    -webkit-font-smoothing: antialiased;
-  }
-
 </style>

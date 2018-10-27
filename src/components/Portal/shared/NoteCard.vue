@@ -119,6 +119,9 @@ export default class NoteCard extends Vue {
 
   .notebody {
     height: 150px !important;
+    overflow: hidden;
+    padding: 0;
+    margin: 20px;
   }
 
 </style>

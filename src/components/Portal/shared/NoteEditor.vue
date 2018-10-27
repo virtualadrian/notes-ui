@@ -1,8 +1,8 @@
 <template>
   <v-layout v-resize="onResize">
-    <v-flex>
-      <tinymce id="noteEditor" v-model="noteBody"
-               :toolbar2="'codesample'" ref="editorBody" :other_options="otherOptions">
+    <v-flex ref="editorContainer">
+      <tinymce id="noteEditor" v-model="currentNote.noteBody" :toolbar2="toolbar2"
+               ref="editorBody" :other_options="otherOptions">
       </tinymce>
     </v-flex>
   </v-layout>
@@ -15,7 +15,7 @@ import imageService from '@/core/service/image.service';
 
 @Component({
   components: {
-    tinymce
+    tinymce: tinymce
   },
   computed: {
     ...mapGetters('noteStore', ['currentNote'])
@@ -25,39 +25,64 @@ import imageService from '@/core/service/image.service';
   }
 })
 export default class NoteEditor extends Vue {
+  toolbar2 = 'image | codesample code';
   otherOptions = {
-    codesample_content_css: '/static/style/prism.css',
     menubar: 'edit insert view format table tools',
+    plugins: ['advlist autolink lists link image charmap print preview hr anchor pagebreak',
+      'searchreplace wordcount visualblocks visualchars code fullscreen',
+      'insertdatetime media nonbreaking save table contextmenu directionality',
+      'template paste textcolor colorpicker textpattern imagetools toc help emoticons hr'],
+    toolbar: 'formatselect | bold italic strikethrough forecolor backcolor | link | alignleft aligncenter alignright alignjustify | numlist bullist outdent indent | removeformat',
+    external_plugins: {
+      'codesample': '/static/script/codesample/plugin.js'
+    },
     branding: false,
     file_picker_types: 'image',
     image_title: true,
     automatic_uploads: true,
     images_upload_handler: imageService.handleUpload,
-    file_picker_callback: imageService.handleFilePick
+    file_picker_callback: imageService.handleFilePick,
+    codesample_content_css: '/static/style/prism.css',
+    codesample_languages: [{ text: 'HTML/XML', value: 'markup' },
+      { text: 'Apacheconf', value: 'apacheconf' },
+      { text: 'CSS', value: 'css' },
+      { text: 'C', value: 'c' },
+      { text: 'Clojure', value: 'clojure' },
+      { text: 'C#', value: 'csharp' },
+      { text: 'C++', value: 'cpp' },
+      { text: 'Go', value: 'go' },
+      { text: 'JavaScript', value: 'javascript' },
+      { text: 'Java', value: 'java' },
+      { text: 'Json', value: 'json' },
+      { text: 'Docker', value: 'docker' },
+      { text: 'Perl', value: 'perl' },
+      { text: 'PHP', value: 'php' },
+      { text: 'Powershell', value: 'powershell' },
+      { text: 'Python', value: 'python' },
+      { text: 'Ruby', value: 'ruby' },
+      { text: 'Rust', value: 'rust' },
+      { text: 'Sql', value: 'sql' },
+      { text: 'Typescript', value: 'typescript' }
+    ]
   };
-  noteBody = '';
 
-  @Watch('noteBody')
-  noteBodyChanged(value) {
-    this.currentNote.noteBody = value;
+  @Watch('currentNote')
+  noteUpdated() {
+    this.currentNote.hasChanges = true;
   }
 
-  mounted() {
-    const $vm = this;
+  created() {
     this.getNoteDetail(this.$route.params.id)
       .then(() => {
-        $vm.noteBody = $vm.currentNote.noteBody;
         setTimeout(this.onResize, 200);
-
-        window.tinymce.activeEditor.execCommand('mceRepaint');
       });
   }
 
   onResize() {
     if (window.tinymce && window.tinymce.activeEditor) {
       this.windowSize = {
-        x: this.$refs.editorBody.$el.clientWidth,
-        y: window.innerHeight - 440
+        x: this.$refs.editorContainer.clientWidth,
+        y: window.innerHeight - 300
       };
       window.tinymce.activeEditor.theme.resizeTo(this.windowSize.x, this.windowSize.y);
     }
@@ -83,6 +108,7 @@ export default class NoteEditor extends Vue {
     #noteTitle, #noteBody {
       color: #656565!important;
     }
+
     #noteTitle {
       font-size: 20px;
       font-weight: bolder;
