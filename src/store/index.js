@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import PortalLayouModule from '@/store/portal-global-store';
-import NoteModule from '@/store/note.module';
+import NoteModule from '@/store/note.module.js';
 
 Vue.use(Vuex);
 

@@ -29,7 +29,7 @@ export default {
 };
 
 </script>
-<style src="./Home.scss" scoped lang="scss">
+<style scoped lang="scss">
   .home-component {
 
   }

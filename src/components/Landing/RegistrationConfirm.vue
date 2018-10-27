@@ -92,7 +92,6 @@ export default class RegistrationConfirm extends Vue {
 
     setPassword() {
       if (this.passwordValid) {
-        const token = this.registration.token;
         http.post(api.setNewPassword(), this.registration)
           .then(() => {
             router.push({name: 'Login'});

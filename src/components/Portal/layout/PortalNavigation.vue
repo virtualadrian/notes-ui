@@ -4,7 +4,7 @@
     <nav class="navbar navbar-expand-lg fixed-top navbar-custom sticky sticky-dark app-header-nav-wrap">
       <div class="container">
         <!-- LOGO -->
-        <router-link class="navbar-brand logo" :to="{name: 'PortalDashboard'}">
+        <router-link class="navbar-brand logo" :to="{name: 'Notes'}">
           <i class="zmdi zmdi-book"></i> <span>noteler</span>
         </router-link>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -100,65 +100,65 @@ import fab from 'vue-fab';
   components: {fab}
 })
 export default class PortalNavigation extends Vue {
-    noteSearch = {
-      term: ''
-    };
-    fabActions = [
-      {
-        name: 'studySession',
-        icon: 'schedule',
-        tooltip: 'Start Study Session',
-        color: '#007bff'
-      },
-      {
-        name: 'addNewCardDeck',
-        icon: 'flip_to_back',
-        tooltip: 'Add Card Deck',
-        color: '#007bff'
-      },
-      {
-        name: 'addNewNote',
-        icon: 'notes',
-        tooltip: 'Add New Note',
-        color: '#007bff'
-      }
-    ];
-
-    showSearch() {
-      this.$refs.noteSearch.show();
+  noteSearch = {
+    term: ''
+  };
+  fabActions = [
+    {
+      name: 'studySession',
+      icon: 'schedule',
+      tooltip: 'Start Study Session',
+      color: '#007bff'
+    },
+    {
+      name: 'addNewCardDeck',
+      icon: 'flip_to_back',
+      tooltip: 'Add Card Deck',
+      color: '#007bff'
+    },
+    {
+      name: 'addNewNote',
+      icon: 'notes',
+      tooltip: 'Add New Note',
+      color: '#007bff'
     }
+  ];
 
-    searchNotes() {
-      this.$refs.noteSearch.hide();
-      router.push({name: 'PortalSearchNote',
-        params: {
-          term: this.noteSearch.term,
-          page: 1,
-          size: 10
-        }});
-    }
+  showSearch() {
+    this.$refs.noteSearch.show();
+  }
 
-    addNewNote() {
-      router.push({name: 'PortalNoteDetail'});
-    }
+  searchNotes() {
+    this.$refs.noteSearch.hide();
+    router.push({name: 'PortalSearchNote',
+      params: {
+        term: this.noteSearch.term,
+        page: 1,
+        size: 10
+      }});
+  }
 
-    addNewCardDeck() {
-      router.push({name: 'PortalCardDeckDetail'});
-    }
+  addNewNote() {
+    router.push({name: 'PortalNoteDetail'});
+  }
 
-    studySession() {
-      console.log('study study');
-    }
+  addNewCardDeck() {
+    router.push({name: 'PortalCardDeckDetail'});
+  }
 
-    logout() {
-      auth.logout();
-      router.push('/');
-      // force refresh if logging out from homepage
-      if (router.currentRoute.name === 'Home') {
-        router.go();
-      }
+  studySession() {
+    console.log('study study');
+  }
+
+  logout() {
+    auth.logout();
+    router.push('/');
+    // force refresh if logging out from homepage
+    if (router.currentRoute.name === 'Home') {
+      router.go();
     }
   }
+}
 
 </script>
 <style scoped lang="scss">

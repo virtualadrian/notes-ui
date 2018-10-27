@@ -16,8 +16,6 @@
               v-model="note.noteBody"></vue-editor>
           </div>
 
-
-
           <v-toolbar dark dense color="#ffc107">
             <v-btn round color="accent--text text--lighten1" icon  @click="composing = false">
               <v-icon>close</v-icon>
@@ -37,37 +35,37 @@
 
 </template>
 <script>
-  import {Emit, Component, Vue} from 'vue-property-decorator';
-  import { VueEditor } from 'vue2-editor';
-  // import http from '@/global/services/http';
+import {Emit, Component, Vue} from 'vue-property-decorator';
+import { VueEditor } from 'vue2-editor';
+// import http from '@/global/services/http';
 
-  // import environment from '@/global/services/environment';
+// import environment from '@/global/services/environment';
 
-  // const api = {
-  //   saveNote: () => environment.getEndpoint(`note`)
-  // };
+// const api = {
+//   saveNote: () => environment.getEndpoint(`note`)
+// };
 
-  @Component({
-    components: {'vue-editor': VueEditor}
-  })
-  export default class QuickCompose extends Vue {
-    isComposeVisible = false;
-    note = {};
-    editor = {
-      dirty: false
-    };
-    editorSettings = {
-      editorOptions: 'editorWrap'
-    };
+@Component({
+  components: {'vue-editor': VueEditor}
+})
+export default class QuickCompose extends Vue {
+  isComposeVisible = false;
+  note = {};
+  editor = {
+    dirty: false
+  };
+  editorSettings = {
+    editorOptions: 'editorWrap'
+  };
 
-    composing = false;
+  composing = false;
 
-    @Emit
-    saveChanges(note) {}
+  @Emit
+  saveChanges(note) {}
 
-    @Emit
-    clearChanges(note) {}
-  }
+  @Emit
+  clearChanges(note) {}
+}
 
 </script>
 <style lang="scss">

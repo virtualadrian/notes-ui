@@ -30,6 +30,7 @@ module.exports = {
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'comma-style': ["error", "last"],
     'semi': ["error", "always"],
-    "space-before-function-paren": ["error", "never"]
+    "space-before-function-paren": ["error", "never"],
+    'no-useless-escape': 'off'
   }
 };

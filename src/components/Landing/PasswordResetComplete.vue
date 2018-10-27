@@ -102,7 +102,6 @@
           </div> <!-- /col -->
         </div> <!--end row -->
 
-
       </div> <!-- end container -->
     </section>
     <b-modal id="modal-center" ref="problemUpdatingPassword"

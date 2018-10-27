@@ -15,14 +15,14 @@
           </v-btn>
 
           <v-list>
-            <v-list-tile @click="">
+            <v-list-tile>
               <v-list-tile-title>Privacy</v-list-tile-title>
             </v-list-tile>
-            <v-list-tile @click="">
+            <v-list-tile >
               <v-list-tile-title>Terms Of Service</v-list-tile-title>
             </v-list-tile>
             <v-divider></v-divider>
-            <v-list-tile @click="">
+            <v-list-tile >
               <v-list-tile-title>Logout</v-list-tile-title>
             </v-list-tile>
           </v-list>
@@ -82,7 +82,7 @@ export default class PortalLayout extends Vue {
 
     @Prop
     source;
-  }
+}
 
 </script>
 <style scoped lang="scss">

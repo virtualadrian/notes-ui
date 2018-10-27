@@ -11,7 +11,7 @@
 
     <preview-note @edit-note="editNote" :note.sync="previewingNote" ref="previewDialog"></preview-note>
 
-    <note-grid :notes.sync="notes"
+    <note-grid :notes.sync="noteList"
                @view-note="viewNote"
                @edit-note="editNote" @pin-note="pinNote"
                @delete-note="deleteNote" @create-cards-from-note="createCardsFromNote"
@@ -24,13 +24,13 @@
 </template>
 <script>
 import { Component, Emit, Vue } from 'vue-property-decorator';
-import http from '@/global/services/http';
 import auth from '@/global/services/authentication';
 import environment from '@/global/services/environment';
 import PreviewNote from '@/components/Portal/shared/PreviewNote.vue';
 import NoteGrid from '@/components/Portal/shared/NoteGrid.vue';
 import PortalNoteDetail from '@/components/Portal/notes/PortalNoteDetail.vue';
 import QuickCompose from '@/components/Portal/shared/QuickCompose.vue';
+import {mapActions, mapGetters} from 'vuex';
 
 import noteService from '@/core/service/note.service.js';
 
@@ -48,6 +48,12 @@ const api = {
     'note-detail': PortalNoteDetail,
     'quick-compose': QuickCompose,
     'note-grid': NoteGrid
+  },
+  computed: {
+    ...mapGetters('note', ['noteList'])
+  },
+  methods: {
+    ...mapActions('note', ['getNotes'])
   }
 })
 export default class PortalNotes extends Vue {
@@ -61,7 +67,7 @@ export default class PortalNotes extends Vue {
   };
 
   mounted() {
-    this.getNotes();
+    this.getNoteList();
     this.getUser();
   }
 
@@ -136,12 +142,13 @@ export default class PortalNotes extends Vue {
     this.currentUserFirstName = auth.getCurrentUserFirstName();
   }
 
-  getNotes() {
-    const filter = this.$route.params.filter || 'ALL';
-    http.get(api.getNotes(filter))
-      .then((result) => {
-        this.notesResult = result.data;
-      });
+  getNoteList() {
+    this.getNotes();
+    // const filter = this.$route.params.filter || 'ALL';
+    // http.get(api.getNotes(filter))
+    //   .then((result) => {
+    //     this.notesResult = result.data;
+    //   });
   }
 
   toggleDeleteConfirm(note) {

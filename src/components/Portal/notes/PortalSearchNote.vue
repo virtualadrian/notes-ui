@@ -36,7 +36,7 @@
         </div>
       </div>
       <div class="row result">
-        <div class="col-sm-4" v-for="note in result.content">
+        <div class="col-sm-4" v-for="note in result.content" :key="note.id">
           <div class="card card-shadow" >
             <div class="card-body">
               <h5 class="card-title">

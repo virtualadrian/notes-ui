@@ -62,7 +62,7 @@ export default class Login extends Vue {
     login() {
       auth.login(this.loginModel.username, this.loginModel.password)
         .then(() => {
-          router.push({ name: 'PortalDashboard' });
+          router.push({ name: 'Notes' });
         }).catch(() => {
           this.$refs.problemLoggingIn.show();
         });

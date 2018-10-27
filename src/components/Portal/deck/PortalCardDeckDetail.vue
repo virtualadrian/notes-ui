@@ -28,7 +28,6 @@
 </template>
 <script>
 import { Component, Vue } from 'vue-property-decorator';
-import router from '@/router';
 import http from '@/global/services/http';
 import environment from '@/global/services/environment';
 

@@ -11,7 +11,6 @@
           <v-toolbar-title>Preview: {{note.noteTitle}}</v-toolbar-title>
           <v-spacer></v-spacer>
 
-
           <v-speed-dial absolute fab top right light open-on-hover v-model="fab"
                         transition="scale-transition"
                         direction="bottom" color="amber" class="mt-4 ml-4">
@@ -35,8 +34,6 @@
           </v-speed-dial>
         </v-toolbar>
 
-
-
         <v-alert :value="note.isPublic" color="info" icon="new_releases" dismissible>
           Heads up, this note is public. To make it private again, head over to the Edit area.
         </v-alert>
@@ -48,7 +45,6 @@
           <v-container fluid>
             <v-layout align-space-between justify-space-around row fill-height>
               <v-flex xs12 sm12>
-
 
                 <v-card class="elevation-16">
                   <v-toolbar color="blue-grey lighten-5" class="card-detail-drag-handle" light>
@@ -110,7 +106,6 @@
                     </v-container>
                   </v-card>
 
-
                 </v-card>
 
               </v-flex>
@@ -123,7 +118,6 @@
             <v-flex xs12 sm10>
               <div ref="noteBody" v-html="note.noteBody"></div>
 
-
             </v-flex>
           </v-layout>
         </v-container>
@@ -133,52 +127,52 @@
 
 </template>
 <script>
-  import {Emit, Prop, Component, Vue} from 'vue-property-decorator';
-  import VueDraggableResizable from 'vue-draggable-resizable'
+import {Emit, Prop, Component, Vue} from 'vue-property-decorator';
+import VueDraggableResizable from 'vue-draggable-resizable';
 
-  import hljs from 'highlight.js';
+import hljs from 'highlight.js';
 
-  @Component({
-    components: {
-      'vue-draggable-resizable': VueDraggableResizable
-    }
-  })
-  export default class PreviewNote extends Vue {
-    showPreview = false;
-    addingCard = false;
-    fab=false;
-    card = {question: '', answer: ''};
-
-    @Prop({
-      type: Object,
-      default: () => { return {}; }
-    })
-    note;
-
-    @Emit()
-    editNote(note) {}
-
-    populateQuestion() {
-      this.card.question = window.getSelection().toString();
-    }
-    populateAnswer() {
-      this.card.answer = window.getSelection().toString();
-    }
-
-    updated() {
-      this.$refs.noteBody.querySelectorAll('code').forEach((el, idx, arr) => {
-        hljs.highlightBlock(el);
-      });
-    }
-
-    hide() {
-      this.showPreview = false;
-    }
-
-    show() {
-      this.showPreview = true;
-    }
+@Component({
+  components: {
+    'vue-draggable-resizable': VueDraggableResizable
   }
+})
+export default class PreviewNote extends Vue {
+  showPreview = false;
+  addingCard = false;
+  fab=false;
+  card = {question: '', answer: ''};
+
+  @Prop({
+    type: Object,
+    default: () => { return {}; }
+  })
+  note;
+
+  @Emit()
+  editNote(note) {}
+
+  populateQuestion() {
+    this.card.question = window.getSelection().toString();
+  }
+  populateAnswer() {
+    this.card.answer = window.getSelection().toString();
+  }
+
+  updated() {
+    this.$refs.noteBody.querySelectorAll('code').forEach((el, idx, arr) => {
+      hljs.highlightBlock(el);
+    });
+  }
+
+  hide() {
+    this.showPreview = false;
+  }
+
+  show() {
+    this.showPreview = true;
+  }
+}
 
 </script>
 <style lang="scss">
