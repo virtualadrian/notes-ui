@@ -1,27 +1,27 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 
-import auth from '@/services/authentication';
+import auth from '@/global/services/authentication';
 
-import LandingLayout from '@/components/Landing/LandingLayout/LandingLayout.vue';
+import LandingLayout from '@/components/Landing/LandingLayout.vue';
 
-import Login from '@/components/Landing/Login/Login.vue';
-import Home from '@/components/Landing/Home/Home.vue';
-import RegistrationFull from '@/components/Landing/RegistrationFull/RegistrationFull.vue';
-import RegistrationConfirm from '@/components/Landing/RegistrationConfirm/RegistrationConfirm.vue';
-import PasswordReset from '@/components/Landing/PasswordReset/PasswordReset.vue';
-import PasswordResetComplete from '@/components/Landing/PasswordResetComplete/PasswordResetComplete.vue';
-import SupportHome from '@/components/Landing/SupportHome/SupportHome.vue';
-import NoteView from '@/components/Landing/NoteView/NoteView.vue';
+import Login from '@/components/Landing/Login.vue';
+import Home from '@/components/Landing/Home.vue';
+import RegistrationFull from '@/components/Landing/RegistrationFull.vue';
+import RegistrationConfirm from '@/components/Landing/RegistrationConfirm.vue';
+import PasswordReset from '@/components/Landing/PasswordReset.vue';
+import PasswordResetComplete from '@/components/Landing/PasswordResetComplete.vue';
+import SupportHome from '@/components/Landing/SupportHome.vue';
+import NoteView from '@/components/Landing/NoteView.vue';
 
-import PortalLayout from '@/components/Portal/layout/PortalLayout/PortalLayout.vue';
-import PortalNotes from '@/components/Portal/notes/PortalNotes/PortalNotes.vue';
-import PortalNoteDetail from '@/components/Portal/notes/PortalNoteDetail/PortalNoteDetail.vue';
-import PortalNoteView from '@/components/Portal/notes/PortalNoteView/PortalNoteView.vue';
-import PortalSearchNote from '@/components/Portal/notes/PortalSearchNote/PortalSearchNote.vue';
+import PortalLayout from '@/components/Portal/layout/PortalLayout.vue';
+import PortalNotes from '@/components/Portal/notes/PortalNotes.vue';
+import PortalNoteDetail from '@/components/Portal/notes/PortalNoteDetail.vue';
+import PortalNoteView from '@/components/Portal/notes/PortalNoteView.vue';
+import PortalSearchNote from '@/components/Portal/notes/PortalSearchNote.vue';
 
-import PortalCardDeckList from '@/components/Portal/deck/PortalCardDeckList/PortalCardDeckList.vue';
-import PortalCardDeckDetail from '@/components/Portal/deck/PortalCardDeckDetail/PortalCardDeckDetail.vue';
+import PortalCardDeckList from '@/components/Portal/deck/PortalCardDeckList.vue';
+import PortalCardDeckDetail from '@/components/Portal/deck/PortalCardDeckDetail.vue';
 
 Vue.use(Router);
 

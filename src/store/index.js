@@ -1,11 +1,16 @@
+
+// import PortalLayouModule from '@/store/portal-global-store';
+import noteModule from '@/store/note.module.js';
+
 import Vue from 'vue';
-import Vuex from 'vuex';
-import PortalLayouModule from '@/store/portal-global-store';
+import Vuex, { Store } from 'vuex';
 
 Vue.use(Vuex);
 
-export default new Vuex.Store({
+const store = new Store({
   modules: {
-    portal: PortalLayouModule
+    noteStore: noteModule
   }
 });
+
+export default store;
