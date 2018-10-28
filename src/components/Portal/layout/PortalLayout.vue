@@ -1,9 +1,9 @@
 <template>
   <section class="portal-layout">
     <v-app id="keep">
-      <drawer :drawer="drawer"></drawer>
+      <drawer></drawer>
       <v-toolbar color="#2a56c6" app clipped-left flat fixed dark>
-        <v-toolbar-side-icon @click.native="drawer = !drawer"></v-toolbar-side-icon>
+        <v-toolbar-side-icon @click.native="toggleDrawer"></v-toolbar-side-icon>
         <span @click="$router.push({name: 'Notes', params: {filter: 'ALL'}})" class="title ml-3 ml-5 mr-5">Noteler&nbsp;<span class="font-weight-light">Portal</span></span>
         <v-text-field class="ml-3" solo-inverted flat hide-details label="Search" prepend-inner-icon="search"></v-text-field>
 
@@ -50,12 +50,15 @@ import PortalNavigation from '@/components/Portal/layout/PortalNavigation.vue';
 import Footer from '@/components/Portal/layout/Footer.vue';
 import Drawer from '@/components/Portal/shared/Drawer.vue';
 import QuickCompose from '@/components/Portal/shared/QuickCompose';
+import {mapMutations} from 'vuex';
 
 @Component({
-  components: {PortalNavigation, Footer, Drawer, 'quick-compose': QuickCompose}
+  components: {PortalNavigation, Footer, Drawer, 'quick-compose': QuickCompose},
+  methods: {
+    ...mapMutations('global', ['toggleDrawer'])
+  }
 })
 export default class PortalLayout extends Vue {
-    drawer = true;
     links = [
       'Home',
       'About Us',

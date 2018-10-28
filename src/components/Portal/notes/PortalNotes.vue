@@ -44,7 +44,6 @@ import {mapActions, mapGetters, mapMutations} from 'vuex';
 })
 export default class PortalNotes extends Vue {
   currentNote = {};
-  previewingNote = {};
   filter = 'ALL';
 
   snack = {

@@ -24,6 +24,7 @@ import PortalCardDeckList from '@/components/Portal/deck/PortalCardDeckList.vue'
 import PortalCardDeckDetail from '@/components/Portal/deck/PortalCardDeckDetail.vue';
 
 import PortalNoteTags from '@/components/Portal/notes/PortalNoteTags';
+import Snippets from '@/components/Portal/snippets/Snippets';
 
 Vue.use(Router);
 
@@ -140,6 +141,11 @@ export default new Router({
           path: 'deck/edit/:id?',
           name: 'PortalCardDeckDetail',
           component: PortalCardDeckDetail
+        },
+        {
+          path: 'snippets',
+          name: 'Snippets',
+          component: Snippets
         }
       ]
     }

@@ -1,63 +1,61 @@
 <template>
-  <section>
-    <v-container class="note-tags-container">
-      <v-layout row>
-        <v-flex xs12>
-          <v-card>
-            <v-toolbar color="primary" dark>
-              <!--<v-toolbar-side-icon></v-toolbar-side-icon>-->
-              <v-toolbar-title>Browse/Filter Tags</v-toolbar-title>
-              <v-spacer></v-spacer>
-              <v-btn icon><v-icon>view_module</v-icon></v-btn>
-              <v-btn icon><v-icon>list</v-icon></v-btn>
-            </v-toolbar>
+  <v-container class="note-tags-container" fluid>
+    <v-layout row>
+      <v-flex xs12>
+        <v-card>
+          <v-toolbar color="primary" dark>
+            <!--<v-toolbar-side-icon></v-toolbar-side-icon>-->
+            <v-toolbar-title>Browse/Filter Tags</v-toolbar-title>
+            <v-spacer></v-spacer>
+            <v-btn icon><v-icon>view_module</v-icon></v-btn>
+            <v-btn icon><v-icon>list</v-icon></v-btn>
+          </v-toolbar>
 
-            <v-list subheader>
-              <v-subheader>Select one or more tags to filter your notes</v-subheader>
-              <v-list-tile class="tag-filter">
-                <template v-for="(tag, index) in noteTagList"  >
-                    <v-chip color="secondary"  text-color="white" @click="toggleTag(tag)" :key="`tag-${index}`">
-                      <v-avatar v-if="isTagSelected(tag)">
-                        <v-icon>check_circle</v-icon>
-                      </v-avatar>
-                      {{tag}}
-                    </v-chip>
-                  </template>
-              </v-list-tile>
-            </v-list>
+          <v-list subheader>
+            <v-subheader>Select one or more tags to filter your notes</v-subheader>
+            <v-list-tile class="tag-filter">
+              <template v-for="(tag, index) in noteTagList"  >
+                  <v-chip color="secondary"  text-color="white" @click="toggleTag(tag)" :key="`tag-${index}`">
+                    <v-avatar v-if="isTagSelected(tag)">
+                      <v-icon>check_circle</v-icon>
+                    </v-avatar>
+                    {{tag}}
+                  </v-chip>
+                </template>
+            </v-list-tile>
+          </v-list>
 
-            <v-list subheader>
-              <v-subheader>Notes tagged with: &nbsp; <strong>{{selectedTags.join(', ')}}</strong></v-subheader>
-              <template v-for="note in noteListForTags">
-                <section :key="note.id">
-                  <v-divider ></v-divider>
-                  <v-list-tile >
-                    <v-list-tile-action>
-                      <v-checkbox color="#333" v-model="note.selected"></v-checkbox>
-                    </v-list-tile-action>
-                    <v-list-tile-content @click.prevent="note.selected = !note.selected">
-                      <v-list-tile-title>{{note.noteTitle}}</v-list-tile-title>
-                      <v-list-tile-sub-title>Tags: {{note.noteTags}}</v-list-tile-sub-title>
-                    </v-list-tile-content>
-                    <v-list-tile-action>
-                      <v-btn @click="previewTagNote(note)" icon><v-icon>remove_red_eye</v-icon></v-btn>
-                    </v-list-tile-action>
-                    <v-list-tile-action>
-                      <v-btn :to="{ name: 'NoteDetail', params: { id: note.id }}" icon><v-icon>edit</v-icon></v-btn>
-                    </v-list-tile-action>
-                    <v-list-tile-action>
-                      <v-btn @click="archiveTagNote(note)" icon><v-icon>archive</v-icon></v-btn>
-                    </v-list-tile-action>
-                  </v-list-tile>
-                </section>
-              </template>
-            </v-list>
-          </v-card>
-        </v-flex>
-      </v-layout>
-    </v-container>
+          <v-list subheader>
+            <v-subheader>Notes tagged with: &nbsp; <strong>{{selectedTags.join(', ')}}</strong></v-subheader>
+            <template v-for="note in noteListForTags">
+              <section :key="note.id">
+                <v-divider ></v-divider>
+                <v-list-tile >
+                  <v-list-tile-action>
+                    <v-checkbox color="#333" v-model="note.selected"></v-checkbox>
+                  </v-list-tile-action>
+                  <v-list-tile-content @click.prevent="note.selected = !note.selected">
+                    <v-list-tile-title>{{note.noteTitle}}</v-list-tile-title>
+                    <v-list-tile-sub-title>Tags: {{note.noteTags}}</v-list-tile-sub-title>
+                  </v-list-tile-content>
+                  <v-list-tile-action>
+                    <v-btn @click="previewTagNote(note)" icon><v-icon>remove_red_eye</v-icon></v-btn>
+                  </v-list-tile-action>
+                  <v-list-tile-action>
+                    <v-btn :to="{ name: 'NoteDetail', params: { id: note.id }}" icon><v-icon>edit</v-icon></v-btn>
+                  </v-list-tile-action>
+                  <v-list-tile-action>
+                    <v-btn @click="archiveTagNote(note)" icon><v-icon>archive</v-icon></v-btn>
+                  </v-list-tile-action>
+                </v-list-tile>
+              </section>
+            </template>
+          </v-list>
+        </v-card>
+      </v-flex>
+    </v-layout>
     <preview-note ref="previewDialog"></preview-note>
-  </section>
+  </v-container>
 </template>
 <script>
 import {Component, Vue} from 'vue-property-decorator';

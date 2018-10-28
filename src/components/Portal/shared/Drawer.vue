@@ -1,5 +1,6 @@
 <template>
-  <v-navigation-drawer v-model="visible" fixed clipped class="grey lighten-4" app>
+  <v-navigation-drawer :value="getDrawerVisible" fixed clipped class="grey lighten-4" app>
+
     <v-list dense class="grey lighten-4">
       <template v-for="(link, i) in DRAWER">
 
@@ -31,7 +32,7 @@
 </template>
 <script>
 import {Prop, Component, Vue} from 'vue-property-decorator';
-
+import {mapGetters} from 'vuex';
 const LinkType = {
   HEADING: 1,
   ITEM: 2,
@@ -47,7 +48,11 @@ class NavDrawerLink {
   }
 }
 
-@Component()
+@Component({
+  computed: {
+    ...mapGetters('global', ['getDrawerVisible'])
+  }
+})
 export default class Drawer extends Vue {
   @Prop({default: true}) drawer;
 
