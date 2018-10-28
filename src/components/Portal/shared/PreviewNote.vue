@@ -8,7 +8,7 @@
           <v-btn icon dark @click.native="showPreview = false">
             <v-icon>close</v-icon>
           </v-btn>
-          <v-toolbar-title>Preview: {{note.noteTitle}}</v-toolbar-title>
+          <v-toolbar-title>Preview: {{getPreviewNote.noteTitle}}</v-toolbar-title>
           <v-spacer></v-spacer>
 
           <v-speed-dial absolute fab top right light open-on-hover v-model="fab"
@@ -25,7 +25,7 @@
             <v-btn fab dark small color="green" @click="addingCard = !addingCard">
               <v-icon>add</v-icon>
             </v-btn>
-            <v-btn fab dark small color="indigo" :to="{name: 'NoteDetail', params: { id: note.id }}">
+            <v-btn fab dark small color="indigo" :to="{name: 'NoteDetail', params: { id: getPreviewNote.id }}">
               <v-icon>edit</v-icon>
             </v-btn>
             <v-btn fab dark small color="red">
@@ -34,7 +34,7 @@
           </v-speed-dial>
         </v-toolbar>
 
-        <v-alert :value="note.isPublic" color="info" icon="new_releases" dismissible>
+        <v-alert :value="getPreviewNote.isPublic" color="info" icon="new_releases" dismissible>
           Heads up, this note is public. To make it private again, head over to the Edit area.
         </v-alert>
 
@@ -116,7 +116,7 @@
         <v-container fluid>
           <v-layout justify-center row>
             <v-flex xs12 sm10>
-              <div ref="noteBody" v-html="note.noteBody"></div>
+              <div ref="noteBody" v-html="getPreviewNote.noteBody"></div>
 
             </v-flex>
           </v-layout>
@@ -127,14 +127,17 @@
 
 </template>
 <script>
-import {Emit, Prop, Component, Vue} from 'vue-property-decorator';
+import {Emit, Component, Vue} from 'vue-property-decorator';
 import VueDraggableResizable from 'vue-draggable-resizable';
-
+import {mapGetters} from 'vuex';
 import hljs from 'highlight.js';
 
 @Component({
   components: {
     'vue-draggable-resizable': VueDraggableResizable
+  },
+  computed: {
+    ...mapGetters('noteStore', ['getPreviewNote'])
   }
 })
 export default class PreviewNote extends Vue {
@@ -142,12 +145,6 @@ export default class PreviewNote extends Vue {
   addingCard = false;
   fab=false;
   card = {question: '', answer: ''};
-
-  @Prop({
-    type: Object,
-    default: () => { return {}; }
-  })
-  note;
 
   @Emit()
   editNote(note) {}

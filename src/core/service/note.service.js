@@ -4,6 +4,8 @@ import environment from '@/global/services/environment';
 const api = {
   getPublicNote: (id) => environment.getEndpoint(`note/public/${id}`),
   getNote: (id) => environment.getEndpoint(`note/${id}`),
+  getNoteTags: () => environment.getEndpoint(`note/tags`),
+  getNotesForTags: (tags) => environment.getEndpoint(`note/tags/filter?${tags}`),
   getNotes: (term) => environment.getEndpoint(`note/filter/${term}`),
   getNotesPaged: (page, size) => environment.getEndpoint(`note/${page}/${size}`),
   searchNotesPaged: (term, page, size) => environment.getEndpoint(`note//search/${term}/${page}/${size}`),
@@ -17,6 +19,17 @@ const api = {
 };
 
 class NoteService {
+  getNoteTags(id) {
+    return http.get(api.getNoteTags()).then(res => res.data);
+  }
+  getNotesForTags(tags) {
+    const tagparms = [];
+    for (var i = 0; i < tags.length; i++) {
+      tagparms.push(`tag=${tags[i]}`);
+    }
+    return http.get(api.getNotesForTags(tagparms.join('&'))).then(res => res.data);
+  }
+
   getNote(id) {
     return http.get(api.getNote(id)).then(res => res.data);
   }

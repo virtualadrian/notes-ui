@@ -23,6 +23,8 @@ import PortalSearchNote from '@/components/Portal/notes/PortalSearchNote.vue';
 import PortalCardDeckList from '@/components/Portal/deck/PortalCardDeckList.vue';
 import PortalCardDeckDetail from '@/components/Portal/deck/PortalCardDeckDetail.vue';
 
+import PortalNoteTags from '@/components/Portal/notes/PortalNoteTags';
+
 Vue.use(Router);
 
 export default new Router({
@@ -103,6 +105,11 @@ export default new Router({
           path: 'notes/:filter?',
           name: 'Notes',
           component: PortalNotes
+        },
+        {
+          path: 'note/browse/tags',
+          name: 'NoteTags',
+          component: PortalNoteTags
         },
         {
           path: 'note/edit/:id?',

@@ -31,7 +31,7 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="danger" flat @click.native="discardChanges">Don't Save</v-btn>
+          <v-btn color="danger" flat @click.native="closeEditor">Don't Save</v-btn>
           <v-btn color="success" flat @click.native="saveAndClose">Save</v-btn>
         </v-card-actions>
       </v-card>

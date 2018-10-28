@@ -9,11 +9,11 @@
       <v-flex xs3><v-btn icon flat @click="snack.isVisible = false"><v-icon>close</v-icon></v-btn></v-flex>
     </v-snackbar>
 
-    <preview-note :note.sync="previewingNote" ref="previewDialog"></preview-note>
+    <preview-note ref="previewDialog"></preview-note>
 
     <note-grid :notes.sync="noteList"
                @view-note="viewNote" @pin-note="pinNote"
-               @delete-note="deleteNote" @create-cards-from-note="createCardsFromNote"
+               @create-cards-from-note="createCardsFromNote"
                @create-favorite-note="createFavoriteNote"
                @duplicate-note="duplicateNote" @archive-note="archiveNote">
 
@@ -23,12 +23,10 @@
 </template>
 <script>
 import { Component, Vue, Emit } from 'vue-property-decorator';
-
-import auth from '@/global/services/authentication';
 import PreviewNote from '@/components/Portal/shared/PreviewNote.vue';
 import NoteGrid from '@/components/Portal/shared/NoteGrid.vue';
 import QuickCompose from '@/components/Portal/shared/QuickCompose.vue';
-import {mapActions, mapGetters} from 'vuex';
+import {mapActions, mapGetters, mapMutations} from 'vuex';
 
 @Component({
   components: {
@@ -40,7 +38,8 @@ import {mapActions, mapGetters} from 'vuex';
     ...mapGetters('noteStore', ['noteList'])
   },
   methods: {
-    ...mapActions('noteStore', ['getNotes', 'pinNote', 'createFavoriteNote', 'shareNote', 'duplicateNote', 'archiveNote'])
+    ...mapActions('noteStore', ['getNotes', 'pinNote', 'createFavoriteNote', 'shareNote', 'duplicateNote', 'archiveNote']),
+    ...mapMutations('noteStore', ['setPreviewNote'])
   }
 })
 export default class PortalNotes extends Vue {
@@ -57,7 +56,6 @@ export default class PortalNotes extends Vue {
   mounted() {
     this.filter = this.$route.params.filter || 'ALL';
     this.getNotes(this.filter);
-    this.getUser();
   }
 
   success(message) {
@@ -73,27 +71,13 @@ export default class PortalNotes extends Vue {
   }
 
   viewNote(note) {
-    this.previewingNote = note;
+    this.setPreviewNote(note);
     this.$refs.previewDialog.show();
   }
 
   @Emit()
   createCardsFromNote(note) {
     console.log('createCardsFromNote');
-  }
-
-  @Emit()
-  confirmDeleteNote(note) {
-
-  }
-
-  deleteNote(note) {
-
-  }
-
-  getUser() {
-    // api.currentUserAccountId = auth.getCurrentUserAccountId();
-    this.currentUserFirstName = auth.getCurrentUserFirstName();
   }
 
   toggleDeleteConfirm(note) {
@@ -103,33 +87,6 @@ export default class PortalNotes extends Vue {
     } else {
       this.$refs.deleteNote.hide();
     }
-  }
-
-  //
-  // deleteNote() {
-  //   if (!this.currentNote) {
-  //     return;
-  //   }
-  //   http.delete(api.deleteNote(this.currentNote.id))
-  //     .then(() => {
-  //       this.$refs.deleteNote.hide();
-  //       this.$toastr.s('Note has been removed.');
-  //       this.getNotes();
-  //     });
-  // }
-
-  cancel() {
-    this.editingNote = false;
-    this.editor.dirty = false;
-    // return;
-    // editor-change
-    // if (!this.editor.dirty) {
-    //   this.editingNote = false;
-    //   this.editor.dirty = false;
-    //   this.currentNote = null;
-    // } else {
-    //   this.$refs.unsavedChanges.show();
-    // }
   }
 }
 

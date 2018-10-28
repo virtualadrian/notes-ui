@@ -61,7 +61,7 @@ export default class Drawer extends Vue {
     new NavDrawerLink(LinkType.ITEM, 'library_books', 'All Notes', ($router) => $router.push({name: 'Notes', params: { filter: 'ALL' }})),
     new NavDrawerLink(LinkType.ITEM, 'star', 'Favorites', ($router) => $router.push({name: 'Notes', params: { filter: 'FAVORITES' }})),
     new NavDrawerLink(LinkType.ITEM, 'filter_list', 'Snippets', ($router) => $router.push({name: 'Snippets'})),
-    new NavDrawerLink(LinkType.ITEM, 'short_text', 'Tags', ($router) => $router.push({name: 'Tags'})),
+    new NavDrawerLink(LinkType.ITEM, 'short_text', 'Tags', ($router) => $router.push({name: 'NoteTags'})),
     new NavDrawerLink(LinkType.DIVIDER, null, null, null),
     new NavDrawerLink(LinkType.HEADING, null, 'Study Card Decks', null),
     new NavDrawerLink(LinkType.ITEM, 'add', 'Add Deck', ($router) => $router.push({name: 'DeckDetail'})),

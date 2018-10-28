@@ -38,38 +38,38 @@ const api = {
   getNote: (id) => environment.getEndpoint(`note/${id}`)
 };
 
-  @Component({
-    components: {VueEditor}
-  })
+@Component({
+  components: {VueEditor}
+})
 export default class PortalNoteView extends Vue {
-    currentNote = {id: 0, noteTitle: '', noteBody: ''};
-    mounted() {
-      this.currentNote.id = this.$route.params.id;
-      this.getNoteDetail();
-    }
-
-    updated() {
-      this.$el.querySelectorAll('.ql-syntax').forEach((el, idx, arr) => {
-        hljs.highlightBlock(el);
-      });
-    }
-
-    cancel() {
-      router.push({name: 'PortalNotes'});
-    }
-
-    editNote() {
-      router.push({name: 'NoteDetail', params: { id: this.currentNote.id }});
-    }
-
-    getNoteDetail() {
-      if (!this.currentNote.id) { return; }
-      http.get(api.getNote(this.currentNote.id))
-        .then((response) => {
-          this.currentNote = response.data;
-        });
-    }
+  currentNote = {id: 0, noteTitle: '', noteBody: ''};
+  mounted() {
+    this.currentNote.id = this.$route.params.id;
+    this.getNoteDetail();
   }
+
+  updated() {
+    this.$el.querySelectorAll('.ql-syntax').forEach((el, idx, arr) => {
+      hljs.highlightBlock(el);
+    });
+  }
+
+  cancel() {
+    router.push({name: 'PortalNotes'});
+  }
+
+  editNote() {
+    router.push({name: 'NoteDetail', params: { id: this.currentNote.id }});
+  }
+
+  getNoteDetail() {
+    if (!this.currentNote.id) { return; }
+    http.get(api.getNote(this.currentNote.id))
+      .then((response) => {
+        this.currentNote = response.data;
+      });
+  }
+}
 
 </script>
 <style scoped lang="scss">
