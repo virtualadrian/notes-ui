@@ -2,9 +2,17 @@
   <section class="portal-layout">
     <v-app id="keep">
       <drawer></drawer>
-      <v-toolbar color="#2a56c6" app clipped-left flat fixed dark>
+      <v-toolbar color="#2a56c6" app clipped-left  fixed dark>
         <v-toolbar-side-icon @click.native="toggleDrawer"></v-toolbar-side-icon>
-        <span @click="$router.push({name: 'Notes', params: {filter: 'ALL'}})" class="title ml-3 ml-5 mr-5">Noteler&nbsp;<span class="font-weight-light">Portal</span></span>
+        <span @click="$router.push({name: 'Notes', params: {filter: 'ALL'}})" class="headline ml-3 ml-5 mr-5">
+          Noteler&nbsp;
+              <v-chip color="indigo darken-4" text-color="white">
+                <v-avatar>
+                  <v-icon>star</v-icon>
+                </v-avatar>
+                Pro
+              </v-chip>
+        </span>
         <v-text-field class="ml-3" solo-inverted flat hide-details label="Search" prepend-inner-icon="search"></v-text-field>
 
         <v-btn icon><v-icon>notifications</v-icon></v-btn>
