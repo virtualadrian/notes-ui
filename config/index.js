@@ -9,6 +9,7 @@ module.exports = {
 
     // Paths
     assetsSubDirectory: 'static',
+    assetsConfigDirectory: 'appconfig',
     assetsPublicPath: '/',
     proxyTable: {},
 

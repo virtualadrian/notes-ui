@@ -1,24 +1,30 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 
-import auth from '@/services/authentication';
+import auth from '@/global/services/authentication';
 
-import LandingLayout from '@/components/Landing/LandingLayout/LandingLayout.vue';
+import LandingLayout from '@/components/Landing/LandingLayout.vue';
 
-import Login from '@/components/Landing/Login/Login.vue';
-import Home from '@/components/Landing/Home/Home.vue';
-import RegistrationFull from '@/components/Landing/RegistrationFull/RegistrationFull.vue';
-import RegistrationConfirm from '@/components/Landing/RegistrationConfirm/RegistrationConfirm.vue';
-import PasswordReset from '@/components/Landing/PasswordReset/PasswordReset.vue';
-import PasswordResetComplete from '@/components/Landing/PasswordResetComplete/PasswordResetComplete.vue';
-import SupportHome from '@/components/Landing/SupportHome/SupportHome.vue';
+import Login from '@/components/Landing/Login.vue';
+import Home from '@/components/Landing/Home.vue';
+import RegistrationFull from '@/components/Landing/RegistrationFull.vue';
+import RegistrationConfirm from '@/components/Landing/RegistrationConfirm.vue';
+import PasswordReset from '@/components/Landing/PasswordReset.vue';
+import PasswordResetComplete from '@/components/Landing/PasswordResetComplete.vue';
+import SupportHome from '@/components/Landing/SupportHome.vue';
+import NoteView from '@/components/Landing/NoteView.vue';
 
-import PortalLayout from '@/components/Portal/PortalLayout/PortalLayout.vue';
-import PortalDashboard from '@/components/Portal/PortalDashboard/PortalDashboard.vue';
-import PortalNotes from '@/components/Portal/PortalNotes/PortalNotes.vue';
-import PortalNoteDetail from '@/components/Portal/PortalNoteDetail/PortalNoteDetail.vue';
-import PortalNoteView from '@/components/Portal/PortalNoteView/PortalNoteView.vue';
-import PortalSearchNote from '@/components/Portal/PortalSearchNote/PortalSearchNote.vue';
+import PortalLayout from '@/components/Portal/layout/PortalLayout.vue';
+import PortalNotes from '@/components/Portal/notes/PortalNotes.vue';
+import PortalNoteDetail from '@/components/Portal/notes/PortalNoteDetail.vue';
+import PortalNoteView from '@/components/Portal/notes/PortalNoteView.vue';
+import PortalSearchNote from '@/components/Portal/notes/PortalSearchNote.vue';
+
+import PortalCardDeckList from '@/components/Portal/deck/PortalCardDeckList.vue';
+import PortalCardDeckDetail from '@/components/Portal/deck/PortalCardDeckDetail.vue';
+
+import PortalNoteTags from '@/components/Portal/notes/PortalNoteTags';
+import Snippets from '@/components/Portal/snippets/Snippets';
 
 Vue.use(Router);
 
@@ -27,6 +33,15 @@ export default new Router({
     {
       path: '/',
       component: LandingLayout,
+      beforeEnter: (to, from, next) => {
+        if (auth.isLoggedIn()) {
+          next({
+            path: '/portal/notes/ALL'
+          });
+        } else {
+          next();
+        }
+      },
       children: [
         {
           path: '',
@@ -62,27 +77,44 @@ export default new Router({
           path: 'support/help',
           name: 'SupportHome',
           component: SupportHome
+        },
+        {
+          path: 'note/shared/:id',
+          name: 'NoteView',
+          component: NoteView
         }
       ]
     },
     {
       path: '/portal',
       component: PortalLayout,
-      beforeEnter: auth.guardRoute,
+      beforeEnter: (to, from, next) => {
+        if (!auth.isLoggedIn()) {
+          next({
+            path: '/account/login'
+          });
+        } else {
+          next();
+        }
+      },
       children: [
         {
           path: '',
-          name: 'PortalDashboard',
-          component: PortalDashboard
+          redirect: { name: 'Notes', params: {filter: 'ALL'} }
         },
         {
-          path: 'notes',
-          name: 'PortalNotes',
+          path: 'notes/:filter?',
+          name: 'Notes',
           component: PortalNotes
         },
         {
+          path: 'note/browse/tags',
+          name: 'NoteTags',
+          component: PortalNoteTags
+        },
+        {
           path: 'note/edit/:id?',
-          name: 'PortalNoteDetail',
+          name: 'NoteDetail',
           component: PortalNoteDetail
         },
         {
@@ -99,6 +131,21 @@ export default new Router({
           path: 'note/search/:term?/:page?/:size?',
           name: 'PortalSearchNote',
           component: PortalSearchNote
+        },
+        {
+          path: 'deck',
+          name: 'PortalCardDeckList',
+          component: PortalCardDeckList
+        },
+        {
+          path: 'deck/edit/:id?',
+          name: 'PortalCardDeckDetail',
+          component: PortalCardDeckDetail
+        },
+        {
+          path: 'snippets',
+          name: 'Snippets',
+          component: Snippets
         }
       ]
     }
